@@ -13,23 +13,19 @@ struct ConfigurationView: View {
     var body: some View {
         NavigationStack {
             Form {
-                TextField(
-                    text: $viewModel.inputFolder,
-                    prompt: Text("~/input/folder/*.pdf"),
-                    label: { Text("Input Folder:") }
-                )
-                TextField(
-                    text: $viewModel.outputFolder,
-                    prompt: Text("~/output/folder"),
-                    label: { Text("Output Folder:") }
-                )
-
-                Button("Run") {
-                    viewModel.processFolders()
+                Button {
+                    viewModel.showFileImporter = true
+                } label: {
+                    Label("Choose directory", systemImage: "folder.circle")
                 }
             }
             .padding()
         }
+        .fileImporter(
+            isPresented: $viewModel.showFileImporter,
+            allowedContentTypes: [.directory],
+            onCompletion: viewModel.onOutputDirectorySelected
+        )
     }
 }
 
