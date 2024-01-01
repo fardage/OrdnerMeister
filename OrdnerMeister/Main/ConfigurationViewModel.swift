@@ -34,7 +34,10 @@ class ConfigurationViewModel {
 
         do {
             let tree = try TreeBuilder().buildTree(from: url)
-            _ = TextScrapper().extractTextFromFiles(from: tree)
+            let textTree = TextScrapper().extractTextFromFiles(from: tree)
+            let dataTable = try DataTableCreator().createDataTable(from: textTree)
+
+            print(dataTable)
         } catch {
             Logger.general.error("\(error)")
         }
