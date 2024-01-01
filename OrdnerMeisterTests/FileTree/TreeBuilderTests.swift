@@ -47,23 +47,23 @@ final class TreeBuilderTests: XCTestCase {
     func testBuildTree() throws {
         let rootNode = try treeBuilder.buildTree(from: testDirURL)
 
-        XCTAssertEqual(rootNode.name, "TestDirectory")
+        XCTAssertEqual(rootNode.url.lastPathComponent, "TestDirectory")
         XCTAssertEqual(rootNode.children.count, 3)
 
         let file1Node = try XCTUnwrap(rootNode.children["File1.txt"])
-        XCTAssertEqual(file1Node.name, "File1.txt")
+        XCTAssertEqual(file1Node.url.lastPathComponent, "File1.txt")
         XCTAssertTrue(file1Node.children.isEmpty)
 
         let file2Node = try XCTUnwrap(rootNode.children["File2.txt"])
-        XCTAssertEqual(file2Node.name, "File2.txt")
+        XCTAssertEqual(file2Node.url.lastPathComponent, "File2.txt")
         XCTAssertTrue(file2Node.children.isEmpty)
 
         let subDirNode = try XCTUnwrap(rootNode.children["SubDirectory"])
-        XCTAssertEqual(subDirNode.name, "SubDirectory")
+        XCTAssertEqual(subDirNode.url.lastPathComponent, "SubDirectory")
         XCTAssertEqual(subDirNode.children.count, 1)
 
         let subFileNode = try XCTUnwrap(subDirNode.children["SubFile.txt"])
-        XCTAssertEqual(subFileNode.name, "SubFile.txt")
+        XCTAssertEqual(subFileNode.url.lastPathComponent, "SubFile.txt")
         XCTAssertTrue(subFileNode.children.isEmpty)
     }
 }

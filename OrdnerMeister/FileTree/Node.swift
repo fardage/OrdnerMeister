@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct Node {
+struct Node: Equatable {
     typealias Name = String
-    var name: Name
+    var url: URL
+    var textualContent: String?
     var children: [Name: Node]
 }

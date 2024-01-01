@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "9927AAB9-54A3-43AC-84D7-9B15B33C830E",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:OrdnerMeister.xcodeproj",
+        "identifier" : "B1FBB7842B3EF38A006FC513",
+        "name" : "OrdnerMeisterTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -33,7 +33,8 @@ class ConfigurationViewModel {
         Logger.general.info("Start processing folders")
 
         do {
-            _ = try TreeBuilder().buildTree(from: url)
+            let tree = try TreeBuilder().buildTree(from: url)
+            _ = TextScrapper().extractTextFromFiles(from: tree)
         } catch {
             Logger.general.error("\(error)")
         }

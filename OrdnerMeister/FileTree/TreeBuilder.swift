@@ -18,7 +18,7 @@ struct TreeBuilder {
     func buildTree(from nodeURL: URL) throws -> Node {
         Logger.general.debug("Processing \(nodeURL)")
 
-        var node = Node(name: nodeURL.lastPathComponent, children: [:])
+        var node = Node(url: nodeURL, children: [:])
 
         guard checkIsDirectory(url: nodeURL) else {
             return node
