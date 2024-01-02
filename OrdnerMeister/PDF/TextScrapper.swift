@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 import PDFKit
 
 struct TextScrapper {
@@ -19,6 +20,7 @@ struct TextScrapper {
         var newNode = Node(url: node.url, children: [:])
 
         guard node.children.count != 0 else {
+            Logger.fileProcessing.debug("Extrating text from \(node.url)")
             let text = extractTextFromFile(from: node.url)
             newNode.textualContent = text
             return newNode
