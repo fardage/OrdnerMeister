@@ -11,20 +11,20 @@ import NaturalLanguage
 import OSLog
 
 class FileClassifier {
-    private typealias FolderURLString = String
-    private typealias TextualContent = String
+    typealias FolderURL = URL
+    typealias TextualContent = String
 
-    private var bayesianClassifier: BayesianClassifier<String, String>?
+    private var bayesianClassifier: BayesianClassifier<FolderURL, TextualContent>?
 
     func train(using rootNode: Node) {
         Logger.nlp.info("Start training classifier")
 
         let (folderURLStringList, textualContentList) = createDictionary(from: rootNode)
 
-        var eventSpace = EventSpace<FolderURLString, TextualContent>()
+        var eventSpace = EventSpace<FolderURL, TextualContent>()
 
         for (folderURL, textualContent) in zip(folderURLStringList, textualContentList) {
-            let category = folderURL.lowercased()
+            let category = folderURL
             let features = retrieveTokens(from: textualContent)
             eventSpace.observe(category, features: features)
         }
@@ -32,14 +32,9 @@ class FileClassifier {
         bayesianClassifier = BayesianClassifier(eventSpace: eventSpace)
     }
 
-    func evaluate(_ textualContent: String) -> URL? {
+    func evaluate(_ textualContent: TextualContent) -> FolderURL? {
         let features = retrieveTokens(from: textualContent)
-
-        if let prediction = bayesianClassifier?.classify(features) {
-            return URL(string: prediction)
-        } else {
-            return nil
-        }
+        return bayesianClassifier?.classify(features)
     }
 
     private func retrieveTokens(from text: String) -> [String] {
@@ -57,8 +52,8 @@ class FileClassifier {
         return tokens
     }
 
-    private func createDictionary(from rootNode: Node) -> ([FolderURLString], [TextualContent]) {
-        var folderURLStringList = [FolderURLString]()
+    private func createDictionary(from rootNode: Node) -> ([FolderURL], [TextualContent]) {
+        var folderURL = [FolderURL]()
         var textualContentList = [TextualContent]()
         var queue = [Node]()
         queue.append(rootNode)
@@ -69,8 +64,7 @@ class FileClassifier {
             if let textualContent = current.textualContent {
                 let parentURL = current.url
                     .deletingLastPathComponent()
-                    .absoluteString
-                folderURLStringList.append(parentURL)
+                folderURL.append(parentURL)
                 textualContentList.append(textualContent)
             }
 
@@ -79,6 +73,6 @@ class FileClassifier {
             }
         }
 
-        return (folderURLStringList, textualContentList)
+        return (folderURL, textualContentList)
     }
 }
