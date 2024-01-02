@@ -12,4 +12,6 @@ extension Logger {
     private static var subsystem = "ch.tseng.OrdnerMeister"
 
     static let general = Logger(subsystem: subsystem, category: "general")
+    static let fileProcessing = Logger(subsystem: subsystem, category: "file processing")
+    static let nlp = Logger(subsystem: subsystem, category: "nlp")
 }

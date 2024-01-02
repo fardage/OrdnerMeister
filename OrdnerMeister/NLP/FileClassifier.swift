@@ -17,6 +17,8 @@ class FileClassifier {
     private var bayesianClassifier: BayesianClassifier<String, String>?
 
     func train(using rootNode: Node) {
+        Logger.nlp.info("Start training classifier")
+
         let (folderURLStringList, textualContentList) = createDictionary(from: rootNode)
 
         var eventSpace = EventSpace<FolderURLString, TextualContent>()

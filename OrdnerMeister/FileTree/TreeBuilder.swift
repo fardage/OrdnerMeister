@@ -16,7 +16,7 @@ struct TreeBuilder {
     }
 
     func buildTree(from nodeURL: URL) throws -> Node {
-        Logger.general.debug("Processing \(nodeURL)")
+        Logger.fileProcessing.debug("Processing \(nodeURL)")
 
         var node = Node(url: nodeURL, children: [:])
 
