@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "bayes",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/fcanas/Bayes",
+      "state" : {
+        "revision" : "2e237f67e1e8398f3ffa5e75180ba3d3a0d9c9ae",
+        "version" : "1.0.0"
+      }
+    },
+    {
       "identity" : "mockingbird",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/birdrides/mockingbird",

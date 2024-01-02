@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B16164262B431AC9004D64AB /* Bayes in Frameworks */ = {isa = PBXBuildFile; productRef = B16164252B431AC9004D64AB /* Bayes */; };
 		B17F91412B416FA000473E19 /* TreeBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F91402B416FA000473E19 /* TreeBuilderTests.swift */; };
 		B17F91452B41B83000473E19 /* TextScrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F91442B41B83000473E19 /* TextScrapper.swift */; };
 		B17F91482B41D75900473E19 /* TextScrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F91472B41D75900473E19 /* TextScrapperTests.swift */; };
-		B1869EA22B42E2FA00B7407E /* DataTableCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1869EA12B42E2FA00B7407E /* DataTableCreator.swift */; };
-		B1869EA52B42EAC900B7407E /* DataTableCreatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1869EA42B42EAC900B7407E /* DataTableCreatorTests.swift */; };
+		B1869EA22B42E2FA00B7407E /* FileClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1869EA12B42E2FA00B7407E /* FileClassifier.swift */; };
 		B19E6A742B40495C006B7A4A /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19E6A732B40495C006B7A4A /* Node.swift */; };
 		B19E6A762B404A9C006B7A4A /* TreeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19E6A752B404A9C006B7A4A /* TreeBuilder.swift */; };
 		B1EBD3A32B41DB6F00BE2CA0 /* PDFKitWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EBD3A22B41DB6F00BE2CA0 /* PDFKitWrapper.swift */; };
@@ -46,9 +46,7 @@
 		B1869E962B42BA7F00B7407E /* OrdnerMeister.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = OrdnerMeister.app; path = "../../Library/Developer/Xcode/DerivedData/OrdnerMeister-hbfxjdouoblsfmfznnnftqefcdkp/Build/Products/Debug/OrdnerMeister.app"; sourceTree = "<group>"; };
 		B1869E972B42BA8200B7407E /* OrdnerMeister.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = OrdnerMeister.app; path = "../../Library/Developer/Xcode/DerivedData/OrdnerMeister-hbfxjdouoblsfmfznnnftqefcdkp/Build/Products/Debug/OrdnerMeister.app"; sourceTree = "<group>"; };
 		B1869E982B42BA9500B7407E /* OrdnerMeister.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = OrdnerMeister.app; path = "../../Library/Developer/Xcode/DerivedData/OrdnerMeister-hbfxjdouoblsfmfznnnftqefcdkp/Build/Products/Debug/OrdnerMeister.app"; sourceTree = "<group>"; };
-		B1869E992B42BB0200B7407E /* OrdnerMeisterTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = OrdnerMeisterTests.xctestplan; sourceTree = "<group>"; };
-		B1869EA12B42E2FA00B7407E /* DataTableCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTableCreator.swift; sourceTree = "<group>"; };
-		B1869EA42B42EAC900B7407E /* DataTableCreatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTableCreatorTests.swift; sourceTree = "<group>"; };
+		B1869EA12B42E2FA00B7407E /* FileClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileClassifier.swift; sourceTree = "<group>"; };
 		B19E6A732B40495C006B7A4A /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		B19E6A752B404A9C006B7A4A /* TreeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeBuilder.swift; sourceTree = "<group>"; };
 		B1EBD3A22B41DB6F00BE2CA0 /* PDFKitWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFKitWrapper.swift; sourceTree = "<group>"; };
@@ -66,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B16164262B431AC9004D64AB /* Bayes in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,7 +95,6 @@
 			children = (
 				B17F91422B41B57900473E19 /* FileTree */,
 				B17F91462B41D73900473E19 /* PDF */,
-				B1869EA32B42EA9300B7407E /* NLP */,
 			);
 			path = OrdnerMeisterTests;
 			sourceTree = "<group>";
@@ -129,15 +127,7 @@
 		B1869E9E2B42BC8300B7407E /* NLP */ = {
 			isa = PBXGroup;
 			children = (
-				B1869EA12B42E2FA00B7407E /* DataTableCreator.swift */,
-			);
-			path = NLP;
-			sourceTree = "<group>";
-		};
-		B1869EA32B42EA9300B7407E /* NLP */ = {
-			isa = PBXGroup;
-			children = (
-				B1869EA42B42EAC900B7407E /* DataTableCreatorTests.swift */,
+				B1869EA12B42E2FA00B7407E /* FileClassifier.swift */,
 			);
 			path = NLP;
 			sourceTree = "<group>";
@@ -154,13 +144,12 @@
 		B1FBB76B2B3EF389006FC513 = {
 			isa = PBXGroup;
 			children = (
-				B15485972B42F2EC00CB7FB5 /* OrdnerMeister.xctestplan */,
 				B1FBB7762B3EF389006FC513 /* OrdnerMeister */,
 				B17F913F2B416F7B00473E19 /* OrdnerMeisterTests */,
 				AFD693E69DDB532F75B6EF36 /* Generated Mocks */,
 				B1869E932B42BA5E00B7407E /* OrdnerMeister.app */,
 				B1869E942B42BA5E00B7407E /* OrdnerMeisterTests.xctest */,
-				B1869E992B42BB0200B7407E /* OrdnerMeisterTests.xctestplan */,
+				B15485972B42F2EC00CB7FB5 /* OrdnerMeister.xctestplan */,
 			);
 			sourceTree = "<group>";
 		};
@@ -229,6 +218,9 @@
 			dependencies = (
 			);
 			name = OrdnerMeister;
+			packageProductDependencies = (
+				B16164252B431AC9004D64AB /* Bayes */,
+			);
 			productName = OrdnerMeister;
 			productReference = B1869E932B42BA5E00B7407E /* OrdnerMeister.app */;
 			productType = "com.apple.product-type.application";
@@ -286,6 +278,7 @@
 			mainGroup = B1FBB76B2B3EF389006FC513;
 			packageReferences = (
 				B1FBB7AA2B3F202D006FC513 /* XCRemoteSwiftPackageReference "mockingbird" */,
+				B16164242B431AC9004D64AB /* XCRemoteSwiftPackageReference "Bayes" */,
 			);
 			productRefGroup = B1FBB76B2B3EF389006FC513;
 			projectDirPath = "";
@@ -345,7 +338,7 @@
 				B19E6A762B404A9C006B7A4A /* TreeBuilder.swift in Sources */,
 				B19E6A742B40495C006B7A4A /* Node.swift in Sources */,
 				B1FBB7B42B40018D006FC513 /* OMLogger.swift in Sources */,
-				B1869EA22B42E2FA00B7407E /* DataTableCreator.swift in Sources */,
+				B1869EA22B42E2FA00B7407E /* FileClassifier.swift in Sources */,
 				B17F91452B41B83000473E19 /* TextScrapper.swift in Sources */,
 				B1FBB7782B3EF389006FC513 /* OrdnerMeisterApp.swift in Sources */,
 				B1FBB7A32B3EF5B4006FC513 /* ConfigurationViewModel.swift in Sources */,
@@ -359,7 +352,6 @@
 				F2A074E5241F2FD5A8C94348 /* OrdnerMeisterTests-OrdnerMeisterMocks.generated.swift in Sources */,
 				B17F91412B416FA000473E19 /* TreeBuilderTests.swift in Sources */,
 				B17F91482B41D75900473E19 /* TextScrapperTests.swift in Sources */,
-				B1869EA52B42EAC900B7407E /* DataTableCreatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,6 +614,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B16164242B431AC9004D64AB /* XCRemoteSwiftPackageReference "Bayes" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/fcanas/Bayes";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		B1FBB7AA2B3F202D006FC513 /* XCRemoteSwiftPackageReference "mockingbird" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/birdrides/mockingbird";
@@ -633,6 +633,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B16164252B431AC9004D64AB /* Bayes */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B16164242B431AC9004D64AB /* XCRemoteSwiftPackageReference "Bayes" */;
+			productName = Bayes;
+		};
 		B1FBB7AB2B3F202D006FC513 /* Mockingbird */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B1FBB7AA2B3F202D006FC513 /* XCRemoteSwiftPackageReference "mockingbird" */;

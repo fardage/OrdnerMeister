@@ -17,15 +17,17 @@ class ConfigurationViewModel {
     }
 
     func onOutputDirectorySelected(_ result: Result<URL, Error>) {
-        switch result {
-        case let .success(directory):
-            guard directory.startAccessingSecurityScopedResource() else { return }
+        Task {
+            switch result {
+            case let .success(directory):
+                guard directory.startAccessingSecurityScopedResource() else { return }
 
-            processFolder(url: directory)
+                processFolder(url: directory)
 
-            directory.stopAccessingSecurityScopedResource()
-        case let .failure(error):
-            Logger.general.error("\(error)")
+                directory.stopAccessingSecurityScopedResource()
+            case let .failure(error):
+                Logger.general.error("\(error)")
+            }
         }
     }
 
@@ -35,9 +37,12 @@ class ConfigurationViewModel {
         do {
             let tree = try TreeBuilder().buildTree(from: url)
             let textTree = TextScrapper().extractTextFromFiles(from: tree)
-            let dataTable = try DataTableCreator().createDataTable(from: textTree)
 
-            print(dataTable)
+            let fileClassifier = FileClassifier()
+            fileClassifier.train(using: textTree)
+            let result = fileClassifier.evaluate("Für die Steuerperiode 2023 stellen wir Ihnen die nachfolgende Zahlungsempfehlung als provisorische Rechnung zu.")
+            Logger.general.info("\(result?.absoluteString ?? "N/A")")
+
         } catch {
             Logger.general.error("\(error)")
         }
