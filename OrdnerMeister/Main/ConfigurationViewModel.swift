@@ -20,11 +20,7 @@ class ConfigurationViewModel {
         Task {
             switch result {
             case let .success(directory):
-                guard directory.startAccessingSecurityScopedResource() else { return }
-
                 processFolder(url: directory)
-
-                directory.stopAccessingSecurityScopedResource()
             case let .failure(error):
                 Logger.general.error("\(error)")
             }
