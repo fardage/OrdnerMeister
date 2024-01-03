@@ -16,17 +16,14 @@ class FileClassifier {
 
     private var bayesianClassifier: BayesianClassifier<FolderURL, TextualContent>?
 
-    func train(using rootNode: Node) {
+    func train(with categories: [FolderURL], and features: [TextualContent]) {
         Logger.nlp.info("Start training classifier")
-
-        let (folderURLStringList, textualContentList) = createDictionary(from: rootNode)
 
         var eventSpace = EventSpace<FolderURL, TextualContent>()
 
-        for (folderURL, textualContent) in zip(folderURLStringList, textualContentList) {
-            let category = folderURL
-            let features = retrieveTokens(from: textualContent)
-            eventSpace.observe(category, features: features)
+        for (category, feature) in zip(categories, features) {
+            let tokens = retrieveTokens(from: feature)
+            eventSpace.observe(category, features: tokens)
         }
 
         bayesianClassifier = BayesianClassifier(eventSpace: eventSpace)
@@ -50,29 +47,5 @@ class FileClassifier {
         }
 
         return tokens
-    }
-
-    private func createDictionary(from rootNode: Node) -> ([FolderURL], [TextualContent]) {
-        var folderURL = [FolderURL]()
-        var textualContentList = [TextualContent]()
-        var queue = [Node]()
-        queue.append(rootNode)
-
-        while !queue.isEmpty {
-            let current = queue.removeFirst()
-
-            if let textualContent = current.textualContent {
-                let parentURL = current.url
-                    .deletingLastPathComponent()
-                folderURL.append(parentURL)
-                textualContentList.append(textualContent)
-            }
-
-            current.children.forEach { child in
-                queue.append(child.value)
-            }
-        }
-
-        return (folderURL, textualContentList)
     }
 }

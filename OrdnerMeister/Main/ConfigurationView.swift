@@ -24,6 +24,11 @@ struct ConfigurationView: View {
                     label: "Output",
                     description: "Directory where the input files should be moved to and sorted"
                 )
+                Button {
+                    viewModel.processFolders()
+                } label: {
+                    Text("Run")
+                }
             }
             .padding()
         }
