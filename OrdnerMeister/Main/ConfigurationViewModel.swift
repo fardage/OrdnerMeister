@@ -39,16 +39,16 @@ class ConfigurationViewModel {
 
             // Train classifier
             let outputDirTree = try treeBuilder.buildTree(from: outputDirURL)
-            let (outputFileURLs, outputTexts) = textScrapper.extractTextFromFiles(from: outputDirTree)
+            let outputDataTable = textScrapper.extractTextFromFiles(from: outputDirTree)
 
-            fileClassifier.train(with: outputFileURLs, and: outputTexts)
+            fileClassifier.train(with: outputDataTable)
 
             // Read inbox
             let inboxDirTree = try treeBuilder.buildTree(from: inboxDirURL)
-            let (inboxFileURLs, inboxTexts) = textScrapper.extractTextFromFiles(from: inboxDirTree)
+            let inboxDataTable = textScrapper.extractTextFromFiles(from: inboxDirTree)
 
             // Evaluate
-            inboxTexts.forEach { text in
+            inboxDataTable.textualContent.forEach { text in
                 let prediction = fileClassifier.evaluate(text)
                 Logger.general.info("✅ Prediction: \(prediction?.absoluteString ?? "N/A")")
             }

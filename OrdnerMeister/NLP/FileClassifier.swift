@@ -11,17 +11,14 @@ import NaturalLanguage
 import OSLog
 
 class FileClassifier {
-    typealias FolderURL = URL
-    typealias TextualContent = String
+    private var bayesianClassifier: BayesianClassifier<URL, String>?
 
-    private var bayesianClassifier: BayesianClassifier<FolderURL, TextualContent>?
-
-    func train(with categories: [FolderURL], and features: [TextualContent]) {
+    func train(with dataTable: DataTable) {
         Logger.nlp.info("Start training classifier")
 
-        var eventSpace = EventSpace<FolderURL, TextualContent>()
+        var eventSpace = EventSpace<URL, String>()
 
-        for (category, feature) in zip(categories, features) {
+        for (category, feature) in zip(dataTable.folderURL, dataTable.textualContent) {
             let tokens = retrieveTokens(from: feature)
             eventSpace.observe(category, features: tokens)
         }
@@ -29,7 +26,7 @@ class FileClassifier {
         bayesianClassifier = BayesianClassifier(eventSpace: eventSpace)
     }
 
-    func evaluate(_ textualContent: TextualContent) -> FolderURL? {
+    func evaluate(_ textualContent: String) -> URL? {
         let features = retrieveTokens(from: textualContent)
         return bayesianClassifier?.classify(features)
     }

@@ -9,6 +9,11 @@ import Foundation
 import OSLog
 import PDFKit
 
+struct DataTable {
+    let folderURL: [URL]
+    let textualContent: [String]
+}
+
 struct TextScrapper {
     private let pdfKitWrapper: PDFKitWrapping
 
@@ -16,7 +21,7 @@ struct TextScrapper {
         self.pdfKitWrapper = pdfKitWrapper
     }
 
-    func extractTextFromFiles(from node: Node) -> ([URL], [String]) {
+    func extractTextFromFiles(from node: Node) -> DataTable {
         var newNodeWithText = extractTextFromNode(from: node)
         return createDictionary(from: newNodeWithText)
     }
@@ -40,7 +45,7 @@ struct TextScrapper {
         return newNode
     }
 
-    private func createDictionary(from rootNode: Node) -> ([URL], [String]) {
+    private func createDictionary(from rootNode: Node) -> DataTable {
         var folderURL = [URL]()
         var textualContentList = [String]()
         var queue = [Node]()
@@ -61,7 +66,7 @@ struct TextScrapper {
             }
         }
 
-        return (folderURL, textualContentList)
+        return DataTable(folderURL: folderURL, textualContent: textualContentList)
     }
 
     private func extractTextFromFile(from file: URL) -> String? {
