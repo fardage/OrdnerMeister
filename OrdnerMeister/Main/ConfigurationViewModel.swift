@@ -10,19 +10,12 @@ import OSLog
 
 @Observable
 class ConfigurationViewModel {
-    private let treeBuilder: TreeBuilder
-    private let textScrapper: TextScrapper
-    private let fileClassifier: FileClassifier
+    private let fileOrchestrator: FileOrchestrating
     var inboxDirectory: String
     var outputDirectory: String
 
-    init(treeBuilder: TreeBuilder = TreeBuilder(),
-         textScrapper: TextScrapper = TextScrapper(),
-         fileClassifier: FileClassifier = FileClassifier())
-    {
-        self.treeBuilder = treeBuilder
-        self.textScrapper = textScrapper
-        self.fileClassifier = fileClassifier
+    init(fileOrchestrator: FileOrchestrating = FileOrchestrator()) {
+        self.fileOrchestrator = fileOrchestrator
         inboxDirectory = String.Empty
         outputDirectory = String.Empty
     }
@@ -31,27 +24,10 @@ class ConfigurationViewModel {
         Logger.general.info("Start processing folders")
 
         do {
-            guard let inboxDirURL = URL(string: inboxDirectory),
-                  let outputDirURL = URL(string: outputDirectory)
-            else {
-                return
-            }
-
-            // Train classifier
-            let outputDirTree = try treeBuilder.buildTree(from: outputDirURL)
-            let outputDataTable = textScrapper.extractTextFromFiles(from: outputDirTree)
-
-            fileClassifier.train(with: outputDataTable)
-
-            // Read inbox
-            let inboxDirTree = try treeBuilder.buildTree(from: inboxDirURL)
-            let inboxDataTable = textScrapper.extractTextFromFiles(from: inboxDirTree)
-
-            // Evaluate
-            try inboxDataTable.textualContent.forEach { text in
-                let prediction = try fileClassifier.evaluate(text)
-                Logger.general.info("✅ Prediction: \(prediction?.absoluteString ?? "N/A")")
-            }
+            try fileOrchestrator.trainAndClassify(
+                inboxDirString: inboxDirectory,
+                outputDirString: outputDirectory
+            )
         } catch {
             Logger.general.error("\(error)")
         }
