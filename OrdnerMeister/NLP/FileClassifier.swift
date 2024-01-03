@@ -11,6 +11,10 @@ import NaturalLanguage
 import OSLog
 
 class FileClassifier {
+    enum ClassifierError: Error {
+        case notTrained
+    }
+
     private var bayesianClassifier: BayesianClassifier<URL, String>?
 
     func train(with dataTable: DataTable) {
@@ -19,26 +23,35 @@ class FileClassifier {
         var eventSpace = EventSpace<URL, String>()
 
         for (category, feature) in zip(dataTable.folderURL, dataTable.textualContent) {
-            let tokens = retrieveTokens(from: feature)
+            let tokens = feature.tokenize()
             eventSpace.observe(category, features: tokens)
         }
 
         bayesianClassifier = BayesianClassifier(eventSpace: eventSpace)
     }
 
-    func evaluate(_ textualContent: String) -> URL? {
-        let features = retrieveTokens(from: textualContent)
-        return bayesianClassifier?.classify(features)
-    }
+    func evaluate(_ textualContent: String) throws -> URL? {
+        guard let bayesianClassifier else {
+            Logger.nlp.error("Classifier not trained")
+            throw ClassifierError.notTrained
+        }
 
-    private func retrieveTokens(from text: String) -> [String] {
+        let features = textualContent.tokenize()
+        return bayesianClassifier.classify(features)
+    }
+}
+
+// MARK: - Tokenizer
+
+extension String {
+    func tokenize() -> [String] {
         let tokenizer = NLTokenizer(unit: .word)
-        tokenizer.string = text
+        tokenizer.string = self
 
         var tokens = [String]()
 
-        tokenizer.enumerateTokens(in: text.startIndex ..< text.endIndex) { tokenRange, _ -> Bool in
-            let token = String(text[tokenRange].lowercased())
+        tokenizer.enumerateTokens(in: startIndex ..< endIndex) { tokenRange, _ -> Bool in
+            let token = String(self[tokenRange].lowercased())
             tokens.append(token)
             return true
         }

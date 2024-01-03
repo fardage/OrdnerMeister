@@ -14,7 +14,7 @@ protocol PDFKitWrapping {
 
 struct PDFKitWrapper: PDFKitWrapping {
     func extractText(from url: URL) -> String? {
-        let pdfDocument = PDFDocument(url: url)!
-        return pdfDocument.string
+        let pdfDocument = PDFDocument(url: url)
+        return pdfDocument?.string
     }
 }

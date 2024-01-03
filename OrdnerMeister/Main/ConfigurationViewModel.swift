@@ -48,8 +48,8 @@ class ConfigurationViewModel {
             let inboxDataTable = textScrapper.extractTextFromFiles(from: inboxDirTree)
 
             // Evaluate
-            inboxDataTable.textualContent.forEach { text in
-                let prediction = fileClassifier.evaluate(text)
+            try inboxDataTable.textualContent.forEach { text in
+                let prediction = try fileClassifier.evaluate(text)
                 Logger.general.info("✅ Prediction: \(prediction?.absoluteString ?? "N/A")")
             }
         } catch {
