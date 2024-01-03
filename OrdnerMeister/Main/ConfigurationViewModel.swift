@@ -10,21 +10,12 @@ import OSLog
 
 @Observable
 class ConfigurationViewModel {
-    var showFileImporter: Bool
+    var inboxDirectory: String
+    var outputDirectory: String
 
     init() {
-        showFileImporter = false
-    }
-
-    func onOutputDirectorySelected(_ result: Result<URL, Error>) {
-        Task {
-            switch result {
-            case let .success(directory):
-                processFolder(url: directory)
-            case let .failure(error):
-                Logger.general.error("\(error)")
-            }
-        }
+        inboxDirectory = String.Empty
+        outputDirectory = String.Empty
     }
 
     private func processFolder(url: URL) {

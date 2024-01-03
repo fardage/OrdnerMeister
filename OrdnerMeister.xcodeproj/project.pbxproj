@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B12119092B45519E008C7195 /* String+Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12119082B45519E008C7195 /* String+Values.swift */; };
 		B16164262B431AC9004D64AB /* Bayes in Frameworks */ = {isa = PBXBuildFile; productRef = B16164252B431AC9004D64AB /* Bayes */; };
 		B17F91412B416FA000473E19 /* TreeBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F91402B416FA000473E19 /* TreeBuilderTests.swift */; };
 		B17F91452B41B83000473E19 /* TextScrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F91442B41B83000473E19 /* TextScrapper.swift */; };
@@ -37,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		354E72FE353BCE3D3DA8083D /* OrdnerMeisterTests-OrdnerMeisterMocks.generated.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = "OrdnerMeisterTests-OrdnerMeisterMocks.generated.swift"; path = "MockingbirdMocks/OrdnerMeisterTests-OrdnerMeisterMocks.generated.swift"; sourceTree = "<group>"; };
+		B12119082B45519E008C7195 /* String+Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Values.swift"; sourceTree = "<group>"; };
 		B15485972B42F2EC00CB7FB5 /* OrdnerMeister.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = OrdnerMeister.xctestplan; sourceTree = "<group>"; };
 		B17F91402B416FA000473E19 /* TreeBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeBuilderTests.swift; sourceTree = "<group>"; };
 		B17F91442B41B83000473E19 /* TextScrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextScrapper.swift; sourceTree = "<group>"; };
@@ -88,6 +90,14 @@
 				354E72FE353BCE3D3DA8083D /* OrdnerMeisterTests-OrdnerMeisterMocks.generated.swift */,
 			);
 			name = "Generated Mocks";
+			sourceTree = "<group>";
+		};
+		B12119072B455190008C7195 /* String */ = {
+			isa = PBXGroup;
+			children = (
+				B12119082B45519E008C7195 /* String+Values.swift */,
+			);
+			path = String;
 			sourceTree = "<group>";
 		};
 		B17F913F2B416F7B00473E19 /* OrdnerMeisterTests */ = {
@@ -189,6 +199,7 @@
 		B1FBB7B12B40010A006FC513 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				B12119072B455190008C7195 /* String */,
 				B1FBB7B22B40017A006FC513 /* Logging */,
 			);
 			path = Shared;
@@ -335,6 +346,7 @@
 			files = (
 				B1FBB77A2B3EF389006FC513 /* ConfigurationView.swift in Sources */,
 				B1EBD3A32B41DB6F00BE2CA0 /* PDFKitWrapper.swift in Sources */,
+				B12119092B45519E008C7195 /* String+Values.swift in Sources */,
 				B19E6A762B404A9C006B7A4A /* TreeBuilder.swift in Sources */,
 				B19E6A742B40495C006B7A4A /* Node.swift in Sources */,
 				B1FBB7B42B40018D006FC513 /* OMLogger.swift in Sources */,
