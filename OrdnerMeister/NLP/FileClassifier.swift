@@ -30,14 +30,14 @@ class FileClassifier {
         bayesianClassifier = BayesianClassifier(eventSpace: eventSpace)
     }
 
-    func evaluate(_ textualContent: String) throws -> URL? {
+    func evaluate(_ textualContent: String, firstN: Int = 1) throws -> [URL] {
         guard let bayesianClassifier else {
             Logger.nlp.error("Classifier not trained")
             throw ClassifierError.notTrained
         }
 
         let features = textualContent.tokenize()
-        return bayesianClassifier.classify(features)
+        return bayesianClassifier.classify(features, firstN: firstN)
     }
 }
 
@@ -57,5 +57,16 @@ extension String {
         }
 
         return tokens
+    }
+}
+
+// MARK: - BayesianClassifier
+
+public extension BayesianClassifier {
+    func classify<S: Sequence>(_ features: S, firstN: Int) -> [Category] where S.Iterator.Element == Feature {
+        let categoryProbabilities = categoryProbabilities(features)
+        let sorted = categoryProbabilities.sorted { $0.value > $1.value }
+        let firstN = sorted.prefix(firstN)
+        return firstN.map(\.key)
     }
 }

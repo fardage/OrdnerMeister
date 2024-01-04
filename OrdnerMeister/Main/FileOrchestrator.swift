@@ -46,8 +46,8 @@ struct FileOrchestrator: FileOrchestrating {
 
             // Evaluate
             try inboxDataTable.textualContent.forEach { text in
-                let prediction = try fileClassifier.evaluate(text)
-                Logger.general.info("✅ Prediction: \(prediction?.absoluteString ?? "N/A")")
+                let prediction = try fileClassifier.evaluate(text, firstN: 3)
+                Logger.general.info("✅ Prediction: \(String(describing: prediction))")
             }
         } catch {
             Logger.fileProcessing.error("\(error)")
