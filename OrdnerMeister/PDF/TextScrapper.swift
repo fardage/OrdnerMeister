@@ -21,9 +21,9 @@ struct TextScrapper {
         self.pdfKitWrapper = pdfKitWrapper
     }
 
-    func extractTextFromFiles(from node: Node) -> DataTable {
+    func extractText(from node: Node, onFolderLevel: Bool = false) -> DataTable {
         var newNodeWithText = extractTextFromNode(from: node)
-        return createDictionary(from: newNodeWithText)
+        return createDictionary(from: newNodeWithText, onFolderLevel: onFolderLevel)
     }
 
     private func extractTextFromNode(from node: Node) -> Node {
@@ -45,7 +45,7 @@ struct TextScrapper {
         return newNode
     }
 
-    private func createDictionary(from rootNode: Node) -> DataTable {
+    private func createDictionary(from rootNode: Node, onFolderLevel: Bool) -> DataTable {
         var folderURL = [URL]()
         var textualContentList = [String]()
         var queue = [Node]()
@@ -55,9 +55,9 @@ struct TextScrapper {
             let current = queue.removeFirst()
 
             if let textualContent = current.textualContent {
-                let parentURL = current.url
-                    .deletingLastPathComponent()
-                folderURL.append(parentURL)
+                let fileURL = current.url
+                let parentURL = current.url.deletingLastPathComponent()
+                folderURL.append(onFolderLevel ? parentURL : fileURL)
                 textualContentList.append(textualContent)
             }
 

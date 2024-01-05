@@ -13,22 +13,26 @@ struct ConfigurationView: View {
 
     var body: some View {
         NavigationStack {
-            Form {
-                DirectoryConfigView(
-                    path: $viewModel.inboxDirectory,
-                    label: "Inbox",
-                    description: "Directory with input files to be classified and sorted"
-                )
-                DirectoryConfigView(
-                    path: $viewModel.outputDirectory,
-                    label: "Output",
-                    description: "Directory where the input files should be moved to and sorted"
-                )
-                Button {
-                    viewModel.processFolders()
-                } label: {
-                    Text("Run")
+            VStack {
+                Form {
+                    DirectoryConfigView(
+                        path: $viewModel.inboxDirectory,
+                        label: "Inbox",
+                        description: "Directory with input files to be classified and sorted"
+                    )
+                    DirectoryConfigView(
+                        path: $viewModel.outputDirectory,
+                        label: "Output",
+                        description: "Directory where the input files should be moved to and sorted"
+                    )
+                    Button {
+                        viewModel.processFolders()
+                    } label: {
+                        Text("Run")
+                    }
                 }
+
+                ActionableFilesView(actionableFiles: viewModel.actionableFiles)
             }
             .padding()
         }
@@ -75,5 +79,36 @@ struct DirectoryConfigView: View {
                 }
             }
         )
+    }
+}
+
+struct ActionableFilesView: View {
+    let actionableFiles: [FilePrediction]
+
+    var body: some View {
+        List(actionableFiles) { actionableFile in
+            FileRowView(
+                file: actionableFile.file,
+                predictedOutputFolders: actionableFile.predictedOutputFolders
+            )
+        }
+    }
+}
+
+struct FileRowView: View {
+    let file: URL
+    let predictedOutputFolders: [URL]
+
+    var body: some View {
+        HStack {
+            Text(file.lastPathComponent)
+            ForEach(predictedOutputFolders, id: \.self) { folder in
+                Button {
+                    // TODO: Move file
+                } label: {
+                    Label(folder.lastPathComponent, systemImage: "folder.badge.plus")
+                }
+            }
+        }
     }
 }
