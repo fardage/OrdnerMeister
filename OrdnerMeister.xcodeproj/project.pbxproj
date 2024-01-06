@@ -15,6 +15,7 @@
 		B12119152B45EEA4008C7195 /* ConfigurationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12119142B45EEA4008C7195 /* ConfigurationViewModelTests.swift */; };
 		B12119182B4730A2008C7195 /* DomainProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12119172B4730A2008C7195 /* DomainProperty.swift */; };
 		B121191E2B473115008C7195 /* DomainPropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121191D2B473115008C7195 /* DomainPropertyTests.swift */; };
+		B12119212B49BEFB008C7195 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12119202B49BEFB008C7195 /* FileManager.swift */; };
 		B16164262B431AC9004D64AB /* Bayes in Frameworks */ = {isa = PBXBuildFile; productRef = B16164252B431AC9004D64AB /* Bayes */; };
 		B17F91412B416FA000473E19 /* TreeBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F91402B416FA000473E19 /* TreeBuilderTests.swift */; };
 		B17F91452B41B83000473E19 /* TextScrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F91442B41B83000473E19 /* TextScrapper.swift */; };
@@ -53,6 +54,7 @@
 		B12119142B45EEA4008C7195 /* ConfigurationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationViewModelTests.swift; sourceTree = "<group>"; };
 		B12119172B4730A2008C7195 /* DomainProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainProperty.swift; sourceTree = "<group>"; };
 		B121191D2B473115008C7195 /* DomainPropertyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainPropertyTests.swift; sourceTree = "<group>"; };
+		B12119202B49BEFB008C7195 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		B15485972B42F2EC00CB7FB5 /* OrdnerMeister.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = OrdnerMeister.xctestplan; sourceTree = "<group>"; };
 		B17F91402B416FA000473E19 /* TreeBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeBuilderTests.swift; sourceTree = "<group>"; };
 		B17F91442B41B83000473E19 /* TextScrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextScrapper.swift; sourceTree = "<group>"; };
@@ -152,6 +154,14 @@
 				B121191D2B473115008C7195 /* DomainPropertyTests.swift */,
 			);
 			path = Combine;
+			sourceTree = "<group>";
+		};
+		B121191F2B49BEE5008C7195 /* FileManager */ = {
+			isa = PBXGroup;
+			children = (
+				B12119202B49BEFB008C7195 /* FileManager.swift */,
+			);
+			path = FileManager;
 			sourceTree = "<group>";
 		};
 		B17F913F2B416F7B00473E19 /* OrdnerMeisterTests */ = {
@@ -259,6 +269,7 @@
 		B1FBB7B12B40010A006FC513 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				B121191F2B49BEE5008C7195 /* FileManager */,
 				B12119162B473077008C7195 /* Combine */,
 				B12119072B455190008C7195 /* String */,
 				B1FBB7B22B40017A006FC513 /* Logging */,
@@ -414,6 +425,7 @@
 				B1FBB7B42B40018D006FC513 /* OMLogger.swift in Sources */,
 				B1869EA22B42E2FA00B7407E /* FileClassifier.swift in Sources */,
 				B12119122B45ECC8008C7195 /* FileOrchestrator.swift in Sources */,
+				B12119212B49BEFB008C7195 /* FileManager.swift in Sources */,
 				B12119182B4730A2008C7195 /* DomainProperty.swift in Sources */,
 				B17F91452B41B83000473E19 /* TextScrapper.swift in Sources */,
 				B1FBB7782B3EF389006FC513 /* OrdnerMeisterApp.swift in Sources */,

@@ -9,9 +9,9 @@ import Foundation
 import OSLog
 
 struct TreeBuilder {
-    let fileManager: FileManager
+    let fileManager: FileManaging
 
-    init(fileManager: FileManager = FileManager.default) {
+    init(fileManager: FileManaging = FileManager.default) {
         self.fileManager = fileManager
     }
 
@@ -20,11 +20,13 @@ struct TreeBuilder {
 
         var node = Node(url: nodeURL, children: [:])
 
-        guard checkIsDirectory(url: nodeURL) else {
-            return node
-        }
+        guard nodeURL.isDirectory else { return node }
 
-        let contents = try fileManager.contentsOfDirectory(at: nodeURL, includingPropertiesForKeys: nil)
+        let contents = try fileManager.contentsOfDirectory(
+            at: nodeURL,
+            includingPropertiesForKeys: nil,
+            options: []
+        )
 
         node.children = try contents.reduce(into: [:]) { acc, url in
             acc[url.lastPathComponent] = try buildTree(from: url)
@@ -32,10 +34,10 @@ struct TreeBuilder {
 
         return node
     }
+}
 
-    private func checkIsDirectory(url: URL) -> Bool {
-        var isDir: ObjCBool = false
-        fileManager.fileExists(atPath: url.path, isDirectory: &isDir)
-        return isDir.boolValue
+extension URL {
+    var isDirectory: Bool {
+        (try? resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory == true
     }
 }

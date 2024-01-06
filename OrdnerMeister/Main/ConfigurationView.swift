@@ -32,7 +32,12 @@ struct ConfigurationView: View {
                     }
                 }
 
-                ActionableFilesView(actionableFiles: viewModel.actionableFiles)
+                ActionableFilesView(
+                    actionableFiles: viewModel.actionableFiles,
+                    onPredictionClick: { file, folder in
+                        viewModel.onPredictionClick(fileURL: file, targetFolderURL: folder)
+                    }
+                )
             }
             .padding()
         }
@@ -84,12 +89,14 @@ struct DirectoryConfigView: View {
 
 struct ActionableFilesView: View {
     let actionableFiles: [FilePrediction]
+    let onPredictionClick: (URL, URL) -> Void
 
     var body: some View {
         List(actionableFiles) { actionableFile in
             FileRowView(
                 file: actionableFile.file,
-                predictedOutputFolders: actionableFile.predictedOutputFolders
+                predictedOutputFolders: actionableFile.predictedOutputFolders,
+                onPredictionClick: onPredictionClick
             )
         }
     }
@@ -98,13 +105,14 @@ struct ActionableFilesView: View {
 struct FileRowView: View {
     let file: URL
     let predictedOutputFolders: [URL]
+    let onPredictionClick: (URL, URL) -> Void
 
     var body: some View {
         HStack {
             Text(file.lastPathComponent)
             ForEach(predictedOutputFolders, id: \.self) { folder in
                 Button {
-                    // TODO: Move file
+                    onPredictionClick(file, folder)
                 } label: {
                     Label(folder.lastPathComponent, systemImage: "folder.badge.plus")
                 }

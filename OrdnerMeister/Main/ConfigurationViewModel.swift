@@ -49,4 +49,15 @@ class ConfigurationViewModel {
             Logger.general.info("Done processing folders")
         }
     }
+
+    func onPredictionClick(fileURL: URL, targetFolderURL: URL) {
+        Task {
+            do {
+                try fileOrchestrator.copyFile(from: fileURL, to: targetFolderURL)
+                actionableFiles.removeAll { $0.file == fileURL }
+            } catch {
+                Logger.general.error("\(error)")
+            }
+        }
+    }
 }

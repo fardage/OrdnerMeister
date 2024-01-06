@@ -12,9 +12,11 @@ import OSLog
 protocol FileOrchestrating {
     var lastPredictions: DomainProperty<[FilePrediction]> { get }
     func trainAndClassify(inboxDirString: String, outputDirString: String) throws
+    func copyFile(from sourceURL: URL, to destinationURL: URL) throws
 }
 
 struct FileOrchestrator: FileOrchestrating {
+    private let fileManager: FileManaging
     private let treeBuilder: TreeBuilder
     private let textScrapper: TextScrapper
     private let fileClassifier: FileClassifier
@@ -24,10 +26,12 @@ struct FileOrchestrator: FileOrchestrating {
         _lastPredictions.domainProperty()
     }
 
-    init(treeBuilder: TreeBuilder = TreeBuilder(),
+    init(fileManager: FileManaging = FileManager(),
+         treeBuilder: TreeBuilder = TreeBuilder(),
          textScrapper: TextScrapper = TextScrapper(),
          fileClassifier: FileClassifier = FileClassifier())
     {
+        self.fileManager = fileManager
         self.treeBuilder = treeBuilder
         self.textScrapper = textScrapper
         self.fileClassifier = fileClassifier
@@ -60,6 +64,11 @@ struct FileOrchestrator: FileOrchestrating {
         } catch {
             Logger.fileProcessing.error("\(error)")
         }
+    }
+
+    func copyFile(from sourceURL: URL, to folderURL: URL) throws {
+        let destinationURL = folderURL.appending(path: sourceURL.lastPathComponent)
+        try fileManager.copyItem(at: sourceURL, to: destinationURL)
     }
 }
 
