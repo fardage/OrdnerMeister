@@ -9,7 +9,7 @@ import Foundation
 import OSLog
 import PDFKit
 
-struct DataTable {
+struct DataTable: Codable {
     let folderURL: [URL]
     let textualContent: [String]
 }
@@ -21,7 +21,7 @@ struct TextScrapper {
         self.pdfKitWrapper = pdfKitWrapper
     }
 
-    func extractText(from node: Node, onFolderLevel: Bool = false) -> DataTable {
+    func extractText(from node: Node, using _: DataTable, onFolderLevel: Bool = false) -> DataTable {
         let newNodeWithText = extractTextFromNode(from: node)
         return createDictionary(from: newNodeWithText, onFolderLevel: onFolderLevel)
     }

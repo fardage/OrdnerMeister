@@ -17,6 +17,7 @@
 		B121191E2B473115008C7195 /* DomainPropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121191D2B473115008C7195 /* DomainPropertyTests.swift */; };
 		B12119212B49BEFB008C7195 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12119202B49BEFB008C7195 /* FileManager.swift */; };
 		B16164262B431AC9004D64AB /* Bayes in Frameworks */ = {isa = PBXBuildFile; productRef = B16164252B431AC9004D64AB /* Bayes */; };
+		B1624F0D2B530F9B0088C4A1 /* TextStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1624F0C2B530F9B0088C4A1 /* TextStore.swift */; };
 		B17F91412B416FA000473E19 /* TreeBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F91402B416FA000473E19 /* TreeBuilderTests.swift */; };
 		B17F91452B41B83000473E19 /* TextScrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F91442B41B83000473E19 /* TextScrapper.swift */; };
 		B17F91482B41D75900473E19 /* TextScrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F91472B41D75900473E19 /* TextScrapperTests.swift */; };
@@ -56,6 +57,7 @@
 		B121191D2B473115008C7195 /* DomainPropertyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainPropertyTests.swift; sourceTree = "<group>"; };
 		B12119202B49BEFB008C7195 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		B15485972B42F2EC00CB7FB5 /* OrdnerMeister.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = OrdnerMeister.xctestplan; sourceTree = "<group>"; };
+		B1624F0C2B530F9B0088C4A1 /* TextStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStore.swift; sourceTree = "<group>"; };
 		B17F91402B416FA000473E19 /* TreeBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeBuilderTests.swift; sourceTree = "<group>"; };
 		B17F91442B41B83000473E19 /* TextScrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextScrapper.swift; sourceTree = "<group>"; };
 		B17F91472B41D75900473E19 /* TextScrapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextScrapperTests.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 			children = (
 				B17F91442B41B83000473E19 /* TextScrapper.swift */,
 				B1EBD3A22B41DB6F00BE2CA0 /* PDFKitWrapper.swift */,
+				B1624F0C2B530F9B0088C4A1 /* TextStore.swift */,
 			);
 			path = PDF;
 			sourceTree = "<group>";
@@ -427,6 +430,7 @@
 				B12119122B45ECC8008C7195 /* FileOrchestrator.swift in Sources */,
 				B12119212B49BEFB008C7195 /* FileManager.swift in Sources */,
 				B12119182B4730A2008C7195 /* DomainProperty.swift in Sources */,
+				B1624F0D2B530F9B0088C4A1 /* TextStore.swift in Sources */,
 				B17F91452B41B83000473E19 /* TextScrapper.swift in Sources */,
 				B1FBB7782B3EF389006FC513 /* OrdnerMeisterApp.swift in Sources */,
 				B1FBB7A32B3EF5B4006FC513 /* ConfigurationViewModel.swift in Sources */,

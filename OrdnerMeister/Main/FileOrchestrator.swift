@@ -18,6 +18,7 @@ protocol FileOrchestrating {
 struct FileOrchestrator: FileOrchestrating {
     private let fileManager: FileManaging
     private let treeBuilder: TreeBuilder
+    private let textStore: TextStoring
     private let textScrapper: TextScrapper
     private let fileClassifier: FileClassifier
     private let _lastPredictions: CurrentValueSubject<[FilePrediction], Never>
@@ -28,11 +29,13 @@ struct FileOrchestrator: FileOrchestrating {
 
     init(fileManager: FileManaging = FileManager(),
          treeBuilder: TreeBuilder = TreeBuilder(),
+         textStore: TextStoring = TextStore(),
          textScrapper: TextScrapper = TextScrapper(),
          fileClassifier: FileClassifier = FileClassifier())
     {
         self.fileManager = fileManager
         self.treeBuilder = treeBuilder
+        self.textStore = textStore
         self.textScrapper = textScrapper
         self.fileClassifier = fileClassifier
         _lastPredictions = .init([FilePrediction]())
@@ -48,7 +51,9 @@ struct FileOrchestrator: FileOrchestrating {
 
             // Train classifier
             let outputDirTree = try treeBuilder.buildTree(from: outputDirURL)
+            let cachedOutputDataTable = textStore.retreiveCachedDataTable(for: outputDirURL)
             let outputDataTable = textScrapper.extractText(from: outputDirTree, onFolderLevel: true)
+            textStore.store(outputDataTable, for: outputDirURL)
 
             fileClassifier.train(with: outputDataTable)
 
