@@ -22,7 +22,7 @@ struct TextScrapper {
     }
 
     func extractText(from node: Node, onFolderLevel: Bool = false) -> DataTable {
-        var newNodeWithText = extractTextFromNode(from: node)
+        let newNodeWithText = extractTextFromNode(from: node)
         return createDictionary(from: newNodeWithText, onFolderLevel: onFolderLevel)
     }
 
