@@ -21,19 +21,26 @@ struct TextScrapper {
         self.pdfKitWrapper = pdfKitWrapper
     }
 
-    func extractText(from node: Node, using _: DataTable, onFolderLevel: Bool = false) -> DataTable {
-        let newNodeWithText = extractTextFromNode(from: node)
+    func extractText(from node: Node, using cache: DataTable? = nil, onFolderLevel: Bool = false) -> DataTable {
+        let newNodeWithText = extractTextFromNode(from: node, using: cache)
         return createDictionary(from: newNodeWithText, onFolderLevel: onFolderLevel)
     }
 
-    private func extractTextFromNode(from node: Node) -> Node {
+    private func extractTextFromNode(from node: Node, using cache: DataTable? = nil) -> Node {
         var newNode = Node(url: node.url, children: [:])
 
         guard node.children.count != 0 else {
             Logger.fileProcessing.debug("Extrating text from \(node.url)")
-            let text = extractTextFromFile(from: node.url)
-            newNode.textualContent = text
-            return newNode
+
+            if let urlCacheIndex = cache?.folderURL.firstIndex(of: node.url),
+               let cachedText = cache?.textualContent[urlCacheIndex]
+            {
+                newNode.textualContent = cachedText
+                return newNode
+            } else {
+                newNode.textualContent = extractTextFromPDF(from: node.url)
+                return newNode
+            }
         }
 
         let children = node.children.reduce(into: [String: Node]()) { acc, child in
