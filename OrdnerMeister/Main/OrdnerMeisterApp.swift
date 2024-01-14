@@ -11,7 +11,12 @@ import SwiftUI
 struct OrdnerMeisterApp: App {
     var body: some Scene {
         WindowGroup {
-            ConfigurationView(viewModel: .init())
+            HomeView()
         }
+        #if os(macOS)
+            Settings {
+                SettingsView()
+            }
+        #endif
     }
 }

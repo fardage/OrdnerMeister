@@ -16,6 +16,7 @@ protocol FileOrchestrating {
 }
 
 struct FileOrchestrator: FileOrchestrating {
+    private let settingsService: SettingsService
     private let fileManager: FileManaging
     private let treeBuilder: TreeBuilder
     private let textScrapper: TextScrapper
@@ -26,12 +27,13 @@ struct FileOrchestrator: FileOrchestrating {
         _lastPredictions.domainProperty()
     }
 
-    init(fileManager: FileManaging = FileManager(),
-         treeBuilder: TreeBuilder = TreeBuilder(),
-         textScrapper: TextScrapper = TextScrapper(),
-         fileClassifier: FileClassifier = FileClassifier())
+    init(settingsService _: SettingsService = SettingsService()
+        fileManager: FileManaging = FileManager(),
+        treeBuilder: TreeBuilder = TreeBuilder(),
+        textScrapper: TextScrapper = TextScrapper(),
+        fileClassifier: FileClassifier = FileClassifier())
     {
-        self.fileManager = fileManager
+        fileManager = fileManager
         self.treeBuilder = treeBuilder
         self.textScrapper = textScrapper
         self.fileClassifier = fileClassifier

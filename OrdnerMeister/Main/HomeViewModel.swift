@@ -1,5 +1,5 @@
 //
-//  ConfigurationViewModel.swift
+//  HomeViewModel.swift
 //  OrdnerMeister
 //
 //  Created by Marvin Tseng on 29.12.2023.
@@ -10,13 +10,11 @@ import Foundation
 import OSLog
 
 @Observable
-class ConfigurationViewModel {
+class HomeViewModel {
     private let fileOrchestrator: FileOrchestrating
     private var settingsDefaults: SettingsStoring
     private var cancellables = Set<AnyCancellable>()
     var actionableFiles: [FilePrediction]
-    var inboxDirectory: String
-    var outputDirectory: String
 
     init(
         fileOrchestrator: FileOrchestrating = FileOrchestrator(),
@@ -24,8 +22,6 @@ class ConfigurationViewModel {
     ) {
         self.fileOrchestrator = fileOrchestrator
         self.settingsDefaults = settingsDefaults
-        inboxDirectory = settingsDefaults.inboxDirectory ?? String.Empty
-        outputDirectory = settingsDefaults.outputDirectory ?? String.Empty
         actionableFiles = .init()
 
         observeFilePredictions()
@@ -39,17 +35,11 @@ class ConfigurationViewModel {
     }
 
     func processFolders() {
-        settingsDefaults.inboxDirectory = inboxDirectory
-        settingsDefaults.outputDirectory = outputDirectory
-
         Task {
             Logger.general.info("Start processing folders")
 
             do {
-                try fileOrchestrator.trainAndClassify(
-                    inboxDirString: inboxDirectory,
-                    outputDirString: outputDirectory
-                )
+                try fileOrchestrator.trainAndClassify()
             } catch {
                 Logger.general.error("\(error)")
             }

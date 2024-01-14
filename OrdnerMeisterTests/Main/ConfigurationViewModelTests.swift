@@ -16,19 +16,13 @@ final class ConfigurationViewModelTests: XCTestCase {
         given(fileOrchestratorMock.getLastPredictions()).willReturn(.constant([]))
 
         // When
-        let viewModel = ConfigurationViewModel(fileOrchestrator: fileOrchestratorMock)
-        viewModel.inboxDirectory = "inbox"
-        viewModel.outputDirectory = "output"
+        let viewModel = HomeViewModel(fileOrchestrator: fileOrchestratorMock)
         viewModel.processFolders()
 
         // Then
         eventually {
-            verify(fileOrchestratorMock.trainAndClassify(
-                inboxDirString: "inbox",
-                outputDirString: "output"
-            )
-            )
-            .wasCalled()
+            verify(fileOrchestratorMock.trainAndClassify())
+                .wasCalled()
         }
 
         waitForExpectations(timeout: 10)
@@ -40,7 +34,7 @@ final class ConfigurationViewModelTests: XCTestCase {
         given(fileOrchestratorMock.getLastPredictions()).willReturn(.constant([]))
 
         // When
-        let viewModel = ConfigurationViewModel(fileOrchestrator: fileOrchestratorMock)
+        let viewModel = HomeViewModel(fileOrchestrator: fileOrchestratorMock)
         let fileURL = URL(string: "file://foo/bar")!
         let targetFolderURL = URL(string: "file://foo/bar")!
         viewModel.onPredictionClick(fileURL: fileURL, targetFolderURL: targetFolderURL)
