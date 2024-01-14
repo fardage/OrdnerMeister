@@ -14,15 +14,20 @@ struct DataTable {
     let textualContent: [String]
 }
 
-struct TextScrapper {
+class TextScrapper {
     private let pdfKitWrapper: PDFKitWrapping
+    private var textStore: TextStoring
+    private var textCache: [URL: String]
 
-    init(pdfKitWrapper: PDFKitWrapping = PDFKitWrapper()) {
+    init(pdfKitWrapper: PDFKitWrapping = PDFKitWrapper(), textStore: TextStoring = TextStore()) {
         self.pdfKitWrapper = pdfKitWrapper
+        self.textStore = textStore
+        textCache = textStore.getCache()
     }
 
     func extractText(from node: Node, onFolderLevel: Bool = false) -> DataTable {
         var newNodeWithText = extractTextFromNode(from: node)
+        textStore.setCache(textCache)
         return createDictionary(from: newNodeWithText, onFolderLevel: onFolderLevel)
     }
 
@@ -70,10 +75,16 @@ struct TextScrapper {
     }
 
     private func extractTextFromFile(from file: URL) -> String? {
+        if let cachedText = textCache[file] {
+            return cachedText
+        }
+
         if file.pathExtension == "pdf" {
-            extractTextFromPDF(from: file)
+            let extractText = extractTextFromPDF(from: file)
+            textCache[file] = extractText
+            return extractText
         } else {
-            nil
+            return nil
         }
     }
 

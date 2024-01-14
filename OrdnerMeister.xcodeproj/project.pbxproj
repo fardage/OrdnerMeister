@@ -23,6 +23,7 @@
 		B1869EA22B42E2FA00B7407E /* FileClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1869EA12B42E2FA00B7407E /* FileClassifier.swift */; };
 		B19E6A742B40495C006B7A4A /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19E6A732B40495C006B7A4A /* Node.swift */; };
 		B19E6A762B404A9C006B7A4A /* TreeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19E6A752B404A9C006B7A4A /* TreeBuilder.swift */; };
+		B1C29AA12B53DCB700E63F24 /* TextStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C29AA02B53DCB700E63F24 /* TextStore.swift */; };
 		B1EBD3A32B41DB6F00BE2CA0 /* PDFKitWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EBD3A22B41DB6F00BE2CA0 /* PDFKitWrapper.swift */; };
 		B1FBB7782B3EF389006FC513 /* OrdnerMeisterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FBB7772B3EF389006FC513 /* OrdnerMeisterApp.swift */; };
 		B1FBB77A2B3EF389006FC513 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FBB7792B3EF389006FC513 /* ConfigurationView.swift */; };
@@ -67,6 +68,7 @@
 		B1869EA12B42E2FA00B7407E /* FileClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileClassifier.swift; sourceTree = "<group>"; };
 		B19E6A732B40495C006B7A4A /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		B19E6A752B404A9C006B7A4A /* TreeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeBuilder.swift; sourceTree = "<group>"; };
+		B1C29AA02B53DCB700E63F24 /* TextStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStore.swift; sourceTree = "<group>"; };
 		B1EBD3A22B41DB6F00BE2CA0 /* PDFKitWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFKitWrapper.swift; sourceTree = "<group>"; };
 		B1FBB7772B3EF389006FC513 /* OrdnerMeisterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdnerMeisterApp.swift; sourceTree = "<group>"; };
 		B1FBB7792B3EF389006FC513 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 			children = (
 				B17F91442B41B83000473E19 /* TextScrapper.swift */,
 				B1EBD3A22B41DB6F00BE2CA0 /* PDFKitWrapper.swift */,
+				B1C29AA02B53DCB700E63F24 /* TextStore.swift */,
 			);
 			path = PDF;
 			sourceTree = "<group>";
@@ -419,6 +422,7 @@
 			files = (
 				B1FBB77A2B3EF389006FC513 /* ConfigurationView.swift in Sources */,
 				B1EBD3A32B41DB6F00BE2CA0 /* PDFKitWrapper.swift in Sources */,
+				B1C29AA12B53DCB700E63F24 /* TextStore.swift in Sources */,
 				B12119092B45519E008C7195 /* String+Values.swift in Sources */,
 				B19E6A762B404A9C006B7A4A /* TreeBuilder.swift in Sources */,
 				B19E6A742B40495C006B7A4A /* Node.swift in Sources */,
