@@ -26,7 +26,7 @@ class TextScrapper {
     }
 
     func extractText(from node: Node, onFolderLevel: Bool = false) -> DataTable {
-        var newNodeWithText = extractTextFromNode(from: node)
+        let newNodeWithText = extractTextFromNode(from: node)
         textStore.setCache(textCache)
         return createDictionary(from: newNodeWithText, onFolderLevel: onFolderLevel)
     }
