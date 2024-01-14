@@ -24,6 +24,8 @@
 		B19E6A742B40495C006B7A4A /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19E6A732B40495C006B7A4A /* Node.swift */; };
 		B19E6A762B404A9C006B7A4A /* TreeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19E6A752B404A9C006B7A4A /* TreeBuilder.swift */; };
 		B1C29AA12B53DCB700E63F24 /* TextStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C29AA02B53DCB700E63F24 /* TextStore.swift */; };
+		B1C29AA42B540F0B00E63F24 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C29AA32B540F0B00E63F24 /* Settings.swift */; };
+		B1C29AA72B5411AB00E63F24 /* SettingsDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C29AA62B5411AB00E63F24 /* SettingsDefaultsTests.swift */; };
 		B1EBD3A32B41DB6F00BE2CA0 /* PDFKitWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EBD3A22B41DB6F00BE2CA0 /* PDFKitWrapper.swift */; };
 		B1FBB7782B3EF389006FC513 /* OrdnerMeisterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FBB7772B3EF389006FC513 /* OrdnerMeisterApp.swift */; };
 		B1FBB77A2B3EF389006FC513 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FBB7792B3EF389006FC513 /* ConfigurationView.swift */; };
@@ -69,6 +71,8 @@
 		B19E6A732B40495C006B7A4A /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		B19E6A752B404A9C006B7A4A /* TreeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeBuilder.swift; sourceTree = "<group>"; };
 		B1C29AA02B53DCB700E63F24 /* TextStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStore.swift; sourceTree = "<group>"; };
+		B1C29AA32B540F0B00E63F24 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		B1C29AA62B5411AB00E63F24 /* SettingsDefaultsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDefaultsTests.swift; sourceTree = "<group>"; };
 		B1EBD3A22B41DB6F00BE2CA0 /* PDFKitWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFKitWrapper.swift; sourceTree = "<group>"; };
 		B1FBB7772B3EF389006FC513 /* OrdnerMeisterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdnerMeisterApp.swift; sourceTree = "<group>"; };
 		B1FBB7792B3EF389006FC513 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
@@ -170,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				B12119132B45EE94008C7195 /* Main */,
+				B1C29AA52B54119500E63F24 /* Settings */,
 				B12119192B4730CD008C7195 /* Shared */,
 				B17F91422B41B57900473E19 /* FileTree */,
 				B17F91462B41D73900473E19 /* PDF */,
@@ -223,6 +228,22 @@
 			path = FileTree;
 			sourceTree = "<group>";
 		};
+		B1C29AA22B540EDE00E63F24 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				B1C29AA32B540F0B00E63F24 /* Settings.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		B1C29AA52B54119500E63F24 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				B1C29AA62B5411AB00E63F24 /* SettingsDefaultsTests.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		B1FBB76B2B3EF389006FC513 = {
 			isa = PBXGroup;
 			children = (
@@ -239,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				B1FBB7A42B3F1AFC006FC513 /* Main */,
+				B1C29AA22B540EDE00E63F24 /* Settings */,
 				B1FBB7B12B40010A006FC513 /* Shared */,
 				B19E6A722B404930006B7A4A /* FileTree */,
 				B17F91432B41B80800473E19 /* PDF */,
@@ -429,6 +451,7 @@
 				B1FBB7B42B40018D006FC513 /* OMLogger.swift in Sources */,
 				B1869EA22B42E2FA00B7407E /* FileClassifier.swift in Sources */,
 				B12119122B45ECC8008C7195 /* FileOrchestrator.swift in Sources */,
+				B1C29AA42B540F0B00E63F24 /* Settings.swift in Sources */,
 				B12119212B49BEFB008C7195 /* FileManager.swift in Sources */,
 				B12119182B4730A2008C7195 /* DomainProperty.swift in Sources */,
 				B17F91452B41B83000473E19 /* TextScrapper.swift in Sources */,
@@ -443,6 +466,7 @@
 			files = (
 				F2A074E5241F2FD5A8C94348 /* OrdnerMeisterTests-OrdnerMeisterMocks.generated.swift in Sources */,
 				B12119152B45EEA4008C7195 /* ConfigurationViewModelTests.swift in Sources */,
+				B1C29AA72B5411AB00E63F24 /* SettingsDefaultsTests.swift in Sources */,
 				B12119102B45E9EF008C7195 /* FileClassifierTests.swift in Sources */,
 				B121190B2B45E8AA008C7195 /* PDFKitWrapperTests.swift in Sources */,
 				B121191E2B473115008C7195 /* DomainPropertyTests.swift in Sources */,

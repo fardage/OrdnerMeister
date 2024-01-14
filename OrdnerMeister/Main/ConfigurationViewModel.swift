@@ -12,15 +12,20 @@ import OSLog
 @Observable
 class ConfigurationViewModel {
     private let fileOrchestrator: FileOrchestrating
+    private var settingsDefaults: SettingsStoring
     private var cancellables = Set<AnyCancellable>()
     var actionableFiles: [FilePrediction]
     var inboxDirectory: String
     var outputDirectory: String
 
-    init(fileOrchestrator: FileOrchestrating = FileOrchestrator()) {
+    init(
+        fileOrchestrator: FileOrchestrating = FileOrchestrator(),
+        settingsDefaults: SettingsStoring = SettingsDefaults()
+    ) {
         self.fileOrchestrator = fileOrchestrator
-        inboxDirectory = String.Empty
-        outputDirectory = String.Empty
+        self.settingsDefaults = settingsDefaults
+        inboxDirectory = settingsDefaults.inboxDirectory ?? String.Empty
+        outputDirectory = settingsDefaults.outputDirectory ?? String.Empty
         actionableFiles = .init()
 
         observeFilePredictions()
@@ -34,6 +39,9 @@ class ConfigurationViewModel {
     }
 
     func processFolders() {
+        settingsDefaults.inboxDirectory = inboxDirectory
+        settingsDefaults.outputDirectory = outputDirectory
+
         Task {
             Logger.general.info("Start processing folders")
 
