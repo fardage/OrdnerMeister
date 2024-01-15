@@ -11,7 +11,7 @@ import OSLog
 
 protocol FileOrchestrating {
     var lastPredictions: DomainProperty<[FilePrediction]> { get }
-    func trainAndClassify(inboxDirString: String, outputDirString: String) throws
+    func trainAndClassify() throws
     func copyFile(from sourceURL: URL, to destinationURL: URL) throws
 }
 
@@ -27,23 +27,26 @@ struct FileOrchestrator: FileOrchestrating {
         _lastPredictions.domainProperty()
     }
 
-    init(settingsService _: SettingsService = SettingsService()
-        fileManager: FileManaging = FileManager(),
-        treeBuilder: TreeBuilder = TreeBuilder(),
-        textScrapper: TextScrapper = TextScrapper(),
-        fileClassifier: FileClassifier = FileClassifier())
+    init(settingsService: SettingsService = SettingsService(),
+         fileManager: FileManaging = FileManager(),
+         treeBuilder: TreeBuilder = TreeBuilder(),
+         textScrapper: TextScrapper = TextScrapper(),
+         fileClassifier: FileClassifier = FileClassifier())
     {
-        fileManager = fileManager
+        self.settingsService = settingsService
+        self.fileManager = fileManager
         self.treeBuilder = treeBuilder
         self.textScrapper = textScrapper
         self.fileClassifier = fileClassifier
         _lastPredictions = .init([FilePrediction]())
     }
 
-    func trainAndClassify(inboxDirString: String, outputDirString: String) throws {
+    func trainAndClassify() throws {
         do {
-            guard let inboxDirURL = URL(string: inboxDirString),
-                  let outputDirURL = URL(string: outputDirString)
+            guard let inboxDir = settingsService.inboxDirectory.currentValue,
+                  let inboxDirURL = URL(string: inboxDir),
+                  let outputDir = settingsService.outputDirectory.currentValue,
+                  let outputDirURL = URL(string: outputDir)
             else {
                 return
             }

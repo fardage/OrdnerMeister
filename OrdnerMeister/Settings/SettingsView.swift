@@ -5,6 +5,7 @@
 //  Created by Marvin Tseng on 14.01.2024.
 //
 
+import OSLog
 import SwiftUI
 
 struct SettingsView: View {
@@ -40,7 +41,61 @@ struct FolderSettingsView: View {
                 label: "Output",
                 description: "Directory where the input files should be moved to and sorted"
             )
+
+            DirList(
+                description: "Directories in the output folder to exclude / ignore",
+                directories: $viewModel.excludedDirectories
+            )
         }
+        .padding()
+    }
+}
+
+struct DirList: View {
+    @State private var isPresentedFileImporter = false
+    let description: String
+    @Binding var directories: [String]
+
+    var body: some View {
+        Section {
+            List(directories, id: \.self) { dir in
+                HStack {
+                    Label(dir, systemImage: "folder.badge.minus")
+                    Spacer()
+                    Button {
+                        directories.removeAll { $0 == dir }
+                    } label: {
+                        Image(systemName: "minus.square")
+                    }
+                }
+            }
+            .border(Color(NSColor.gridColor), width: 1)
+        } header: {
+            Text("Ignored folders in output directory:")
+        } footer: {
+            HStack {
+                Text(description)
+                    .foregroundStyle(.secondary)
+                Spacer()
+                Button {
+                    isPresentedFileImporter = true
+                } label: {
+                    Text("Exclude Directory")
+                }
+            }
+        }
+        .fileImporter(
+            isPresented: $isPresentedFileImporter,
+            allowedContentTypes: [.directory],
+            onCompletion: { result in
+                switch result {
+                case let .success(directory):
+                    directories.append(directory.absoluteString)
+                case let .failure(error):
+                    Logger.view.error("\(error)")
+                }
+            }
+        )
     }
 }
 

@@ -13,6 +13,8 @@ class FolderSettingsViewModel {
     private let settingsService: SettingsService
     private var cancellables: Set<AnyCancellable>
 
+    var excludedDirectories: [String]
+
     var inboxDirectory: String {
         get {
             settingsService.inboxDirectory.currentValue ?? String.Empty
@@ -33,6 +35,19 @@ class FolderSettingsViewModel {
 
     init(settingsService: SettingsService = SettingsService()) {
         self.settingsService = settingsService
+        excludedDirectories = .init()
         cancellables = .init()
+
+        settingsService.excludedOutputDirectories
+            .sink { [weak self] excludedDirs in
+                self?.excludedDirectories = excludedDirs
+            }
+            .store(in: &cancellables)
+    }
+
+    func addExcludedDirectory(_ directory: String) {
+        var excludedDirectories = settingsService.excludedOutputDirectories.currentValue
+        excludedDirectories.append(directory)
+        settingsService.setExcludedOutputDirectories(excludedDirectories)
     }
 }
