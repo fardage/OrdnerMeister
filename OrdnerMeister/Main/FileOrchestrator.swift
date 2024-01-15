@@ -52,7 +52,7 @@ struct FileOrchestrator: FileOrchestrating {
             }
 
             // Train classifier
-            let outputDirTree = try treeBuilder.buildTree(from: outputDirURL)
+            let outputDirTree = try treeBuilder.buildTree(from: outputDirURL, ignoredDirectories: settingsService.excludedOutputDirectories.currentValue)
             let outputDataTable = textScrapper.extractText(from: outputDirTree, onFolderLevel: true)
 
             fileClassifier.train(with: outputDataTable)

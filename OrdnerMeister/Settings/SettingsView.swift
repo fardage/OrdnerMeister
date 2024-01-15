@@ -44,7 +44,8 @@ struct FolderSettingsView: View {
 
             DirList(
                 description: "Directories in the output folder to exclude / ignore",
-                directories: $viewModel.excludedDirectories
+                directories: $viewModel.excludedDirectories,
+                exludeDirectory: viewModel.addExcludedDirectory
             )
         }
         .padding()
@@ -55,6 +56,7 @@ struct DirList: View {
     @State private var isPresentedFileImporter = false
     let description: String
     @Binding var directories: [String]
+    let exludeDirectory: (String) -> Void
 
     var body: some View {
         Section {
@@ -90,7 +92,7 @@ struct DirList: View {
             onCompletion: { result in
                 switch result {
                 case let .success(directory):
-                    directories.append(directory.absoluteString)
+                    exludeDirectory(directory.absoluteString)
                 case let .failure(error):
                     Logger.view.error("\(error)")
                 }

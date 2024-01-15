@@ -15,7 +15,7 @@ struct TreeBuilder {
         self.fileManager = fileManager
     }
 
-    func buildTree(from nodeURL: URL) throws -> Node {
+    func buildTree(from nodeURL: URL, ignoredDirectories: [String]? = nil) throws -> Node {
         Logger.fileProcessing.debug("Processing \(nodeURL)")
 
         var node = Node(url: nodeURL, children: [:])
@@ -29,7 +29,9 @@ struct TreeBuilder {
         )
 
         node.children = try contents.reduce(into: [:]) { acc, url in
-            acc[url.lastPathComponent] = try buildTree(from: url)
+            let isIgnored = ignoredDirectories?.contains { $0 == url.absoluteString } ?? false
+            guard !isIgnored else { return }
+            acc[url.lastPathComponent] = try buildTree(from: url, ignoredDirectories: ignoredDirectories)
         }
 
         return node
