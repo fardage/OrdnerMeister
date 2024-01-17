@@ -17,14 +17,14 @@ class FileClassifier {
 
     private var bayesianClassifier: BayesianClassifier<URL, String>?
 
-    func train(with dataTable: DataTable) {
+    func train(with instances: [Instance]) {
         Logger.nlp.info("Start training classifier")
 
         var eventSpace = EventSpace<URL, String>()
 
-        for (category, feature) in zip(dataTable.folderURL, dataTable.textualContent) {
-            let tokens = feature.tokenize()
-            eventSpace.observe(category, features: tokens)
+        instances.forEach { instance in
+            let tokens = instance.textualContent.tokenize()
+            eventSpace.observe(instance.targetURL, features: tokens)
         }
 
         bayesianClassifier = BayesianClassifier(eventSpace: eventSpace)

@@ -54,17 +54,17 @@ struct FileOrchestrator: FileOrchestrating {
             // Train classifier
             let ignoredDirectories = settingsService.excludedOutputDirectories.currentValue
             let outputDirTree = try treeBuilder.getAllURLs(from: outputDirURL, ignoredDirectories: ignoredDirectories)
-            let outputDataTable = textScrapper.extractText(from: outputDirTree, onFolderLevel: true)
+            let outputObservations = textScrapper.extractText(from: outputDirTree, onFolderLevel: true)
 
-            fileClassifier.train(with: outputDataTable)
+            fileClassifier.train(with: outputObservations)
 
             // Read inbox
             let inboxDirTree = try treeBuilder.getAllURLs(from: inboxDirURL)
-            let inboxDataTable = textScrapper.extractText(from: inboxDirTree)
+            let inboxData = textScrapper.extractText(from: inboxDirTree)
 
             // Evaluate
-            _lastPredictions.value = try zip(inboxDataTable.folderURL, inboxDataTable.textualContent)
-                .map { url, text in try (url, fileClassifier.evaluate(text, firstN: 3)) }
+            _lastPredictions.value = inboxData
+                .compactMap { try? ($0.targetURL, fileClassifier.evaluate($0.textualContent, firstN: 3)) }
                 .map { fileURL, predictionURLs in FilePrediction(file: fileURL, predictedOutputFolders: predictionURLs) }
 
         } catch {

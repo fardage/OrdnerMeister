@@ -9,9 +9,9 @@ import Foundation
 import OSLog
 import PDFKit
 
-struct DataTable {
-    let folderURL: [URL]
-    let textualContent: [String]
+struct Instance {
+    let targetURL: URL
+    let textualContent: String
 }
 
 class TextScrapper {
@@ -25,18 +25,20 @@ class TextScrapper {
         textCache = textStore.getCache()
     }
 
-    func extractText(from urls: [URL], onFolderLevel: Bool = false) -> DataTable {
-        var folderURL = [URL]()
-        var textualContent = [String]()
+    func extractText(from urls: [URL], onFolderLevel: Bool = false) -> [Instance] {
+        var observations = [Instance]()
 
         for url in urls {
-            folderURL.append(onFolderLevel ? url.deletingLastPathComponent() : url)
-            textualContent.append(extractTextFromPDF(from: url) ?? "")
+            let observation = Instance(
+                targetURL: onFolderLevel ? url.deletingLastPathComponent() : url,
+                textualContent: extractTextFromPDF(from: url) ?? ""
+            )
+            observations.append(observation)
         }
 
         textStore.setCache(textCache)
 
-        return DataTable(folderURL: folderURL, textualContent: textualContent)
+        return observations
     }
 
     private func extractTextFromFile(from file: URL) -> String? {
