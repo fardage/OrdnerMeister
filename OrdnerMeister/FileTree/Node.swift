@@ -10,6 +10,5 @@ import Foundation
 struct Node: Equatable {
     typealias Name = String
     var url: URL
-    var textualContent: String?
     var children: [Name: Node]
 }

@@ -52,13 +52,14 @@ struct FileOrchestrator: FileOrchestrating {
             }
 
             // Train classifier
-            let outputDirTree = try treeBuilder.buildTree(from: outputDirURL, ignoredDirectories: settingsService.excludedOutputDirectories.currentValue)
+            let ignoredDirectories = settingsService.excludedOutputDirectories.currentValue
+            let outputDirTree = try treeBuilder.getAllURLs(from: outputDirURL, ignoredDirectories: ignoredDirectories)
             let outputDataTable = textScrapper.extractText(from: outputDirTree, onFolderLevel: true)
 
             fileClassifier.train(with: outputDataTable)
 
             // Read inbox
-            let inboxDirTree = try treeBuilder.buildTree(from: inboxDirURL)
+            let inboxDirTree = try treeBuilder.getAllURLs(from: inboxDirURL)
             let inboxDataTable = textScrapper.extractText(from: inboxDirTree)
 
             // Evaluate
