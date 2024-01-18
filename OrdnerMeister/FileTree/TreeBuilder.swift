@@ -48,7 +48,7 @@ struct TreeBuilder {
         let contents = try fileManager.contentsOfDirectory(
             at: nodeURL,
             includingPropertiesForKeys: nil,
-            options: []
+            options: [.skipsHiddenFiles]
         )
 
         node.children = try contents.reduce(into: [:]) { acc, url in
