@@ -30,11 +30,13 @@ struct TreeBuilder {
 
             folderURL.append(current.url)
 
-            current.children.forEach { child in
-                queue.append(child.value)
-            }
+            current.children
+                .forEach { child in
+                    queue.append(child.value)
+                }
         }
 
+        folderURL.removeFirst()
         return folderURL
     }
 
