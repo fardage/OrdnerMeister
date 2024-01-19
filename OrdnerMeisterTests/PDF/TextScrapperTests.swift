@@ -24,10 +24,9 @@ class TextScrapperTests: XCTestCase {
 
         let textScrapper = TextScrapper(pdfKitWrapper: pdfKitWrapperMock, textStore: textStoreMock)
 
-        let node = Node(url: pdfURL, children: [:])
-        let result = textScrapper.extractText(from: node)
+        let result = textScrapper.extractText(from: [pdfURL])
 
-        XCTAssertEqual(result.textualContent.first, pdfContent)
+        XCTAssertEqual(result.first?.textualContent, pdfContent)
 
         verify(pdfKitWrapperMock.extractText(from: pdfURL)).wasCalled()
     }
