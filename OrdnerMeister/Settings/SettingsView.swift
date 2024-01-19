@@ -13,9 +13,11 @@ struct SettingsView: View {
         case general
     }
 
+    @Bindable var viewModel: FolderSettingsViewModel
+
     var body: some View {
         TabView {
-            FolderSettingsView()
+            FolderSettingsView(viewModel: viewModel)
                 .tabItem {
                     Label("General", systemImage: "gear")
                 }
@@ -27,7 +29,7 @@ struct SettingsView: View {
 }
 
 struct FolderSettingsView: View {
-    @Bindable var viewModel = FolderSettingsViewModel()
+    @Bindable var viewModel: FolderSettingsViewModel
 
     var body: some View {
         Form {
@@ -102,5 +104,5 @@ struct DirList: View {
 }
 
 #Preview {
-    SettingsView()
+    SettingsView(viewModel: .init(settingsService: .init()))
 }

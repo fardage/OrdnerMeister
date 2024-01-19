@@ -12,16 +12,13 @@ import OSLog
 @Observable
 class HomeViewModel {
     private let fileOrchestrator: FileOrchestrating
-    private var settingsDefaults: SettingsStoring
     private var cancellables = Set<AnyCancellable>()
     var actionableFiles: [FilePrediction]
 
     init(
-        fileOrchestrator: FileOrchestrating = FileOrchestrator(),
-        settingsDefaults: SettingsStoring = SettingsDefaults()
+        fileOrchestrator: FileOrchestrating
     ) {
         self.fileOrchestrator = fileOrchestrator
-        self.settingsDefaults = settingsDefaults
         actionableFiles = .init()
 
         observeFilePredictions()

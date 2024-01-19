@@ -27,7 +27,7 @@ struct FileOrchestrator: FileOrchestrating {
         _lastPredictions.domainProperty()
     }
 
-    init(settingsService: SettingsService = SettingsService(),
+    init(settingsService: SettingsService,
          fileManager: FileManaging = FileManager(),
          treeBuilder: TreeBuilder = TreeBuilder(),
          textScrapper: TextScrapper = TextScrapper(),

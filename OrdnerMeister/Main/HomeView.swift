@@ -9,7 +9,7 @@ import OSLog
 import SwiftUI
 
 struct HomeView: View {
-    @Bindable var viewModel = HomeViewModel()
+    @Bindable var viewModel: HomeViewModel
 
     var body: some View {
         NavigationStack {
@@ -33,7 +33,9 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView(viewModel: .init())
+    HomeView(viewModel: .init(
+        fileOrchestrator: FileOrchestrator(settingsService: .init())
+    ))
 }
 
 struct ActionableFilesView: View {

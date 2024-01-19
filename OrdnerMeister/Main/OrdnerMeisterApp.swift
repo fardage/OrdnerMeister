@@ -9,14 +9,17 @@ import SwiftUI
 
 @main
 struct OrdnerMeisterApp: App {
+    let settingsService = SettingsService()
+
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            HomeView(viewModel: .init(
+                fileOrchestrator: FileOrchestrator(settingsService: settingsService)
+            ))
         }
-        #if os(macOS)
-            Settings {
-                SettingsView()
-            }
-        #endif
+
+        Settings {
+            SettingsView(viewModel: .init(settingsService: settingsService))
+        }
     }
 }
