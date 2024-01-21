@@ -11,14 +11,41 @@ import OSLog
 
 @Observable
 class HomeViewModel {
+    enum Status {
+        case ready, busy, done
+
+        var description: String {
+            switch self {
+            case .ready:
+                "Ready"
+            case .busy:
+                "Processing Files"
+            case .done:
+                "Done"
+            }
+        }
+    }
+
     private let fileOrchestrator: FileOrchestrating
     private var cancellables = Set<AnyCancellable>()
+    var currentStatus: HomeViewModel.Status
     var actionableFiles: [FilePrediction]
+    var isBusy: Bool {
+        switch currentStatus {
+        case .ready:
+            false
+        case .busy:
+            true
+        case .done:
+            false
+        }
+    }
 
     init(
         fileOrchestrator: FileOrchestrating
     ) {
         self.fileOrchestrator = fileOrchestrator
+        currentStatus = .ready
         actionableFiles = .init()
 
         observeFilePredictions()
@@ -33,15 +60,13 @@ class HomeViewModel {
 
     func processFolders() {
         Task {
-            Logger.general.info("Start processing folders")
-
+            currentStatus = .busy
             do {
                 try fileOrchestrator.trainAndClassify()
             } catch {
                 Logger.general.error("\(error)")
             }
-
-            Logger.general.info("Done processing folders")
+            currentStatus = .done
         }
     }
 

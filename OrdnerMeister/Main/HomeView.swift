@@ -14,11 +14,11 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Button {
-                    viewModel.processFolders()
-                } label: {
-                    Text("Run")
-                }
+                StatusBar(
+                    statusText: viewModel.currentStatus.description,
+                    isPresentingBusy: viewModel.isBusy,
+                    start: viewModel.processFolders
+                )
 
                 ActionableFilesView(
                     actionableFiles: viewModel.actionableFiles,
@@ -68,6 +68,43 @@ struct FileRowView: View {
                     Label(folder.lastPathComponent, systemImage: "folder.badge.plus")
                 }
             }
+        }
+    }
+}
+
+struct StatusBar: View {
+    var statusText: String
+    let isPresentingBusy: Bool
+    let start: () -> Void
+
+    var body: some View {
+        ZStack {
+            HStack {
+                Button {
+                    start()
+                } label: {
+                    Image(systemName: "play.fill")
+                }
+                .disabled(isPresentingBusy)
+
+                Spacer()
+            }
+
+            HStack {
+                if isPresentingBusy {
+                    ProgressView()
+                        .controlSize(.small)
+                        .padding(.leading, 8)
+                }
+
+                Spacer()
+
+                Text(statusText)
+                    .padding(.trailing, 8)
+            }
+            .frame(maxWidth: 320, maxHeight: 24)
+            .background(.separator)
+            .cornerRadius(4)
         }
     }
 }
