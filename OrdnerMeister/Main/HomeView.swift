@@ -61,6 +61,7 @@ struct FileRowView: View {
     var body: some View {
         HStack {
             Text(file.lastPathComponent)
+            Spacer()
             ForEach(predictedOutputFolders, id: \.self) { folder in
                 Button {
                     onPredictionClick(file, folder)
