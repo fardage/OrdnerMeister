@@ -92,18 +92,18 @@ struct StatusBar: View {
             }
 
             HStack {
-                if isPresentingBusy {
-                    ProgressView()
-                        .controlSize(.small)
-                        .padding(.leading, 8)
-                }
+                Text(statusText)
+                    .padding(.leading, 16)
 
                 Spacer()
 
-                Text(statusText)
-                    .padding(.trailing, 8)
+                if isPresentingBusy {
+                    ProgressView()
+                        .controlSize(.small)
+                        .padding(.trailing, 16)
+                }
             }
-            .frame(maxWidth: 320, maxHeight: 24)
+            .frame(maxWidth: 400, maxHeight: 24)
             .background(.separator)
             .cornerRadius(4)
         }
