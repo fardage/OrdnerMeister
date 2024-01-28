@@ -14,12 +14,15 @@ struct Instance {
     let textualContent: String
 }
 
-class TextScrapper {
+public class TextScrapper {
     private let pdfKitWrapper: PDFKitWrapping
     private var textStore: TextStoring
     private var textCache: [URL: String]
 
-    init(pdfKitWrapper: PDFKitWrapping = PDFKitWrapper(), textStore: TextStoring = TextStore()) {
+    public init(
+        pdfKitWrapper: PDFKitWrapping = PDFKitWrapper(),
+        textStore: TextStoring = TextStore()
+    ) {
         self.pdfKitWrapper = pdfKitWrapper
         self.textStore = textStore
         textCache = textStore.getCache()

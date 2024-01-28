@@ -9,13 +9,13 @@ import Combine
 import Foundation
 import OSLog
 
-protocol FileOrchestrating {
+public protocol FileOrchestrating {
     var lastPredictions: DomainProperty<[FilePrediction]> { get }
     func trainAndClassify() throws
     func copyFile(from sourceURL: URL, to destinationURL: URL) throws
 }
 
-struct FileOrchestrator: FileOrchestrating {
+public struct FileOrchestrator: FileOrchestrating {
     private let settingsService: SettingsService
     private let fileManager: FileManaging
     private let treeBuilder: TreeBuilder
@@ -23,15 +23,15 @@ struct FileOrchestrator: FileOrchestrating {
     private let fileClassifier: FileClassifier
     private let _lastPredictions: CurrentValueSubject<[FilePrediction], Never>
 
-    var lastPredictions: DomainProperty<[FilePrediction]> {
+    public var lastPredictions: DomainProperty<[FilePrediction]> {
         _lastPredictions.domainProperty()
     }
 
-    init(settingsService: SettingsService,
-         fileManager: FileManaging = FileManager(),
-         treeBuilder: TreeBuilder = TreeBuilder(),
-         textScrapper: TextScrapper = TextScrapper(),
-         fileClassifier: FileClassifier = FileClassifier())
+    public init(settingsService: SettingsService,
+                fileManager: FileManaging = FileManager(),
+                treeBuilder: TreeBuilder = TreeBuilder(),
+                textScrapper: TextScrapper = TextScrapper(),
+                fileClassifier: FileClassifier = FileClassifier())
     {
         self.settingsService = settingsService
         self.fileManager = fileManager
@@ -41,7 +41,7 @@ struct FileOrchestrator: FileOrchestrating {
         _lastPredictions = .init([FilePrediction]())
     }
 
-    func trainAndClassify() throws {
+    public func trainAndClassify() throws {
         do {
             guard let inboxDir = settingsService.inboxDirectory.currentValue,
                   let inboxDirURL = URL(string: inboxDir),
@@ -72,14 +72,14 @@ struct FileOrchestrator: FileOrchestrating {
         }
     }
 
-    func copyFile(from sourceURL: URL, to folderURL: URL) throws {
+    public func copyFile(from sourceURL: URL, to folderURL: URL) throws {
         let destinationURL = folderURL.appending(path: sourceURL.lastPathComponent)
         try fileManager.copyItem(at: sourceURL, to: destinationURL)
     }
 }
 
-struct FilePrediction: Identifiable {
-    var id: String {
+public struct FilePrediction: Identifiable {
+    public var id: String {
         file.absoluteString
     }
 

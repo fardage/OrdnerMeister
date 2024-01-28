@@ -10,14 +10,16 @@ import OSLog
 import PDFKit
 import Vision
 
-protocol PDFKitWrapping {
+public protocol PDFKitWrapping {
     func extractText(from url: URL) -> String?
 }
 
-struct PDFKitWrapper: PDFKitWrapping {
+public struct PDFKitWrapper: PDFKitWrapping {
     private static let triggerOCRThreshold = 10
 
-    func extractText(from url: URL) -> String? {
+    public init() {}
+
+    public func extractText(from url: URL) -> String? {
         guard let pdfDocument = PDFDocument(url: url),
               let pdfString = pdfDocument.string
         else {

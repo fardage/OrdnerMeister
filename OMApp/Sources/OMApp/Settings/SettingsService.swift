@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-class SettingsService {
+public class SettingsService {
     private var settingsStore: SettingsStoring
     private let _inboxDirectory: CurrentValueSubject<String?, Never>
     private let _outputDirectory: CurrentValueSubject<String?, Never>
@@ -26,7 +26,7 @@ class SettingsService {
         _excludedOutputDirectories.domainProperty()
     }
 
-    init(settingsStore: SettingsStoring = SettingsDefaults()) {
+    public init(settingsStore: SettingsStoring = SettingsDefaults()) {
         self.settingsStore = settingsStore
         _inboxDirectory = .init(settingsStore.inboxDirectory)
         _outputDirectory = .init(settingsStore.outputDirectory)
@@ -49,13 +49,13 @@ class SettingsService {
     }
 }
 
-protocol SettingsStoring {
+public protocol SettingsStoring {
     var inboxDirectory: String? { get set }
     var outputDirectory: String? { get set }
     var excludedOutputDirectories: [String] { get set }
 }
 
-struct SettingsDefaults: SettingsStoring {
+public struct SettingsDefaults: SettingsStoring {
     private enum SettingsDefaultsKey: String {
         case inboxDirectory
         case outputDirectory
@@ -64,11 +64,11 @@ struct SettingsDefaults: SettingsStoring {
 
     private let defaults: UserDefaults
 
-    init(defaults: UserDefaults = .init()) {
+    public init(defaults: UserDefaults = .init()) {
         self.defaults = defaults
     }
 
-    var inboxDirectory: String? {
+    public var inboxDirectory: String? {
         get {
             defaults.string(forKey: SettingsDefaultsKey.inboxDirectory.rawValue)
         }
@@ -77,7 +77,7 @@ struct SettingsDefaults: SettingsStoring {
         }
     }
 
-    var outputDirectory: String? {
+    public var outputDirectory: String? {
         get {
             defaults.string(forKey: SettingsDefaultsKey.outputDirectory.rawValue)
         }
@@ -86,7 +86,7 @@ struct SettingsDefaults: SettingsStoring {
         }
     }
 
-    var excludedOutputDirectories: [String] {
+    public var excludedOutputDirectories: [String] {
         get {
             defaults.array(forKey: SettingsDefaultsKey.excludedOutputDirectory.rawValue) as? [String] ?? [String]()
         }

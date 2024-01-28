@@ -10,7 +10,7 @@ import Foundation
 import OSLog
 
 @Observable
-class HomeViewModel {
+public class HomeViewModel {
     enum Status {
         case ready, busy, done
 
@@ -41,7 +41,7 @@ class HomeViewModel {
         }
     }
 
-    init(
+    public init(
         fileOrchestrator: FileOrchestrating
     ) {
         self.fileOrchestrator = fileOrchestrator

@@ -10,10 +10,12 @@ import Foundation
 import NaturalLanguage
 import OSLog
 
-class FileClassifier {
+public class FileClassifier {
     enum ClassifierError: Error {
         case notTrained
     }
+
+    public init() {}
 
     private var bayesianClassifier: BayesianClassifier<URL, String>?
 

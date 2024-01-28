@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol FileManaging {
+public protocol FileManaging {
     func contentsOfDirectory(
         at url: URL,
         includingPropertiesForKeys keys: [URLResourceKey]?,

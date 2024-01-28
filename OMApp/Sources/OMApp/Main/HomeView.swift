@@ -8,10 +8,14 @@
 import OSLog
 import SwiftUI
 
-struct HomeView: View {
+public struct HomeView: View {
     @Bindable var viewModel: HomeViewModel
 
-    var body: some View {
+    public init(viewModel: HomeViewModel) {
+        self.viewModel = viewModel
+    }
+
+    public var body: some View {
         NavigationStack {
             VStack {
                 StatusBar(

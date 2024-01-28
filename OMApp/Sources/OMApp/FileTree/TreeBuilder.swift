@@ -8,10 +8,10 @@
 import Foundation
 import OSLog
 
-struct TreeBuilder {
+public struct TreeBuilder {
     let fileManager: FileManaging
 
-    init(fileManager: FileManaging = FileManager.default) {
+    public init(fileManager: FileManaging = FileManager.default) {
         self.fileManager = fileManager
     }
 
