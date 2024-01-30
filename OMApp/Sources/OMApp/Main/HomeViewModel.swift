@@ -28,6 +28,8 @@ public class HomeViewModel {
 
     private let fileOrchestrator: FileOrchestrating
     private var cancellables = Set<AnyCancellable>()
+    var showingAlert: Bool
+    var lastErrorMessage: String
     var currentStatus: HomeViewModel.Status
     var actionableFiles: [FilePrediction]
     var isBusy: Bool {
@@ -45,6 +47,8 @@ public class HomeViewModel {
         fileOrchestrator: FileOrchestrating
     ) {
         self.fileOrchestrator = fileOrchestrator
+        showingAlert = false
+        lastErrorMessage = ""
         currentStatus = .ready
         actionableFiles = .init()
 
@@ -65,6 +69,8 @@ public class HomeViewModel {
                 try fileOrchestrator.trainAndClassify()
             } catch {
                 Logger.general.error("\(error)")
+                lastErrorMessage = error.localizedDescription
+                showingAlert = true
             }
             currentStatus = .done
         }
@@ -77,6 +83,8 @@ public class HomeViewModel {
                 actionableFiles.removeAll { $0.file == fileURL }
             } catch {
                 Logger.general.error("\(error)")
+                lastErrorMessage = error.localizedDescription
+                showingAlert = true
             }
         }
     }

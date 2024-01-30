@@ -33,6 +33,9 @@ public struct HomeView: View {
             }
             .padding()
         }
+        .alert(viewModel.lastErrorMessage, isPresented: $viewModel.showingAlert) {
+            Button("OK") {}
+        }
     }
 }
 
