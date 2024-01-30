@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 @Observable
-public class FolderSettingsViewModel {
+class FolderSettingsViewModel {
     private let settingsService: SettingsService
     private var cancellables: Set<AnyCancellable>
 
@@ -33,7 +33,7 @@ public class FolderSettingsViewModel {
         }
     }
 
-    public init(settingsService: SettingsService = SettingsService()) {
+    init(settingsService: SettingsService = SettingsService()) {
         self.settingsService = settingsService
         excludedDirectories = .init()
         cancellables = .init()

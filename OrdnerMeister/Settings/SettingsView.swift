@@ -8,18 +8,14 @@
 import OSLog
 import SwiftUI
 
-public struct SettingsView: View {
+struct SettingsView: View {
     private enum Tabs: Hashable {
         case general
     }
 
     @Bindable var viewModel: FolderSettingsViewModel
 
-    public init(viewModel: FolderSettingsViewModel) {
-        self.viewModel = viewModel
-    }
-
-    public var body: some View {
+    var body: some View {
         TabView {
             FolderSettingsView(viewModel: viewModel)
                 .tabItem {

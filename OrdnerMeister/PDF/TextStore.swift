@@ -8,12 +8,12 @@
 import Foundation
 import OSLog
 
-public protocol TextStoring {
+protocol TextStoring {
     func getCache() -> [URL: String]
     func setCache(_ cache: [URL: String])
 }
 
-public struct TextStore: TextStoring {
+struct TextStore: TextStoring {
     private static let textCacheFileName = "ordnerMeister.cache"
 
     private let fileManager: FileManager
@@ -26,11 +26,11 @@ public struct TextStore: TextStoring {
         return cacheDirectoryURL.appendingPathComponent(TextStore.textCacheFileName)
     }
 
-    public init(fileManager: FileManager = .default) {
+    init(fileManager: FileManager = .default) {
         self.fileManager = fileManager
     }
 
-    public func getCache() -> [URL: String] {
+    func getCache() -> [URL: String] {
         do {
             guard let cacheFileURL else {
                 return [:]
@@ -47,7 +47,7 @@ public struct TextStore: TextStoring {
         return [:]
     }
 
-    public func setCache(_ cache: [URL: String]) {
+    func setCache(_ cache: [URL: String]) {
         guard let cacheFileURL else {
             return
         }

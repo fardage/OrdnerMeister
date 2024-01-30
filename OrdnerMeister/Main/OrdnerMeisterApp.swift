@@ -5,7 +5,6 @@
 //  Created by Marvin Tseng on 29.12.2023.
 //
 
-import OMApp
 import SwiftUI
 
 @main
