@@ -17,6 +17,9 @@
 
 Automatically sort PDF files into your existing folder structure using a Naive Bayes classifier. OrdnerMeister will learn from your existing folder structure and use this knowledge to classify new PDF files. The app will show you the results of the classification process and allow you to move the files to the correct folders. If the PDF has not been OCR'd yet, OrdnerMeister will do this for you using Apple's Vision framework.
 
+<img width="1012" alt="image" src="https://github.com/fardage/OrdnerMeister/assets/48010396/f2926a34-9be9-4e01-be14-a77832468603">
+
+
 ## TODO
 
 - [ ] A nicer UI which shows the progress.
