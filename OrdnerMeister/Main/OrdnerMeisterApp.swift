@@ -6,20 +6,19 @@
 //
 
 import SwiftUI
+import OrdnerMeisterPresentation
 
 @main
 struct OrdnerMeisterApp: App {
-    let settingsService = SettingsService()
+    let dependencies = DependencyContainer.shared
 
     var body: some Scene {
         WindowGroup {
-            HomeView(viewModel: .init(
-                fileOrchestrator: FileOrchestrator(settingsService: settingsService)
-            ))
+            HomeView(viewModel: dependencies.makeHomeViewModel())
         }
 
         Settings {
-            SettingsView(viewModel: .init(settingsService: settingsService))
+            SettingsView(viewModel: dependencies.makeSettingsViewModel())
         }
     }
 }

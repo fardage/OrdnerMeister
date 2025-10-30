@@ -7,6 +7,7 @@
 
 import Combine
 @testable import OrdnerMeister
+@testable import OrdnerMeisterPresentation
 import XCTest
 
 final class DomainPropertyTests: XCTestCase {

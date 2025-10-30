@@ -3,44 +3,26 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		B12119092B45519E008C7195 /* String+Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12119082B45519E008C7195 /* String+Values.swift */; };
-		B121190B2B45E8AA008C7195 /* PDFKitWrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121190A2B45E8AA008C7195 /* PDFKitWrapperTests.swift */; };
-		B121190D2B45E8E1008C7195 /* dummy.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B121190C2B45E8E1008C7195 /* dummy.pdf */; };
-		B12119102B45E9EF008C7195 /* FileClassifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121190F2B45E9EF008C7195 /* FileClassifierTests.swift */; };
-		B12119122B45ECC8008C7195 /* FileOrchestrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12119112B45ECC8008C7195 /* FileOrchestrator.swift */; };
-		B12119152B45EEA4008C7195 /* ConfigurationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12119142B45EEA4008C7195 /* ConfigurationViewModelTests.swift */; };
-		B12119182B4730A2008C7195 /* DomainProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12119172B4730A2008C7195 /* DomainProperty.swift */; };
-		B121191E2B473115008C7195 /* DomainPropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121191D2B473115008C7195 /* DomainPropertyTests.swift */; };
 		B12119212B49BEFB008C7195 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12119202B49BEFB008C7195 /* FileManager.swift */; };
+		80CF0E91EFDB9A6588110E06 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7941683CA9FBD45E239ECEC3 /* DependencyContainer.swift */; };
 		B16164262B431AC9004D64AB /* Bayes in Frameworks */ = {isa = PBXBuildFile; productRef = B16164252B431AC9004D64AB /* Bayes */; };
-		B17F91452B41B83000473E19 /* TextScrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F91442B41B83000473E19 /* TextScrapper.swift */; };
-		B17F91482B41D75900473E19 /* TextScrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17F91472B41D75900473E19 /* TextScrapperTests.swift */; };
-		B1869EA22B42E2FA00B7407E /* FileClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1869EA12B42E2FA00B7407E /* FileClassifier.swift */; };
-		B19E6A742B40495C006B7A4A /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19E6A732B40495C006B7A4A /* Node.swift */; };
-		B19E6A762B404A9C006B7A4A /* TreeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19E6A752B404A9C006B7A4A /* TreeBuilder.swift */; };
-		B1C29AA12B53DCB700E63F24 /* TextStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C29AA02B53DCB700E63F24 /* TextStore.swift */; };
-		B1C29AA42B540F0B00E63F24 /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C29AA32B540F0B00E63F24 /* SettingsService.swift */; };
-		B1C29AA72B5411AB00E63F24 /* SettingsDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C29AA62B5411AB00E63F24 /* SettingsDefaultsTests.swift */; };
-		B1C29AA92B5413D200E63F24 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C29AA82B5413D200E63F24 /* SettingsViewModel.swift */; };
-		B1C29AAD2B5413FE00E63F24 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C29AAC2B5413FE00E63F24 /* SettingsView.swift */; };
-		B1C29AAF2B541D2B00E63F24 /* DirectoryConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C29AAE2B541D2B00E63F24 /* DirectoryConfigView.swift */; };
-		B1EBD3A32B41DB6F00BE2CA0 /* PDFKitWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EBD3A22B41DB6F00BE2CA0 /* PDFKitWrapper.swift */; };
+		CE076C732F6C4700BDC45153 /* OrdnerMeisterDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 9B2419986D1F345A7432041C /* OrdnerMeisterDomain */; };
+		ECA7070F407659C0BE7E7B35 /* OrdnerMeisterData in Frameworks */ = {isa = PBXBuildFile; productRef = 94EE7D48C6FB2544E779251C /* OrdnerMeisterData */; };
+		B3842FFB7632080ED3C91672 /* OrdnerMeisterPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = D491DF52B0A21202DC984F29 /* OrdnerMeisterPresentation */; };
+
 		B1FBB7782B3EF389006FC513 /* OrdnerMeisterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FBB7772B3EF389006FC513 /* OrdnerMeisterApp.swift */; };
-		B1FBB77A2B3EF389006FC513 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FBB7792B3EF389006FC513 /* HomeView.swift */; };
 		B1FBB77C2B3EF389006FC513 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1FBB77B2B3EF389006FC513 /* Assets.xcassets */; };
 		B1FBB77F2B3EF389006FC513 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1FBB77E2B3EF389006FC513 /* Preview Assets.xcassets */; };
-		B1FBB7A32B3EF5B4006FC513 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FBB7A22B3EF5B4006FC513 /* HomeViewModel.swift */; };
-		B1FBB7AC2B3F202D006FC513 /* Mockingbird in Frameworks */ = {isa = PBXBuildFile; productRef = B1FBB7AB2B3F202D006FC513 /* Mockingbird */; };
 		B1FBB7B42B40018D006FC513 /* OMLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FBB7B32B40018D006FC513 /* OMLogger.swift */; };
-		F2A074E5241F2FD5A8C94348 /* OrdnerMeisterTests-OrdnerMeisterMocks.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354E72FE353BCE3D3DA8083D /* OrdnerMeisterTests-OrdnerMeisterMocks.generated.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		B1FBB7862B3EF38A006FC513 /* PBXContainerItemProxy */ = {
+		B10F71EA2EB3C1BC005E3D26 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B1FBB76C2B3EF389006FC513 /* Project object */;
 			proxyType = 1;
@@ -50,74 +32,45 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		354E72FE353BCE3D3DA8083D /* OrdnerMeisterTests-OrdnerMeisterMocks.generated.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = "OrdnerMeisterTests-OrdnerMeisterMocks.generated.swift"; path = "MockingbirdMocks/OrdnerMeisterTests-OrdnerMeisterMocks.generated.swift"; sourceTree = "<group>"; };
+		B10F71E62EB3C1BC005E3D26 /* OrdnerMeisterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrdnerMeisterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B12119082B45519E008C7195 /* String+Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Values.swift"; sourceTree = "<group>"; };
-		B121190A2B45E8AA008C7195 /* PDFKitWrapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFKitWrapperTests.swift; sourceTree = "<group>"; };
-		B121190C2B45E8E1008C7195 /* dummy.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = dummy.pdf; sourceTree = "<group>"; };
-		B121190F2B45E9EF008C7195 /* FileClassifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileClassifierTests.swift; sourceTree = "<group>"; };
-		B12119112B45ECC8008C7195 /* FileOrchestrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileOrchestrator.swift; sourceTree = "<group>"; };
-		B12119142B45EEA4008C7195 /* ConfigurationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationViewModelTests.swift; sourceTree = "<group>"; };
-		B12119172B4730A2008C7195 /* DomainProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainProperty.swift; sourceTree = "<group>"; };
-		B121191D2B473115008C7195 /* DomainPropertyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainPropertyTests.swift; sourceTree = "<group>"; };
 		B12119202B49BEFB008C7195 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
-		B15485972B42F2EC00CB7FB5 /* OrdnerMeister.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = OrdnerMeister.xctestplan; sourceTree = "<group>"; };
-		B17F91442B41B83000473E19 /* TextScrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextScrapper.swift; sourceTree = "<group>"; };
-		B17F91472B41D75900473E19 /* TextScrapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextScrapperTests.swift; sourceTree = "<group>"; };
 		B1869E932B42BA5E00B7407E /* OrdnerMeister.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrdnerMeister.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B1869E942B42BA5E00B7407E /* OrdnerMeisterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrdnerMeisterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B1869E962B42BA7F00B7407E /* OrdnerMeister.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = OrdnerMeister.app; path = "../../Library/Developer/Xcode/DerivedData/OrdnerMeister-hbfxjdouoblsfmfznnnftqefcdkp/Build/Products/Debug/OrdnerMeister.app"; sourceTree = "<group>"; };
-		B1869E972B42BA8200B7407E /* OrdnerMeister.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = OrdnerMeister.app; path = "../../Library/Developer/Xcode/DerivedData/OrdnerMeister-hbfxjdouoblsfmfznnnftqefcdkp/Build/Products/Debug/OrdnerMeister.app"; sourceTree = "<group>"; };
-		B1869E982B42BA9500B7407E /* OrdnerMeister.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = OrdnerMeister.app; path = "../../Library/Developer/Xcode/DerivedData/OrdnerMeister-hbfxjdouoblsfmfznnnftqefcdkp/Build/Products/Debug/OrdnerMeister.app"; sourceTree = "<group>"; };
-		B1869EA12B42E2FA00B7407E /* FileClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileClassifier.swift; sourceTree = "<group>"; };
-		B19E6A732B40495C006B7A4A /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
-		B19E6A752B404A9C006B7A4A /* TreeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeBuilder.swift; sourceTree = "<group>"; };
-		B1C29AA02B53DCB700E63F24 /* TextStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStore.swift; sourceTree = "<group>"; };
-		B1C29AA32B540F0B00E63F24 /* SettingsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
-		B1C29AA62B5411AB00E63F24 /* SettingsDefaultsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDefaultsTests.swift; sourceTree = "<group>"; };
-		B1C29AA82B5413D200E63F24 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
-		B1C29AAC2B5413FE00E63F24 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		B1C29AAE2B541D2B00E63F24 /* DirectoryConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryConfigView.swift; sourceTree = "<group>"; };
-		B1EBD3A22B41DB6F00BE2CA0 /* PDFKitWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFKitWrapper.swift; sourceTree = "<group>"; };
 		B1FBB7772B3EF389006FC513 /* OrdnerMeisterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdnerMeisterApp.swift; sourceTree = "<group>"; };
-		B1FBB7792B3EF389006FC513 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B1FBB77B2B3EF389006FC513 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B1FBB77E2B3EF389006FC513 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B1FBB7802B3EF389006FC513 /* OrdnerMeister.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OrdnerMeister.entitlements; sourceTree = "<group>"; };
-		B1FBB7A22B3EF5B4006FC513 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		7941683CA9FBD45E239ECEC3 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		B1FBB7B32B40018D006FC513 /* OMLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMLogger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		B10F71E72EB3C1BC005E3D26 /* OrdnerMeisterTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = OrdnerMeisterTests; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
+		B10F71E32EB3C1BC005E3D26 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B1FBB7712B3EF389006FC513 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				B16164262B431AC9004D64AB /* Bayes in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B1FBB7822B3EF38A006FC513 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B1FBB7AC2B3F202D006FC513 /* Mockingbird in Frameworks */,
+				CE076C732F6C4700BDC45153 /* OrdnerMeisterDomain in Frameworks */,
+				ECA7070F407659C0BE7E7B35 /* OrdnerMeisterData in Frameworks */,
+				B3842FFB7632080ED3C91672 /* OrdnerMeisterPresentation in Frameworks */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AFD693E69DDB532F75B6EF36 /* Generated Mocks */ = {
-			isa = PBXGroup;
-			children = (
-				B1869E962B42BA7F00B7407E /* OrdnerMeister.app */,
-				B1869E972B42BA8200B7407E /* OrdnerMeister.app */,
-				B1869E982B42BA9500B7407E /* OrdnerMeister.app */,
-				354E72FE353BCE3D3DA8083D /* OrdnerMeisterTests-OrdnerMeisterMocks.generated.swift */,
-			);
-			name = "Generated Mocks";
-			sourceTree = "<group>";
-		};
 		B12119072B455190008C7195 /* String */ = {
 			isa = PBXGroup;
 			children = (
@@ -126,42 +79,9 @@
 			path = String;
 			sourceTree = "<group>";
 		};
-		B121190E2B45E9D3008C7195 /* NLP */ = {
-			isa = PBXGroup;
-			children = (
-				B121190F2B45E9EF008C7195 /* FileClassifierTests.swift */,
-			);
-			path = NLP;
-			sourceTree = "<group>";
-		};
-		B12119132B45EE94008C7195 /* Main */ = {
-			isa = PBXGroup;
-			children = (
-				B12119142B45EEA4008C7195 /* ConfigurationViewModelTests.swift */,
-			);
-			path = Main;
-			sourceTree = "<group>";
-		};
 		B12119162B473077008C7195 /* Combine */ = {
 			isa = PBXGroup;
 			children = (
-				B12119172B4730A2008C7195 /* DomainProperty.swift */,
-			);
-			path = Combine;
-			sourceTree = "<group>";
-		};
-		B12119192B4730CD008C7195 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				B121191A2B4730E6008C7195 /* Combine */,
-			);
-			path = Shared;
-			sourceTree = "<group>";
-		};
-		B121191A2B4730E6008C7195 /* Combine */ = {
-			isa = PBXGroup;
-			children = (
-				B121191D2B473115008C7195 /* DomainPropertyTests.swift */,
 			);
 			path = Combine;
 			sourceTree = "<group>";
@@ -174,34 +94,9 @@
 			path = FileManager;
 			sourceTree = "<group>";
 		};
-		B17F913F2B416F7B00473E19 /* OrdnerMeisterTests */ = {
-			isa = PBXGroup;
-			children = (
-				B12119132B45EE94008C7195 /* Main */,
-				B1C29AA52B54119500E63F24 /* Settings */,
-				B12119192B4730CD008C7195 /* Shared */,
-				B17F91462B41D73900473E19 /* PDF */,
-				B121190E2B45E9D3008C7195 /* NLP */,
-			);
-			path = OrdnerMeisterTests;
-			sourceTree = "<group>";
-		};
 		B17F91432B41B80800473E19 /* PDF */ = {
 			isa = PBXGroup;
 			children = (
-				B17F91442B41B83000473E19 /* TextScrapper.swift */,
-				B1EBD3A22B41DB6F00BE2CA0 /* PDFKitWrapper.swift */,
-				B1C29AA02B53DCB700E63F24 /* TextStore.swift */,
-			);
-			path = PDF;
-			sourceTree = "<group>";
-		};
-		B17F91462B41D73900473E19 /* PDF */ = {
-			isa = PBXGroup;
-			children = (
-				B17F91472B41D75900473E19 /* TextScrapperTests.swift */,
-				B121190A2B45E8AA008C7195 /* PDFKitWrapperTests.swift */,
-				B121190C2B45E8E1008C7195 /* dummy.pdf */,
 			);
 			path = PDF;
 			sourceTree = "<group>";
@@ -209,7 +104,6 @@
 		B1869E9E2B42BC8300B7407E /* NLP */ = {
 			isa = PBXGroup;
 			children = (
-				B1869EA12B42E2FA00B7407E /* FileClassifier.swift */,
 			);
 			path = NLP;
 			sourceTree = "<group>";
@@ -217,8 +111,6 @@
 		B19E6A722B404930006B7A4A /* FileTree */ = {
 			isa = PBXGroup;
 			children = (
-				B19E6A732B40495C006B7A4A /* Node.swift */,
-				B19E6A752B404A9C006B7A4A /* TreeBuilder.swift */,
 			);
 			path = FileTree;
 			sourceTree = "<group>";
@@ -226,18 +118,6 @@
 		B1C29AA22B540EDE00E63F24 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				B1C29AA32B540F0B00E63F24 /* SettingsService.swift */,
-				B1C29AA82B5413D200E63F24 /* SettingsViewModel.swift */,
-				B1C29AAC2B5413FE00E63F24 /* SettingsView.swift */,
-				B1C29AAE2B541D2B00E63F24 /* DirectoryConfigView.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
-		B1C29AA52B54119500E63F24 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				B1C29AA62B5411AB00E63F24 /* SettingsDefaultsTests.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -246,11 +126,9 @@
 			isa = PBXGroup;
 			children = (
 				B1FBB7762B3EF389006FC513 /* OrdnerMeister */,
-				B17F913F2B416F7B00473E19 /* OrdnerMeisterTests */,
-				AFD693E69DDB532F75B6EF36 /* Generated Mocks */,
 				B1869E932B42BA5E00B7407E /* OrdnerMeister.app */,
-				B1869E942B42BA5E00B7407E /* OrdnerMeisterTests.xctest */,
-				B15485972B42F2EC00CB7FB5 /* OrdnerMeister.xctestplan */,
+				B10F71E62EB3C1BC005E3D26 /* OrdnerMeisterTests.xctest */,
+				B10F71E72EB3C1BC005E3D26 /* OrdnerMeisterTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -282,9 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				B1FBB7772B3EF389006FC513 /* OrdnerMeisterApp.swift */,
-				B1FBB7792B3EF389006FC513 /* HomeView.swift */,
-				B1FBB7A22B3EF5B4006FC513 /* HomeViewModel.swift */,
-				B12119112B45ECC8008C7195 /* FileOrchestrator.swift */,
+				7941683CA9FBD45E239ECEC3 /* DependencyContainer.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -311,6 +187,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B10F71E52EB3C1BC005E3D26 /* OrdnerMeisterTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B10F71EC2EB3C1BC005E3D26 /* Build configuration list for PBXNativeTarget "OrdnerMeisterTests" */;
+			buildPhases = (
+				B10F71E22EB3C1BC005E3D26 /* Sources */,
+				B10F71E32EB3C1BC005E3D26 /* Frameworks */,
+				B10F71E42EB3C1BC005E3D26 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B10F71EB2EB3C1BC005E3D26 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				B10F71E72EB3C1BC005E3D26 /* OrdnerMeisterTests */,
+			);
+			name = OrdnerMeisterTests;
+			packageProductDependencies = (
+			);
+			productName = OrdnerMeisterTests;
+			productReference = B10F71E62EB3C1BC005E3D26 /* OrdnerMeisterTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		B1FBB7732B3EF389006FC513 /* OrdnerMeister */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B1FBB7992B3EF38A006FC513 /* Build configuration list for PBXNativeTarget "OrdnerMeister" */;
@@ -331,28 +230,6 @@
 			productReference = B1869E932B42BA5E00B7407E /* OrdnerMeister.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B1FBB7842B3EF38A006FC513 /* OrdnerMeisterTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B1FBB79C2B3EF38A006FC513 /* Build configuration list for PBXNativeTarget "OrdnerMeisterTests" */;
-			buildPhases = (
-				45D562860EF596B248E42BA3 /* Generate Mockingbird Mocks */,
-				B1FBB7812B3EF38A006FC513 /* Sources */,
-				B1FBB7822B3EF38A006FC513 /* Frameworks */,
-				B1FBB7832B3EF38A006FC513 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B1FBB7872B3EF38A006FC513 /* PBXTargetDependency */,
-			);
-			name = OrdnerMeisterTests;
-			packageProductDependencies = (
-				B1FBB7AB2B3F202D006FC513 /* Mockingbird */,
-			);
-			productName = OrdnerMeisterTests;
-			productReference = B1869E942B42BA5E00B7407E /* OrdnerMeisterTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -360,16 +237,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1510;
+				LastSwiftUpdateCheck = 2610;
 				LastUpgradeCheck = 1510;
 				TargetAttributes = {
+					B10F71E52EB3C1BC005E3D26 = {
+						CreatedOnToolsVersion = 26.1;
+						TestTargetID = B1FBB7732B3EF389006FC513;
+					};
 					B1FBB7732B3EF389006FC513 = {
 						CreatedOnToolsVersion = 15.1;
-					};
-					B1FBB7842B3EF38A006FC513 = {
-						CreatedOnToolsVersion = 15.1;
-						LastSwiftMigration = 1510;
-						TestTargetID = B1FBB7732B3EF389006FC513;
 					};
 				};
 			};
@@ -383,20 +259,30 @@
 			);
 			mainGroup = B1FBB76B2B3EF389006FC513;
 			packageReferences = (
-				B1FBB7AA2B3F202D006FC513 /* XCRemoteSwiftPackageReference "mockingbird" */,
 				B16164242B431AC9004D64AB /* XCRemoteSwiftPackageReference "Bayes" */,
+				3BA7DADC098FE4519604DBA1 /* XCLocalSwiftPackageReference "OrdnerMeisterDomain" */,
+				25DB5B573003A05C3600EDA9 /* XCLocalSwiftPackageReference "OrdnerMeisterData" */,
+				05DED06B1AB28B0DAEDD9554 /* XCLocalSwiftPackageReference "OrdnerMeisterPresentation" */,
+
 			);
 			productRefGroup = B1FBB76B2B3EF389006FC513;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				B1FBB7732B3EF389006FC513 /* OrdnerMeister */,
-				B1FBB7842B3EF38A006FC513 /* OrdnerMeisterTests */,
+				B10F71E52EB3C1BC005E3D26 /* OrdnerMeisterTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B10F71E42EB3C1BC005E3D26 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B1FBB7722B3EF389006FC513 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -406,86 +292,81 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B1FBB7832B3EF38A006FC513 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B121190D2B45E8E1008C7195 /* dummy.pdf in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		45D562860EF596B248E42BA3 /* Generate Mockingbird Mocks */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
+/* Begin PBXSourcesBuildPhase section */
+		B10F71E22EB3C1BC005E3D26 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-			);
-			name = "Generate Mockingbird Mocks";
-			outputPaths = (
-				"$(SRCROOT)/MockingbirdMocks/OrdnerMeisterTests-OrdnerMeisterMocks.generated.swift",
-			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -eu\n\n# Prevent Xcode 13 from running this script while indexing.\n[[ \"${ACTION}\" == \"indexbuild\" ]] && exit 0\n\n# Infer the derived data location from the build environment.\n[[ -z \"${DERIVED_DATA+x}\" ]] && DERIVED_DATA=\"$(echo \"${BUILD_ROOT}\" | sed -n 's|\\(.*\\)/Build/.*|\\1|p')\"\n\n\"${DERIVED_DATA}/SourcePackages/checkouts/mockingbird/mockingbird\" generate --targets \"OrdnerMeister\" --outputs \"${SRCROOT}/MockingbirdMocks/OrdnerMeisterTests-OrdnerMeisterMocks.generated.swift\"\n";
 		};
-/* End PBXShellScriptBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
 		B1FBB7702B3EF389006FC513 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1FBB77A2B3EF389006FC513 /* HomeView.swift in Sources */,
-				B1EBD3A32B41DB6F00BE2CA0 /* PDFKitWrapper.swift in Sources */,
-				B1C29AA12B53DCB700E63F24 /* TextStore.swift in Sources */,
 				B12119092B45519E008C7195 /* String+Values.swift in Sources */,
-				B19E6A762B404A9C006B7A4A /* TreeBuilder.swift in Sources */,
-				B1C29AAD2B5413FE00E63F24 /* SettingsView.swift in Sources */,
-				B1C29AAF2B541D2B00E63F24 /* DirectoryConfigView.swift in Sources */,
-				B19E6A742B40495C006B7A4A /* Node.swift in Sources */,
 				B1FBB7B42B40018D006FC513 /* OMLogger.swift in Sources */,
-				B1869EA22B42E2FA00B7407E /* FileClassifier.swift in Sources */,
-				B12119122B45ECC8008C7195 /* FileOrchestrator.swift in Sources */,
-				B1C29AA92B5413D200E63F24 /* SettingsViewModel.swift in Sources */,
-				B1C29AA42B540F0B00E63F24 /* SettingsService.swift in Sources */,
 				B12119212B49BEFB008C7195 /* FileManager.swift in Sources */,
-				B12119182B4730A2008C7195 /* DomainProperty.swift in Sources */,
-				B17F91452B41B83000473E19 /* TextScrapper.swift in Sources */,
 				B1FBB7782B3EF389006FC513 /* OrdnerMeisterApp.swift in Sources */,
-				B1FBB7A32B3EF5B4006FC513 /* HomeViewModel.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B1FBB7812B3EF38A006FC513 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F2A074E5241F2FD5A8C94348 /* OrdnerMeisterTests-OrdnerMeisterMocks.generated.swift in Sources */,
-				B12119152B45EEA4008C7195 /* ConfigurationViewModelTests.swift in Sources */,
-				B1C29AA72B5411AB00E63F24 /* SettingsDefaultsTests.swift in Sources */,
-				B12119102B45E9EF008C7195 /* FileClassifierTests.swift in Sources */,
-				B121190B2B45E8AA008C7195 /* PDFKitWrapperTests.swift in Sources */,
-				B121191E2B473115008C7195 /* DomainPropertyTests.swift in Sources */,
-				B17F91482B41D75900473E19 /* TextScrapperTests.swift in Sources */,
+				80CF0E91EFDB9A6588110E06 /* DependencyContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		B1FBB7872B3EF38A006FC513 /* PBXTargetDependency */ = {
+		B10F71EB2EB3C1BC005E3D26 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B1FBB7732B3EF389006FC513 /* OrdnerMeister */;
-			targetProxy = B1FBB7862B3EF38A006FC513 /* PBXContainerItemProxy */;
+			targetProxy = B10F71EA2EB3C1BC005E3D26 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		B10F71ED2EB3C1BC005E3D26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7C48W538SL;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.tseng.OrdnerMeisterTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OrdnerMeister.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OrdnerMeister";
+			};
+			name = Debug;
+		};
+		B10F71EE2EB3C1BC005E3D26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7C48W538SL;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.tseng.OrdnerMeisterTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OrdnerMeister.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OrdnerMeister";
+			};
+			name = Release;
+		};
 		B1FBB7972B3EF38A006FC513 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -660,52 +541,18 @@
 			};
 			name = Release;
 		};
-		B1FBB79D2B3EF38A006FC513 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7C48W538SL;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.1;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ch.tseng.OrdnerMeisterTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OrdnerMeister.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OrdnerMeister";
-			};
-			name = Debug;
-		};
-		B1FBB79E2B3EF38A006FC513 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7C48W538SL;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.1;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ch.tseng.OrdnerMeisterTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OrdnerMeister.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OrdnerMeister";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B10F71EC2EB3C1BC005E3D26 /* Build configuration list for PBXNativeTarget "OrdnerMeisterTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B10F71ED2EB3C1BC005E3D26 /* Debug */,
+				B10F71EE2EB3C1BC005E3D26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B1FBB76F2B3EF389006FC513 /* Build configuration list for PBXProject "OrdnerMeister" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -724,15 +571,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B1FBB79C2B3EF38A006FC513 /* Build configuration list for PBXNativeTarget "OrdnerMeisterTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B1FBB79D2B3EF38A006FC513 /* Debug */,
-				B1FBB79E2B3EF38A006FC513 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -744,15 +582,23 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		B1FBB7AA2B3F202D006FC513 /* XCRemoteSwiftPackageReference "mockingbird" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/birdrides/mockingbird";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.20.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		3BA7DADC098FE4519604DBA1 /* XCLocalSwiftPackageReference "OrdnerMeisterDomain" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/OrdnerMeisterDomain;
+		};
+		25DB5B573003A05C3600EDA9 /* XCLocalSwiftPackageReference "OrdnerMeisterData" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/OrdnerMeisterData;
+		};
+		05DED06B1AB28B0DAEDD9554 /* XCLocalSwiftPackageReference "OrdnerMeisterPresentation" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/OrdnerMeisterPresentation;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 
 /* Begin XCSwiftPackageProductDependency section */
 		B16164252B431AC9004D64AB /* Bayes */ = {
@@ -760,11 +606,22 @@
 			package = B16164242B431AC9004D64AB /* XCRemoteSwiftPackageReference "Bayes" */;
 			productName = Bayes;
 		};
-		B1FBB7AB2B3F202D006FC513 /* Mockingbird */ = {
+		9B2419986D1F345A7432041C /* OrdnerMeisterDomain */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B1FBB7AA2B3F202D006FC513 /* XCRemoteSwiftPackageReference "mockingbird" */;
-			productName = Mockingbird;
+			package = 3BA7DADC098FE4519604DBA1 /* XCLocalSwiftPackageReference "OrdnerMeisterDomain" */;
+			productName = OrdnerMeisterDomain;
 		};
+		94EE7D48C6FB2544E779251C /* OrdnerMeisterData */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 25DB5B573003A05C3600EDA9 /* XCLocalSwiftPackageReference "OrdnerMeisterData" */;
+			productName = OrdnerMeisterData;
+		};
+		D491DF52B0A21202DC984F29 /* OrdnerMeisterPresentation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 05DED06B1AB28B0DAEDD9554 /* XCLocalSwiftPackageReference "OrdnerMeisterPresentation" */;
+			productName = OrdnerMeisterPresentation;
+		};
+
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B1FBB76C2B3EF389006FC513 /* Project object */;
