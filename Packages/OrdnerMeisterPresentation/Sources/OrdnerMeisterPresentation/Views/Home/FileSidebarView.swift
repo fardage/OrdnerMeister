@@ -29,6 +29,7 @@ struct FileSidebarView: View {
                 List(predictions, selection: $selectedPredictionId) { prediction in
                     FileSidebarRow(prediction: prediction)
                         .tag(prediction.id)
+                        .listRowSeparator(.visible)
                         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                             Button {
                                 onPredictionClick(prediction)
