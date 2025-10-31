@@ -1,26 +1,49 @@
 import Foundation
 import OrdnerMeisterDomain
+import OSLog
 
 /// Concrete implementation of FileRepositoryProtocol
 public final class FileRepository: FileRepositoryProtocol {
     private let fileManager: FileManager
+    private let logger = Logger(subsystem: "ch.tseng.OrdnerMeister", category: "FileSystem")
 
     public init(fileManager: FileManager = .default) {
         self.fileManager = fileManager
     }
 
     public func buildFileTree(from directory: DirectoryPath, excluding exclusions: [DirectoryPath]) async throws -> FileTree {
+        logger.info("Building file tree from: \(directory.url.path)")
         let excludedStrings = exclusions.map { $0.url.absoluteString }
-        let rootNode = try buildNode(from: directory.url, excludedPaths: excludedStrings)
-        return FileTree(root: rootNode)
+
+        do {
+            let rootNode = try buildNode(from: directory.url, excludedPaths: excludedStrings)
+            let tree = FileTree(root: rootNode)
+            let fileCount = tree.flattenFiles().count
+            let folderCount = tree.flattenFolders().count
+            logger.info("File tree built: \(fileCount) files, \(folderCount) folders")
+            return tree
+        } catch {
+            logger.error("Failed to build file tree from '\(directory.url.path)': \(error.localizedDescription)")
+            throw error
+        }
     }
 
     public func copyFile(from source: URL, to destination: URL) async throws {
-        try fileManager.copyItem(at: source, to: destination)
+        logger.debug("Copying file from '\(source.lastPathComponent)' to '\(destination.path)'")
+
+        do {
+            try fileManager.copyItem(at: source, to: destination)
+            logger.info("Successfully copied: \(source.lastPathComponent)")
+        } catch {
+            logger.error("Failed to copy '\(source.lastPathComponent)': \(error.localizedDescription)")
+            throw error
+        }
     }
 
     public func fileExists(at url: URL) -> Bool {
-        fileManager.fileExists(atPath: url.path)
+        let exists = fileManager.fileExists(atPath: url.path)
+        logger.debug("File existence check for '\(url.lastPathComponent)': \(exists)")
+        return exists
     }
 
     public func getFiles(from directory: DirectoryPath, fileExtensions: [String]? = nil) async throws -> [URL] {
@@ -29,15 +52,19 @@ public final class FileRepository: FileRepositoryProtocol {
 
         // If no filter specified, return all files
         guard let extensions = fileExtensions, !extensions.isEmpty else {
+            logger.info("Retrieved \(allFiles.count) files from: \(directory.url.lastPathComponent)")
             return allFiles
         }
 
         // Filter files by extension
-        return allFiles.filter { url in
+        let filtered = allFiles.filter { url in
             let fileExtension = "." + url.pathExtension.lowercased()
             let normalizedExtensions = extensions.map { $0.lowercased() }
             return normalizedExtensions.contains(fileExtension)
         }
+
+        logger.info("Retrieved \(filtered.count) files (filtered by \(extensions.joined(separator: ", "))) from: \(directory.url.lastPathComponent)")
+        return filtered
     }
 
     // MARK: - Private Helper Methods

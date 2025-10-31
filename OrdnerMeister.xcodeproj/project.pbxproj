@@ -7,18 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		80CF0E91EFDB9A6588110E06 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7941683CA9FBD45E239ECEC3 /* DependencyContainer.swift */; };
 		B12119092B45519E008C7195 /* String+Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12119082B45519E008C7195 /* String+Values.swift */; };
 		B12119212B49BEFB008C7195 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12119202B49BEFB008C7195 /* FileManager.swift */; };
-		80CF0E91EFDB9A6588110E06 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7941683CA9FBD45E239ECEC3 /* DependencyContainer.swift */; };
 		B16164262B431AC9004D64AB /* Bayes in Frameworks */ = {isa = PBXBuildFile; productRef = B16164252B431AC9004D64AB /* Bayes */; };
-		CE076C732F6C4700BDC45153 /* OrdnerMeisterDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 9B2419986D1F345A7432041C /* OrdnerMeisterDomain */; };
-		ECA7070F407659C0BE7E7B35 /* OrdnerMeisterData in Frameworks */ = {isa = PBXBuildFile; productRef = 94EE7D48C6FB2544E779251C /* OrdnerMeisterData */; };
-		B3842FFB7632080ED3C91672 /* OrdnerMeisterPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = D491DF52B0A21202DC984F29 /* OrdnerMeisterPresentation */; };
-
 		B1FBB7782B3EF389006FC513 /* OrdnerMeisterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FBB7772B3EF389006FC513 /* OrdnerMeisterApp.swift */; };
 		B1FBB77C2B3EF389006FC513 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1FBB77B2B3EF389006FC513 /* Assets.xcassets */; };
 		B1FBB77F2B3EF389006FC513 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1FBB77E2B3EF389006FC513 /* Preview Assets.xcassets */; };
 		B1FBB7B42B40018D006FC513 /* OMLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FBB7B32B40018D006FC513 /* OMLogger.swift */; };
+		B3842FFB7632080ED3C91672 /* OrdnerMeisterPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = D491DF52B0A21202DC984F29 /* OrdnerMeisterPresentation */; };
+		CE076C732F6C4700BDC45153 /* OrdnerMeisterDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 9B2419986D1F345A7432041C /* OrdnerMeisterDomain */; };
+		ECA7070F407659C0BE7E7B35 /* OrdnerMeisterData in Frameworks */ = {isa = PBXBuildFile; productRef = 94EE7D48C6FB2544E779251C /* OrdnerMeisterData */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7941683CA9FBD45E239ECEC3 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		B10F71E62EB3C1BC005E3D26 /* OrdnerMeisterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrdnerMeisterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B12119082B45519E008C7195 /* String+Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Values.swift"; sourceTree = "<group>"; };
 		B12119202B49BEFB008C7195 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
@@ -40,7 +40,6 @@
 		B1FBB77B2B3EF389006FC513 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B1FBB77E2B3EF389006FC513 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B1FBB7802B3EF389006FC513 /* OrdnerMeister.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OrdnerMeister.entitlements; sourceTree = "<group>"; };
-		7941683CA9FBD45E239ECEC3 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		B1FBB7B32B40018D006FC513 /* OMLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMLogger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,7 +63,6 @@
 				CE076C732F6C4700BDC45153 /* OrdnerMeisterDomain in Frameworks */,
 				ECA7070F407659C0BE7E7B35 /* OrdnerMeisterData in Frameworks */,
 				B3842FFB7632080ED3C91672 /* OrdnerMeisterPresentation in Frameworks */,
-
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,10 +258,9 @@
 			mainGroup = B1FBB76B2B3EF389006FC513;
 			packageReferences = (
 				B16164242B431AC9004D64AB /* XCRemoteSwiftPackageReference "Bayes" */,
-				3BA7DADC098FE4519604DBA1 /* XCLocalSwiftPackageReference "OrdnerMeisterDomain" */,
-				25DB5B573003A05C3600EDA9 /* XCLocalSwiftPackageReference "OrdnerMeisterData" */,
-				05DED06B1AB28B0DAEDD9554 /* XCLocalSwiftPackageReference "OrdnerMeisterPresentation" */,
-
+				3BA7DADC098FE4519604DBA1 /* XCLocalSwiftPackageReference "Packages/OrdnerMeisterDomain" */,
+				25DB5B573003A05C3600EDA9 /* XCLocalSwiftPackageReference "Packages/OrdnerMeisterData" */,
+				05DED06B1AB28B0DAEDD9554 /* XCLocalSwiftPackageReference "Packages/OrdnerMeisterPresentation" */,
 			);
 			productRefGroup = B1FBB76B2B3EF389006FC513;
 			projectDirPath = "";
@@ -573,6 +570,21 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		05DED06B1AB28B0DAEDD9554 /* XCLocalSwiftPackageReference "Packages/OrdnerMeisterPresentation" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/OrdnerMeisterPresentation;
+		};
+		25DB5B573003A05C3600EDA9 /* XCLocalSwiftPackageReference "Packages/OrdnerMeisterData" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/OrdnerMeisterData;
+		};
+		3BA7DADC098FE4519604DBA1 /* XCLocalSwiftPackageReference "Packages/OrdnerMeisterDomain" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/OrdnerMeisterDomain;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		B16164242B431AC9004D64AB /* XCRemoteSwiftPackageReference "Bayes" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -584,44 +596,27 @@
 		};
 /* End XCRemoteSwiftPackageReference section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		3BA7DADC098FE4519604DBA1 /* XCLocalSwiftPackageReference "OrdnerMeisterDomain" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/OrdnerMeisterDomain;
-		};
-		25DB5B573003A05C3600EDA9 /* XCLocalSwiftPackageReference "OrdnerMeisterData" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/OrdnerMeisterData;
-		};
-		05DED06B1AB28B0DAEDD9554 /* XCLocalSwiftPackageReference "OrdnerMeisterPresentation" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/OrdnerMeisterPresentation;
-		};
-/* End XCLocalSwiftPackageReference section */
-
-
 /* Begin XCSwiftPackageProductDependency section */
+		94EE7D48C6FB2544E779251C /* OrdnerMeisterData */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 25DB5B573003A05C3600EDA9 /* XCLocalSwiftPackageReference "Packages/OrdnerMeisterData" */;
+			productName = OrdnerMeisterData;
+		};
+		9B2419986D1F345A7432041C /* OrdnerMeisterDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3BA7DADC098FE4519604DBA1 /* XCLocalSwiftPackageReference "Packages/OrdnerMeisterDomain" */;
+			productName = OrdnerMeisterDomain;
+		};
 		B16164252B431AC9004D64AB /* Bayes */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B16164242B431AC9004D64AB /* XCRemoteSwiftPackageReference "Bayes" */;
 			productName = Bayes;
 		};
-		9B2419986D1F345A7432041C /* OrdnerMeisterDomain */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3BA7DADC098FE4519604DBA1 /* XCLocalSwiftPackageReference "OrdnerMeisterDomain" */;
-			productName = OrdnerMeisterDomain;
-		};
-		94EE7D48C6FB2544E779251C /* OrdnerMeisterData */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 25DB5B573003A05C3600EDA9 /* XCLocalSwiftPackageReference "OrdnerMeisterData" */;
-			productName = OrdnerMeisterData;
-		};
 		D491DF52B0A21202DC984F29 /* OrdnerMeisterPresentation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 05DED06B1AB28B0DAEDD9554 /* XCLocalSwiftPackageReference "OrdnerMeisterPresentation" */;
+			package = 05DED06B1AB28B0DAEDD9554 /* XCLocalSwiftPackageReference "Packages/OrdnerMeisterPresentation" */;
 			productName = OrdnerMeisterPresentation;
 		};
-
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B1FBB76C2B3EF389006FC513 /* Project object */;
