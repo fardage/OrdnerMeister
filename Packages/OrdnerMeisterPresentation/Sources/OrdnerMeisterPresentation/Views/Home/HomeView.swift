@@ -1,7 +1,10 @@
 import SwiftUI
+import OrdnerMeisterDomain
 
 public struct HomeView: View {
     @Bindable var viewModel: HomeViewModel
+    @State private var showingResultAlert = false
+    @State private var showingErrorAlert = false
 
     public init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -26,6 +29,50 @@ public struct HomeView: View {
             .disabled(viewModel.status == .busy)
         }
         .padding()
+        .alert("Processing Complete", isPresented: $showingResultAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            if let result = viewModel.processingResult {
+                Text(resultAlertMessage(for: result))
+            }
+        }
+        .alert("Error", isPresented: $showingErrorAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            if let error = viewModel.lastError {
+                Text(error.localizedDescription)
+            }
+        }
+        .onChange(of: viewModel.status) { oldValue, newValue in
+            handleStatusChange(newValue)
+        }
+    }
+
+    private func handleStatusChange(_ newStatus: HomeViewModel.Status) {
+        switch newStatus {
+        case .done:
+            showingResultAlert = true
+        case .error:
+            showingErrorAlert = true
+        default:
+            break
+        }
+    }
+
+    private func resultAlertMessage(for result: ProcessingResult) -> String {
+        var message = result.summaryMessage
+
+        if result.hasFailures {
+            message += "\n\nFailed files:"
+            for error in result.errors.prefix(5) {
+                message += "\n• \(error.fileName)"
+            }
+            if result.errors.count > 5 {
+                message += "\n• and \(result.errors.count - 5) more..."
+            }
+        }
+
+        return message
     }
 }
 
@@ -55,6 +102,8 @@ struct StatusBar: View {
             return "Processing..."
         case .done:
             return "Done"
+        case .error(let message):
+            return "Error: \(message)"
         }
     }
 
@@ -66,6 +115,8 @@ struct StatusBar: View {
             return Color.blue.opacity(0.2)
         case .done:
             return Color.green.opacity(0.2)
+        case .error:
+            return Color.red.opacity(0.2)
         }
     }
 }
