@@ -29,9 +29,9 @@ public struct HomeView: View {
             if let selectedPrediction = viewModel.selectedPrediction {
                 FileDetailView(
                     prediction: selectedPrediction,
-                    onMove: {
+                    onMove: { selectedFolder in
                         Task {
-                            await viewModel.onPredictionClick(prediction: selectedPrediction)
+                            await viewModel.moveFile(prediction: selectedPrediction, to: selectedFolder)
                         }
                     }
                 )

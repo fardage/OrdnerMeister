@@ -134,8 +134,13 @@ public final class HomeViewModel {
             return
         }
 
+        await moveFile(prediction: prediction, to: destinationFolder)
+    }
+
+    @MainActor
+    public func moveFile(prediction: FilePredictionViewModel, to destinationFolder: URL) async {
         let fileName = prediction.file.lastPathComponent
-        logger.info("User confirmed move for: \(fileName)")
+        logger.info("User confirmed move for: \(fileName) to: \(destinationFolder.lastPathComponent)")
 
         do {
             try await moveFileUseCase.execute(
