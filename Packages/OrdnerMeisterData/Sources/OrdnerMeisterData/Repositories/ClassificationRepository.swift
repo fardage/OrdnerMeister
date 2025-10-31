@@ -54,9 +54,16 @@ public final class ClassificationRepository: ClassificationRepositoryProtocol {
         logger.debug("Classifying file: \(fileName)")
 
         let tokens = file.textContent.tokenize()
-        let categoryProbabilities = classifier.categoryProbabilities(tokens)
+        let logProbabilities = classifier.categoryProbabilities(tokens)
 
-        let sorted = categoryProbabilities.sorted { $0.value > $1.value }
+        // Convert log probabilities to actual probabilities using softmax normalization
+        // This prevents numerical overflow and ensures probabilities sum to 1.0
+        let maxLogProb = logProbabilities.values.max() ?? 0.0
+        let expProbs = logProbabilities.mapValues { exp($0 - maxLogProb) }
+        let sumExpProbs = expProbs.values.reduce(0.0, +)
+        let normalizedProbs = expProbs.mapValues { $0 / sumExpProbs }
+
+        let sorted = normalizedProbs.sorted { $0.value > $1.value }
         let topResults = Array(sorted.prefix(topN))
 
         if let topPrediction = topResults.first {
