@@ -55,23 +55,12 @@ struct FileDetailView: View {
 
                     Divider()
 
-                    // Content area placeholder for future PDF preview
-                    VStack {
-                        Spacer()
-
-                        Image(systemName: "doc.text.image")
-                            .font(.system(size: 48))
-                            .foregroundStyle(.secondary)
-
-                        Text("PDF preview coming soon")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                            .padding(.top, 8)
-
-                        Spacer()
-                    }
-                    .frame(maxWidth: .infinity)
-                    .frame(minHeight: 200)
+                    // PDF Preview
+                    PDFPreviewView(fileURL: prediction.file)
+                        .frame(maxWidth: .infinity)
+                        .frame(minHeight: 300)
+                        .background(Color(nsColor: .textBackgroundColor))
+                        .cornerRadius(8)
                 }
                 .padding()
             }
