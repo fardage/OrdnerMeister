@@ -4,7 +4,6 @@ import OrdnerMeisterDomain
 public struct HomeView: View {
     @Bindable var viewModel: HomeViewModel
     @State private var showingResultAlert = false
-    @State private var showingErrorAlert = false
 
     public init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -36,7 +35,10 @@ public struct HomeView: View {
                 Text(resultAlertMessage(for: result))
             }
         }
-        .alert("Error", isPresented: $showingErrorAlert) {
+        .alert("Error", isPresented: Binding(
+            get: { viewModel.showError },
+            set: { if !$0 { Task { @MainActor in viewModel.dismissError() } } }
+        )) {
             Button("OK", role: .cancel) { }
         } message: {
             if let error = viewModel.lastError {
@@ -52,8 +54,6 @@ public struct HomeView: View {
         switch newStatus {
         case .done:
             showingResultAlert = true
-        case .error:
-            showingErrorAlert = true
         default:
             break
         }

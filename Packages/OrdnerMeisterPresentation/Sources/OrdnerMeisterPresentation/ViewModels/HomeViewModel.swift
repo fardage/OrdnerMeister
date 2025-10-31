@@ -24,6 +24,7 @@ public final class HomeViewModel {
     public private(set) var predictions: [FilePredictionViewModel] = []
     public private(set) var processingResult: ProcessingResult?
     public private(set) var lastError: Error?
+    public private(set) var showError: Bool = false
 
     public init(
         trainClassifierUseCase: TrainClassifierUseCase,
@@ -77,9 +78,16 @@ public final class HomeViewModel {
         } catch {
             // Handle critical error
             lastError = error
+            showError = true
             status = .error(error.localizedDescription)
             logger.error("Error processing folders: \(error.localizedDescription)")
         }
+    }
+
+    @MainActor
+    public func dismissError() {
+        showError = false
+        lastError = nil
     }
 
     @MainActor
@@ -108,6 +116,7 @@ public final class HomeViewModel {
             }
         } catch {
             lastError = error
+            showError = true
             logger.error("Error moving file '\(fileName)': \(error.localizedDescription)")
             // Don't change status - allow user to retry or skip
         }
