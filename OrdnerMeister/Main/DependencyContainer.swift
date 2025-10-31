@@ -4,6 +4,7 @@ import OrdnerMeisterData
 import OrdnerMeisterPresentation
 
 /// Composition root that creates and wires up all dependencies
+@MainActor
 final class DependencyContainer {
     // MARK: - Repositories
 
@@ -77,10 +78,4 @@ final class DependencyContainer {
             updateSettingsUseCase: updateSettingsUseCase
         )
     }
-
-    // MARK: - Singleton
-
-    static let shared = DependencyContainer()
-
-    private init() {}
 }

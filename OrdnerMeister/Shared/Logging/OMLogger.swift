@@ -9,7 +9,7 @@ import Foundation
 import OSLog
 
 extension Logger {
-    private static var subsystem = "ch.tseng.OrdnerMeister"
+    private static let subsystem = "ch.tseng.OrdnerMeister"
 
     // Existing categories
     static let general = Logger(subsystem: subsystem, category: "general")

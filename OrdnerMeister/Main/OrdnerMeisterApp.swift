@@ -10,7 +10,7 @@ import OrdnerMeisterPresentation
 
 @main
 struct OrdnerMeisterApp: App {
-    let dependencies = DependencyContainer.shared
+    let dependencies = DependencyContainer()
 
     var body: some Scene {
         WindowGroup {
