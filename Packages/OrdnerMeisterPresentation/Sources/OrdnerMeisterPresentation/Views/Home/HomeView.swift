@@ -10,24 +10,38 @@ public struct HomeView: View {
     }
 
     public var body: some View {
-        VStack {
-            StatusBar(status: viewModel.status)
-            ActionableFilesView(
+        NavigationSplitView {
+            // Sidebar: File list with StatusBar header
+            FileSidebarView(
                 predictions: viewModel.predictions,
+                status: viewModel.status,
+                selectedPredictionId: $viewModel.selectedPredictionId,
                 onPredictionClick: { prediction in
                     Task {
                         await viewModel.onPredictionClick(prediction: prediction)
                     }
                 }
             )
-            Button("Process Folders") {
-                Task {
-                    await viewModel.processFolders()
-                }
+        } detail: {
+            // Detail: File details or empty state
+            if let selectedPrediction = viewModel.selectedPrediction {
+                FileDetailView(
+                    prediction: selectedPrediction,
+                    onMove: {
+                        Task {
+                            await viewModel.onPredictionClick(prediction: selectedPrediction)
+                        }
+                    }
+                )
+            } else {
+                EmptyDetailView(
+                    status: viewModel.status,
+                    onProcessFolders: {
+                        await viewModel.processFolders()
+                    }
+                )
             }
-            .disabled(viewModel.status == .busy)
         }
-        .padding()
         .alert("Processing Complete", isPresented: $showingResultAlert) {
             Button("OK", role: .cancel) { }
         } message: {
@@ -121,46 +135,3 @@ struct StatusBar: View {
     }
 }
 
-struct ActionableFilesView: View {
-    let predictions: [FilePredictionViewModel]
-    let onPredictionClick: (FilePredictionViewModel) -> Void
-
-    var body: some View {
-        if predictions.isEmpty {
-            Text("No files to process")
-                .foregroundStyle(.secondary)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-        } else {
-            List(predictions) { prediction in
-                FileRowView(
-                    prediction: prediction,
-                    onClick: { onPredictionClick(prediction) }
-                )
-            }
-        }
-    }
-}
-
-struct FileRowView: View {
-    let prediction: FilePredictionViewModel
-    let onClick: () -> Void
-
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text(prediction.file.lastPathComponent)
-                    .font(.headline)
-                if let destination = prediction.predictedOutputFolders.first {
-                    Text("→ \(destination.lastPathComponent)")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                }
-            }
-            Spacer()
-            Button("Move") {
-                onClick()
-            }
-        }
-        .padding(.vertical, 4)
-    }
-}

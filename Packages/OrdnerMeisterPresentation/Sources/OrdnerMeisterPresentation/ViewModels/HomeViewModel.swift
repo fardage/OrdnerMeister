@@ -25,6 +25,12 @@ public final class HomeViewModel {
     public private(set) var processingResult: ProcessingResult?
     public private(set) var lastError: Error?
     public private(set) var showError: Bool = false
+    public var selectedPredictionId: String?
+
+    public var selectedPrediction: FilePredictionViewModel? {
+        guard let selectedId = selectedPredictionId else { return nil }
+        return predictions.first { $0.id == selectedId }
+    }
 
     public init(
         trainClassifierUseCase: TrainClassifierUseCase,
@@ -108,6 +114,11 @@ public final class HomeViewModel {
 
             // Remove the prediction from the list after successful move
             predictions.removeAll { $0.id == prediction.id }
+
+            // Clear selection if the removed file was selected
+            if selectedPredictionId == prediction.id {
+                selectedPredictionId = nil
+            }
 
             // If no more predictions, mark as ready
             if predictions.isEmpty {
