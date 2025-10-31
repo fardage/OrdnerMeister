@@ -28,42 +28,36 @@ struct FileDetailView: View {
 
             Divider()
 
-            ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
-                    // Suggested Folder section
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("Suggested Folder")
-                            .font(.headline)
+            // Suggested Folder section
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Suggested Folder")
+                    .font(.headline)
 
-                        if let destination = prediction.predictedOutputFolders.first {
-                            HStack(spacing: 8) {
-                                Image(systemName: "folder")
-                                    .foregroundStyle(.blue)
-                                Text(destination.lastPathComponent)
-                                    .font(.body)
-                                    .fontWeight(.medium)
-                            }
-
-                            Text(destination.path)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        } else {
-                            Text("No prediction available")
-                                .foregroundStyle(.secondary)
-                        }
+                if let destination = prediction.predictedOutputFolders.first {
+                    HStack(spacing: 8) {
+                        Image(systemName: "folder")
+                            .foregroundStyle(.blue)
+                        Text(destination.lastPathComponent)
+                            .font(.body)
+                            .fontWeight(.medium)
                     }
 
-                    Divider()
-
-                    // PDF Preview
-                    PDFPreviewView(fileURL: prediction.file)
-                        .frame(maxWidth: .infinity)
-                        .frame(minHeight: 300)
-                        .background(Color(nsColor: .textBackgroundColor))
-                        .cornerRadius(8)
+                    Text(destination.path)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                } else {
+                    Text("No prediction available")
+                        .foregroundStyle(.secondary)
                 }
-                .padding()
             }
+            .padding()
+
+            Divider()
+
+            // PDF Preview - fills remaining space
+            PDFPreviewView(fileURL: prediction.file)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(nsColor: .textBackgroundColor))
         }
         .toolbar {
             ToolbarItemGroup(placement: .automatic) {

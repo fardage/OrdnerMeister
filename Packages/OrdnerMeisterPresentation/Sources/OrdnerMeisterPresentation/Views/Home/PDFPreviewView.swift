@@ -56,15 +56,36 @@ struct PDFKitView: NSViewRepresentable {
     @Binding var isLoading: Bool
     @Binding var error: Error?
 
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+
+    class Coordinator: NSObject {
+        var lastViewWidth: CGFloat = 0
+
+        func scaleToFillWidth(_ pdfView: PDFView) {
+            guard let page = pdfView.currentPage else { return }
+
+            let pageWidth = page.bounds(for: .mediaBox).width
+            let viewWidth = pdfView.bounds.width
+
+            if pageWidth > 0 && viewWidth > 0 && viewWidth != lastViewWidth {
+                let scaleToFillWidth = viewWidth / pageWidth
+                pdfView.scaleFactor = scaleToFillWidth
+                lastViewWidth = viewWidth
+            }
+        }
+    }
+
     func makeNSView(context: Context) -> PDFView {
         let pdfView = PDFView()
 
         // Configure for optimal preview performance
         pdfView.displayMode = .singlePage
-        pdfView.autoScales = true
+        pdfView.autoScales = false  // Disable auto-scaling to manually control width-filling
         pdfView.displayDirection = .vertical
         pdfView.displaysPageBreaks = true
-        pdfView.backgroundColor = NSColor.controlBackgroundColor
+        pdfView.backgroundColor = NSColor(white: 0.95, alpha: 1.0)
 
         // Disable navigation chrome for cleaner look
         pdfView.displaysAsBook = false
@@ -73,6 +94,11 @@ struct PDFKitView: NSViewRepresentable {
     }
 
     func updateNSView(_ pdfView: PDFView, context: Context) {
+        // Scale to fill width when view size changes
+        if pdfView.document != nil {
+            context.coordinator.scaleToFillWidth(pdfView)
+        }
+
         // Skip if already loaded for this URL
         if pdfView.document?.documentURL == url {
             return
@@ -95,9 +121,10 @@ struct PDFKitView: NSViewRepresentable {
             DispatchQueue.main.async {
                 pdfView.document = document
 
-                // Go to first page
+                // Go to first page and scale to fill width
                 if let firstPage = document.page(at: 0) {
                     pdfView.go(to: firstPage)
+                    context.coordinator.scaleToFillWidth(pdfView)
                 }
 
                 self.isLoading = false
