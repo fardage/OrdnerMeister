@@ -23,9 +23,21 @@ public final class FileRepository: FileRepositoryProtocol {
         fileManager.fileExists(atPath: url.path)
     }
 
-    public func getFiles(from directory: DirectoryPath) async throws -> [URL] {
+    public func getFiles(from directory: DirectoryPath, fileExtensions: [String]? = nil) async throws -> [URL] {
         let tree = try await buildFileTree(from: directory, excluding: [])
-        return tree.flattenFiles()
+        let allFiles = tree.flattenFiles()
+
+        // If no filter specified, return all files
+        guard let extensions = fileExtensions, !extensions.isEmpty else {
+            return allFiles
+        }
+
+        // Filter files by extension
+        return allFiles.filter { url in
+            let fileExtension = "." + url.pathExtension.lowercased()
+            let normalizedExtensions = extensions.map { $0.lowercased() }
+            return normalizedExtensions.contains(fileExtension)
+        }
     }
 
     // MARK: - Private Helper Methods

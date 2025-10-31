@@ -12,5 +12,8 @@ public protocol FileRepositoryProtocol {
     func fileExists(at url: URL) -> Bool
 
     /// Get all files from a directory (flat list)
-    func getFiles(from directory: DirectoryPath) async throws -> [URL]
+    /// - Parameters:
+    ///   - directory: The directory to scan
+    ///   - fileExtensions: Optional array of file extensions to filter (e.g., [".pdf", ".txt"]). If nil, returns all files.
+    func getFiles(from directory: DirectoryPath, fileExtensions: [String]?) async throws -> [URL]
 }

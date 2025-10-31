@@ -45,7 +45,11 @@ public final class TrainClassifierUseCase: TrainClassifierUseCaseProtocol, @unch
 
         for folderURL in folderURLs where folderURL != settings.outputPath.url {
             let folder = Folder(url: folderURL)
-            let fileURLs = try await fileRepository.getFiles(from: try DirectoryPath(url: folderURL))
+            // Only get PDF files to avoid errors with non-PDF files
+            let fileURLs = try await fileRepository.getFiles(
+                from: try DirectoryPath(url: folderURL),
+                fileExtensions: [".pdf"]
+            )
 
             // Extract text from files in this folder
             for fileURL in fileURLs {
@@ -54,8 +58,14 @@ public final class TrainClassifierUseCase: TrainClassifierUseCaseProtocol, @unch
                 if let cachedText = await textCacheRepository.getCachedText(for: fileURL) {
                     text = cachedText
                 } else {
-                    text = try await textExtractionRepository.extractText(from: fileURL)
-                    try await textCacheRepository.cacheText(text, for: fileURL)
+                    do {
+                        text = try await textExtractionRepository.extractText(from: fileURL)
+                        try await textCacheRepository.cacheText(text, for: fileURL)
+                    } catch {
+                        // Log error but continue with other files
+                        print("Warning: Failed to extract text from \(fileURL.lastPathComponent): \(error)")
+                        continue
+                    }
                 }
 
                 let file = File(url: fileURL, textContent: text)

@@ -33,16 +33,13 @@ public final class ClassifyFilesUseCase: ClassifyFilesUseCaseProtocol, @unchecke
         // 1. Get settings
         let settings = settingsRepository.getSettings()
 
-        // 2. Build file tree from inbox directory
-        let fileTree = try await fileRepository.buildFileTree(
+        // 2. Get PDF files from inbox directory (filter to avoid non-PDF errors)
+        let fileURLs = try await fileRepository.getFiles(
             from: settings.inboxPath,
-            excluding: settings.exclusions
+            fileExtensions: [".pdf"]
         )
 
-        // 3. Get files from the tree
-        let fileURLs = fileTree.flattenFiles()
-
-        // 4. Extract text from each file
+        // 3. Extract text from each file
         var files: [File] = []
         for fileURL in fileURLs {
             // Check cache first
@@ -50,15 +47,21 @@ public final class ClassifyFilesUseCase: ClassifyFilesUseCaseProtocol, @unchecke
             if let cachedText = await textCacheRepository.getCachedText(for: fileURL) {
                 text = cachedText
             } else {
-                text = try await textExtractionRepository.extractText(from: fileURL)
-                try await textCacheRepository.cacheText(text, for: fileURL)
+                do {
+                    text = try await textExtractionRepository.extractText(from: fileURL)
+                    try await textCacheRepository.cacheText(text, for: fileURL)
+                } catch {
+                    // Log error but continue with other files
+                    print("Warning: Failed to extract text from \(fileURL.lastPathComponent): \(error)")
+                    continue
+                }
             }
 
             let file = File(url: fileURL, textContent: text)
             files.append(file)
         }
 
-        // 5. Classify all files
+        // 4. Classify all files
         let classifications = try await classificationRepository.classifyBatch(
             files: files,
             topN: topN

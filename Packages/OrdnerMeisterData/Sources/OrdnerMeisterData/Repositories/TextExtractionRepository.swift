@@ -11,9 +11,15 @@ public final class TextExtractionRepository: TextExtractionRepositoryProtocol {
     public init() {}
 
     public func extractText(from url: URL) async throws -> String {
+        // Check if file is a PDF before attempting to load
+        let fileExtension = url.pathExtension.lowercased()
+        guard fileExtension == "pdf" else {
+            throw TextExtractionError.unsupportedFileType(fileExtension)
+        }
+
         guard let pdfDocument = PDFDocument(url: url),
               let pdfString = pdfDocument.string else {
-            throw TextExtractionError.failedToLoadPDF
+            throw TextExtractionError.failedToLoadPDF(url.lastPathComponent)
         }
 
         // If we have enough text from PDF, use it
@@ -96,6 +102,7 @@ public final class TextExtractionRepository: TextExtractionRepositoryProtocol {
 // MARK: - Errors
 
 public enum TextExtractionError: Error {
-    case failedToLoadPDF
+    case unsupportedFileType(String)
+    case failedToLoadPDF(String)
     case ocrFailed
 }
