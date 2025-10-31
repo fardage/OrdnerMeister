@@ -1,10 +1,8 @@
 import Foundation
-import Combine
 
 /// Use case for retrieving application settings
 public protocol GetSettingsUseCaseProtocol {
     func execute() -> Settings
-    func observe() -> AnyPublisher<Settings, Never>
 }
 
 public final class GetSettingsUseCase: GetSettingsUseCaseProtocol, @unchecked Sendable {
@@ -16,9 +14,5 @@ public final class GetSettingsUseCase: GetSettingsUseCaseProtocol, @unchecked Se
 
     public func execute() -> Settings {
         settingsRepository.getSettings()
-    }
-
-    public func observe() -> AnyPublisher<Settings, Never> {
-        settingsRepository.observeSettings()
     }
 }

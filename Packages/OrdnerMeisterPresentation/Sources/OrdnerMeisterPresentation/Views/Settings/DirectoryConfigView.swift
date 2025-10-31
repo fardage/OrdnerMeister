@@ -37,7 +37,7 @@ public struct DirectoryConfigView: View {
             onCompletion: { result in
                 switch result {
                 case let .success(directory):
-                    path = directory.absoluteString
+                    path = directory.path
                 case let .failure(error):
                     Logger().error("\(error)")
                 }

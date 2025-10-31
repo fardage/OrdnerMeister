@@ -1,11 +1,9 @@
 import Foundation
-import Combine
 import OrdnerMeisterDomain
 
 /// Concrete implementation of SettingsRepositoryProtocol
 public final class SettingsRepository: SettingsRepositoryProtocol {
     private let userDefaults: UserDefaults
-    private let settingsSubject: CurrentValueSubject<Settings, Never>
 
     private enum Keys: String {
         case inboxDirectory
@@ -15,61 +13,38 @@ public final class SettingsRepository: SettingsRepositoryProtocol {
 
     public init(userDefaults: UserDefaults = .standard) {
         self.userDefaults = userDefaults
+    }
 
-        // Load initial settings
+    public func getSettings() -> Settings {
         let inbox = userDefaults.string(forKey: Keys.inboxDirectory.rawValue)
         let output = userDefaults.string(forKey: Keys.outputDirectory.rawValue)
         let exclusions = userDefaults.array(forKey: Keys.excludedDirectories.rawValue) as? [String] ?? []
 
-        let initialSettings = Self.makeSettings(
+        return Self.makeSettings(
             inboxPath: inbox,
             outputPath: output,
             exclusions: exclusions
         )
-
-        self.settingsSubject = CurrentValueSubject(initialSettings)
-    }
-
-    public func getSettings() -> Settings {
-        settingsSubject.value
-    }
-
-    public func observeSettings() -> AnyPublisher<Settings, Never> {
-        settingsSubject.eraseToAnyPublisher()
     }
 
     public func updateInboxPath(_ path: DirectoryPath) throws {
-        userDefaults.set(path.url.path, forKey: Keys.inboxDirectory.rawValue)
-
-        let newSettings = Settings(
-            inboxPath: path,
-            outputPath: settingsSubject.value.outputPath,
-            exclusions: settingsSubject.value.exclusions
-        )
-        settingsSubject.send(newSettings)
+        // Store with trailing slash to ensure DirectoryPath can load it back
+        let pathString = path.url.path.hasSuffix("/") ? path.url.path : path.url.path + "/"
+        userDefaults.set(pathString, forKey: Keys.inboxDirectory.rawValue)
     }
 
     public func updateOutputPath(_ path: DirectoryPath) throws {
-        userDefaults.set(path.url.path, forKey: Keys.outputDirectory.rawValue)
-
-        let newSettings = Settings(
-            inboxPath: settingsSubject.value.inboxPath,
-            outputPath: path,
-            exclusions: settingsSubject.value.exclusions
-        )
-        settingsSubject.send(newSettings)
+        // Store with trailing slash to ensure DirectoryPath can load it back
+        let pathString = path.url.path.hasSuffix("/") ? path.url.path : path.url.path + "/"
+        userDefaults.set(pathString, forKey: Keys.outputDirectory.rawValue)
     }
 
     public func updateExclusions(_ exclusions: [DirectoryPath]) throws {
-        let paths = exclusions.map { $0.url.path }
+        // Store with trailing slashes to ensure DirectoryPath can load them back
+        let paths = exclusions.map { path in
+            path.url.path.hasSuffix("/") ? path.url.path : path.url.path + "/"
+        }
         userDefaults.set(paths, forKey: Keys.excludedDirectories.rawValue)
-
-        let newSettings = Settings(
-            inboxPath: settingsSubject.value.inboxPath,
-            outputPath: settingsSubject.value.outputPath,
-            exclusions: exclusions
-        )
-        settingsSubject.send(newSettings)
     }
 
     // MARK: - Private Helpers

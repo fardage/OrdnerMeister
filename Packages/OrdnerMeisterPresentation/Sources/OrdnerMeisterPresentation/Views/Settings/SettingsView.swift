@@ -93,7 +93,7 @@ struct DirList: View {
             onCompletion: { result in
                 switch result {
                 case let .success(directory):
-                    addDirectory(directory.absoluteString)
+                    addDirectory(directory.path)
                 case let .failure(error):
                     Logger().error("\(error)")
                 }
