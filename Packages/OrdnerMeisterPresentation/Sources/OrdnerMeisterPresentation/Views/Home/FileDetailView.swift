@@ -1,92 +1,105 @@
 import SwiftUI
 import OrdnerMeisterDomain
 
-/// Detail view showing selected file information and actions
+/// Detail view showing selected file information and actions (macOS Mail-style)
 struct FileDetailView: View {
     let prediction: FilePredictionViewModel
     let onMove: () -> Void
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                // File header
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(prediction.file.lastPathComponent)
-                        .font(.title2)
-                        .fontWeight(.semibold)
+        VStack(alignment: .leading, spacing: 0) {
+            // Compact header (Mail-style)
+            VStack(alignment: .leading, spacing: 8) {
+                Text(prediction.file.lastPathComponent)
+                    .font(.title2)
+                    .fontWeight(.semibold)
 
-                    Text(prediction.file.path)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .textSelection(.enabled)
-                }
+                Text(prediction.file.path)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .textSelection(.enabled)
 
-                Divider()
-
-                // File metadata
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("File Information")
-                        .font(.headline)
-
-                    InfoRow(label: "Modified", value: formatDate(prediction.dateModified))
-                    InfoRow(label: "Size", value: formatFileSize(prediction.fileSize))
-                    InfoRow(label: "Type", value: prediction.file.pathExtension.uppercased())
-                }
-
-                Divider()
-
-                // Predicted destination
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Suggested Folder")
-                        .font(.headline)
-
-                    if let destination = prediction.predictedOutputFolders.first {
-                        HStack {
-                            Image(systemName: "folder")
-                                .foregroundStyle(.blue)
-                            Text(destination.lastPathComponent)
-                                .font(.body)
-                        }
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.blue.opacity(0.1))
-                        .cornerRadius(8)
-
-                        Text(destination.path)
-                            .font(.caption2)
-                            .foregroundStyle(.secondary)
-                    } else {
-                        Text("No prediction available")
-                            .foregroundStyle(.secondary)
-                    }
-                }
-
-                Divider()
-
-                // Actions
-                VStack(spacing: 12) {
-                    Button(action: onMove) {
-                        Label("Move to Suggested Folder", systemImage: "arrow.right.square")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(prediction.predictedOutputFolders.isEmpty)
-
-                    Button(action: {
-                        // TODO: Implement custom folder picker in future
-                    }) {
-                        Label("Choose Different Folder", systemImage: "folder")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.bordered)
-                    .disabled(true) // Will be enabled in future tasks
-                }
-
-                Spacer()
+                // Compact metadata row
+                Text(compactMetadata)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
             .padding()
+
+            Divider()
+
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    // Suggested Folder section
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Suggested Folder")
+                            .font(.headline)
+
+                        if let destination = prediction.predictedOutputFolders.first {
+                            HStack(spacing: 8) {
+                                Image(systemName: "folder")
+                                    .foregroundStyle(.blue)
+                                Text(destination.lastPathComponent)
+                                    .font(.body)
+                                    .fontWeight(.medium)
+                            }
+
+                            Text(destination.path)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        } else {
+                            Text("No prediction available")
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+
+                    Divider()
+
+                    // Content area placeholder for future PDF preview
+                    VStack {
+                        Spacer()
+
+                        Image(systemName: "doc.text.image")
+                            .font(.system(size: 48))
+                            .foregroundStyle(.secondary)
+
+                        Text("PDF preview coming soon")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                            .padding(.top, 8)
+
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity)
+                    .frame(minHeight: 200)
+                }
+                .padding()
+            }
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .automatic) {
+                Button(action: {
+                    // TODO: Implement custom folder picker in future
+                }) {
+                    Label("Choose Folder", systemImage: "folder")
+                }
+                .disabled(true) // Will be enabled in future tasks
+
+                Button(action: onMove) {
+                    Label("Move to Suggested Folder", systemImage: "arrow.right.square")
+                }
+                .disabled(prediction.predictedOutputFolders.isEmpty)
+                .keyboardShortcut(.return, modifiers: [.command])
+            }
         }
         .navigationTitle("File Details")
+    }
+
+    private var compactMetadata: String {
+        let date = formatDate(prediction.dateModified)
+        let size = formatFileSize(prediction.fileSize)
+        let type = prediction.file.pathExtension.uppercased()
+        return "Modified: \(date) • Size: \(size) • Type: \(type)"
     }
 
     private func formatDate(_ date: Date?) -> String {
@@ -103,21 +116,5 @@ struct FileDetailView: View {
         formatter.allowedUnits = [.useKB, .useMB]
         formatter.countStyle = .file
         return formatter.string(fromByteCount: size)
-    }
-}
-
-/// Helper view for displaying info rows
-struct InfoRow: View {
-    let label: String
-    let value: String
-
-    var body: some View {
-        HStack {
-            Text(label)
-                .foregroundStyle(.secondary)
-            Spacer()
-            Text(value)
-                .fontWeight(.medium)
-        }
     }
 }
