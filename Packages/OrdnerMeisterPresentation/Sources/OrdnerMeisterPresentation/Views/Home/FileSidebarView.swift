@@ -29,9 +29,11 @@ struct FileSidebarView: View {
                 List(predictions, selection: $selectedPredictionId) { prediction in
                     FileSidebarRow(prediction: prediction)
                         .tag(prediction.id)
-                        .swipeActions(edge: .trailing) {
-                            Button("Move") {
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button {
                                 onPredictionClick(prediction)
+                            } label: {
+                                Label("Move", systemImage: "arrow.right.square")
                             }
                             .tint(.blue)
                         }

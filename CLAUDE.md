@@ -1,0 +1,1 @@
+- Always use test driven development if it makes sense
