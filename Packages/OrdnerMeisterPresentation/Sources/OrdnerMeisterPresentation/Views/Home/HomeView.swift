@@ -11,10 +11,12 @@ public struct HomeView: View {
 
     public var body: some View {
         NavigationSplitView {
-            // Sidebar: File list with StatusBar header
+            // Sidebar: File list with inbox header and bottom status
             FileSidebarView(
                 predictions: viewModel.predictions,
                 status: viewModel.status,
+                showCompletionStatus: viewModel.showCompletionStatus,
+                inboxPath: viewModel.inboxPath,
                 selectedPredictionId: $viewModel.selectedPredictionId,
                 onPredictionClick: { prediction in
                     Task {

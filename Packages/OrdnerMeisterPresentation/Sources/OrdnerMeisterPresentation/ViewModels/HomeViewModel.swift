@@ -16,15 +16,18 @@ public final class HomeViewModel {
     private let trainClassifierUseCase: TrainClassifierUseCase
     private let classifyFilesUseCase: ClassifyFilesUseCase
     private let moveFileUseCase: MoveFileUseCase
+    private let getSettingsUseCase: GetSettingsUseCase
     private let logger = Logger(subsystem: "ch.tseng.OrdnerMeister", category: "view")
 
     private var cancellables = Set<AnyCancellable>()
+    private var completionTimer: Task<Void, Never>?
 
     public private(set) var status: Status = .ready
     public private(set) var predictions: [FilePredictionViewModel] = []
     public private(set) var processingResult: ProcessingResult?
     public private(set) var lastError: Error?
     public private(set) var showError: Bool = false
+    public private(set) var showCompletionStatus: Bool = false
     public var selectedPredictionId: String?
 
     public var selectedPrediction: FilePredictionViewModel? {
@@ -32,14 +35,21 @@ public final class HomeViewModel {
         return predictions.first { $0.id == selectedId }
     }
 
+    public var inboxPath: String {
+        let settings = getSettingsUseCase.execute()
+        return settings.inboxPath.url.lastPathComponent
+    }
+
     public init(
         trainClassifierUseCase: TrainClassifierUseCase,
         classifyFilesUseCase: ClassifyFilesUseCase,
-        moveFileUseCase: MoveFileUseCase
+        moveFileUseCase: MoveFileUseCase,
+        getSettingsUseCase: GetSettingsUseCase
     ) {
         self.trainClassifierUseCase = trainClassifierUseCase
         self.classifyFilesUseCase = classifyFilesUseCase
         self.moveFileUseCase = moveFileUseCase
+        self.getSettingsUseCase = getSettingsUseCase
     }
 
     @MainActor
@@ -81,12 +91,33 @@ public final class HomeViewModel {
                 status = .done
                 logger.info("Processing completed successfully")
             }
+
+            // Show completion status briefly, then hide
+            showCompletionIndicator()
         } catch {
             // Handle critical error
             lastError = error
             showError = true
             status = .error(error.localizedDescription)
             logger.error("Error processing folders: \(error.localizedDescription)")
+        }
+    }
+
+    @MainActor
+    private func showCompletionIndicator() {
+        // Cancel any existing timer
+        completionTimer?.cancel()
+
+        // Show completion status
+        showCompletionStatus = true
+
+        // Hide after 2.5 seconds
+        completionTimer = Task { @MainActor in
+            try? await Task.sleep(for: .seconds(2.5))
+            if !Task.isCancelled {
+                showCompletionStatus = false
+                status = .ready
+            }
         }
     }
 

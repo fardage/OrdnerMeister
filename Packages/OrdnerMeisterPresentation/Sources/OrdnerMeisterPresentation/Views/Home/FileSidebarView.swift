@@ -1,27 +1,30 @@
 import SwiftUI
 import OrdnerMeisterDomain
 
-/// Sidebar view showing list of files to process with StatusBar header
+/// Sidebar view showing list of files to process (Apple Notes-style)
 struct FileSidebarView: View {
     let predictions: [FilePredictionViewModel]
     let status: HomeViewModel.Status
+    let showCompletionStatus: Bool
+    let inboxPath: String
     @Binding var selectedPredictionId: String?
     let onPredictionClick: (FilePredictionViewModel) -> Void
 
     var body: some View {
         VStack(spacing: 0) {
-            // StatusBar in header
-            StatusBar(status: status)
-                .padding(.horizontal)
-                .padding(.top)
+            // Inbox folder header (always visible, like Apple Notes)
+            InboxFolderHeader(
+                folderName: inboxPath,
+                fileCount: predictions.count
+            )
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+
+            Divider()
 
             // File list
             if predictions.isEmpty {
-                ContentUnavailableView(
-                    "No Files to Process",
-                    systemImage: "doc.text.magnifyingglass",
-                    description: Text("Click 'Process Folders' to scan for files")
-                )
+                Spacer()
             } else {
                 List(predictions, selection: $selectedPredictionId) { prediction in
                     FileSidebarRow(
@@ -32,8 +35,40 @@ struct FileSidebarView: View {
                 }
                 .listStyle(.sidebar)
             }
+
+            // Bottom status indicator (Apple Mail-style)
+            BottomStatusIndicator(
+                status: status,
+                showCompletion: showCompletionStatus
+            )
+            .animation(.easeInOut(duration: 0.3), value: status)
+            .animation(.easeInOut(duration: 0.3), value: showCompletionStatus)
         }
         .navigationTitle("Files")
+    }
+}
+
+/// Inbox folder header showing folder name and file count
+struct InboxFolderHeader: View {
+    let folderName: String
+    let fileCount: Int
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "folder")
+                .foregroundStyle(.blue)
+                .font(.title3)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(folderName)
+                    .font(.headline)
+                Text("\(fileCount) \(fileCount == 1 ? "file" : "files") available to sort")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+
+            Spacer()
+        }
     }
 }
 

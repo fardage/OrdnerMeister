@@ -68,7 +68,8 @@ final class DependencyContainer {
         HomeViewModel(
             trainClassifierUseCase: trainClassifierUseCase,
             classifyFilesUseCase: classifyFilesUseCase,
-            moveFileUseCase: moveFileUseCase
+            moveFileUseCase: moveFileUseCase,
+            getSettingsUseCase: getSettingsUseCase
         )
     }
 
