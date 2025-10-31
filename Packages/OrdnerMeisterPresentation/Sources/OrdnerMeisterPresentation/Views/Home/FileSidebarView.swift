@@ -27,11 +27,14 @@ struct FileSidebarView: View {
                 Spacer()
             } else {
                 List(predictions, selection: $selectedPredictionId) { prediction in
-                    FileSidebarRow(
-                        prediction: prediction,
-                        onMove: { onPredictionClick(prediction) }
-                    )
-                    .tag(prediction.id)
+                    FileSidebarRow(prediction: prediction)
+                        .tag(prediction.id)
+                        .swipeActions(edge: .trailing) {
+                            Button("Move") {
+                                onPredictionClick(prediction)
+                            }
+                            .tint(.blue)
+                        }
                 }
                 .listStyle(.sidebar)
             }
@@ -75,33 +78,23 @@ struct InboxFolderHeader: View {
 /// Row view for each file in the sidebar
 struct FileSidebarRow: View {
     let prediction: FilePredictionViewModel
-    let onMove: () -> Void
 
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(prediction.file.lastPathComponent)
-                    .font(.headline)
+        VStack(alignment: .leading, spacing: 4) {
+            Text(prediction.file.lastPathComponent)
+                .font(.headline)
 
-                if let date = prediction.dateModified {
-                    Text(date, style: .date)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-
-                if let destination = prediction.predictedOutputFolders.first {
-                    Text("→ \(destination.lastPathComponent)")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                }
+            if let date = prediction.dateModified {
+                Text(date, style: .date)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
 
-            Spacer()
-
-            Button("Move") {
-                onMove()
+            if let destination = prediction.predictedOutputFolders.first {
+                Text("→ \(destination.lastPathComponent)")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
             }
-            .buttonStyle(.borderless)
         }
         .padding(.vertical, 4)
     }
