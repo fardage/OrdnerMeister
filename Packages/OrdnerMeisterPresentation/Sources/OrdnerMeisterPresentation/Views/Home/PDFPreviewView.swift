@@ -10,6 +10,11 @@ struct PDFPreviewView: View {
 
     var body: some View {
         ZStack {
+            // Always render PDFKitView so it can load
+            PDFKitView(url: fileURL, isLoading: $isLoading, error: $loadError)
+                .opacity(isLoading || loadError != nil ? 0 : 1)
+
+            // Show loading overlay
             if isLoading {
                 VStack {
                     ProgressView()
@@ -19,7 +24,12 @@ struct PDFPreviewView: View {
                         .foregroundStyle(.secondary)
                         .padding(.top, 8)
                 }
-            } else if let error = loadError {
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(nsColor: .controlBackgroundColor))
+            }
+
+            // Show error overlay
+            if let error = loadError {
                 VStack(spacing: 12) {
                     Image(systemName: "exclamationmark.triangle")
                         .font(.system(size: 48))
@@ -32,14 +42,11 @@ struct PDFPreviewView: View {
                         .multilineTextAlignment(.center)
                 }
                 .padding()
-            } else {
-                PDFKitView(url: fileURL, isLoading: $isLoading, error: $loadError)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(nsColor: .controlBackgroundColor))
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onAppear {
-            isLoading = true
-        }
     }
 }
 
@@ -66,6 +73,11 @@ struct PDFKitView: NSViewRepresentable {
     }
 
     func updateNSView(_ pdfView: PDFView, context: Context) {
+        // Skip if already loaded for this URL
+        if pdfView.document?.documentURL == url {
+            return
+        }
+
         // Load PDF document asynchronously
         DispatchQueue.global(qos: .userInitiated).async {
             guard let document = PDFDocument(url: url) else {
