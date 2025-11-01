@@ -49,6 +49,7 @@ public struct HomeView: View {
                 )
             }
         }
+        .animation(.easeInOut(duration: 0.3), value: viewModel.selectedPredictionId)
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button(action: {
@@ -75,6 +76,22 @@ public struct HomeView: View {
             if let error = viewModel.lastError {
                 Text(error.localizedDescription)
             }
+        }
+        .sheet(isPresented: Binding(
+            get: { viewModel.showConflictAlert },
+            set: { if !$0 { viewModel.dismissConflict() } }
+        )) {
+            ConflictResolutionView(
+                existingFileName: viewModel.conflictingPrediction?.file.lastPathComponent ?? "",
+                onRename: { newName in
+                    Task {
+                        await viewModel.moveFileWithNewName(newName: newName)
+                    }
+                },
+                onCancel: {
+                    viewModel.dismissConflict()
+                }
+            )
         }
         .onChange(of: viewModel.status) { oldValue, newValue in
             handleStatusChange(newValue)

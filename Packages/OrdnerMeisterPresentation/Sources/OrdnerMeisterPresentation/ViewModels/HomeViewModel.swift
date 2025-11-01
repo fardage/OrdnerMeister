@@ -32,6 +32,11 @@ public final class HomeViewModel {
     public private(set) var currentProgress: ProcessingProgress?
     public var selectedPredictionId: String?
 
+    // File conflict state
+    public private(set) var showConflictAlert: Bool = false
+    public private(set) var conflictingPrediction: FilePredictionViewModel?
+    public private(set) var conflictingDestination: URL?
+
     public var selectedPrediction: FilePredictionViewModel? {
         guard let selectedId = selectedPredictionId else { return nil }
         return predictions.first { $0.id == selectedId }
@@ -199,12 +204,26 @@ public final class HomeViewModel {
                 to: destinationFolder
             )
 
+            // Find the index before removal for auto-selection
+            let currentIndex = predictions.firstIndex { $0.id == prediction.id }
+
             // Remove the prediction from the list after successful move
             predictions.removeAll { $0.id == prediction.id }
 
-            // Clear selection if the removed file was selected
+            // Auto-select next file if the removed file was selected
             if selectedPredictionId == prediction.id {
-                selectedPredictionId = nil
+                if let index = currentIndex, !predictions.isEmpty {
+                    // Select the file at the same index (next file) if available
+                    if index < predictions.count {
+                        selectedPredictionId = predictions[index].id
+                    } else {
+                        // Was the last file, select the new last file
+                        selectedPredictionId = predictions.last?.id
+                    }
+                } else {
+                    // No more files, clear selection
+                    selectedPredictionId = nil
+                }
             }
 
             // If no more predictions, mark as ready
@@ -212,11 +231,73 @@ public final class HomeViewModel {
                 status = .ready
                 logger.info("All files processed, returning to ready state")
             }
+        } catch let error as FileSystemError {
+            // Handle file conflict separately
+            if case .fileAlreadyExists = error {
+                logger.warning("File '\(fileName)' already exists at destination, showing conflict resolution")
+                conflictingPrediction = prediction
+                conflictingDestination = destinationFolder
+                showConflictAlert = true
+                return
+            }
+            // Handle other file system errors
+            lastError = error
+            showError = true
+            logger.error("File system error moving file '\(fileName)': \(error.localizedDescription)")
         } catch {
             lastError = error
             showError = true
             logger.error("Error moving file '\(fileName)': \(error.localizedDescription)")
-            // Don't change status - allow user to retry or skip
         }
+    }
+
+    @MainActor
+    public func moveFileWithNewName(newName: String) async {
+        guard let prediction = conflictingPrediction,
+              let destinationFolder = conflictingDestination else {
+            logger.error("Cannot rename file: missing conflict state")
+            return
+        }
+
+        let oldFileName = prediction.file.lastPathComponent
+        logger.info("Renaming and moving file from '\(oldFileName)' to '\(newName)'")
+
+        // Dismiss conflict alert
+        showConflictAlert = false
+        conflictingPrediction = nil
+        conflictingDestination = nil
+
+        // Create new file URL with the new name
+        let newFileURL = prediction.file.deletingLastPathComponent().appendingPathComponent(newName)
+
+        do {
+            // First rename the file in place
+            try FileManager.default.moveItem(at: prediction.file, to: newFileURL)
+
+            // Update the prediction with new file URL
+            let renamedPrediction = FilePredictionViewModel(
+                file: newFileURL,
+                predictions: prediction.predictions
+            )
+
+            // Remove old prediction and add renamed one
+            predictions.removeAll { $0.id == prediction.id }
+            predictions.insert(renamedPrediction, at: 0)
+
+            // Now move the renamed file to destination
+            await moveFile(prediction: renamedPrediction, to: destinationFolder)
+        } catch {
+            lastError = error
+            showError = true
+            logger.error("Error renaming file '\(oldFileName)' to '\(newName)': \(error.localizedDescription)")
+        }
+    }
+
+    @MainActor
+    public func dismissConflict() {
+        logger.info("User cancelled file conflict resolution")
+        showConflictAlert = false
+        conflictingPrediction = nil
+        conflictingDestination = nil
     }
 }
