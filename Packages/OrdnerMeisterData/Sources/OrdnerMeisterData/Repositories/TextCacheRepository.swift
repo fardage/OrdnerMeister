@@ -3,7 +3,8 @@ import OrdnerMeisterDomain
 import OSLog
 
 /// Concrete implementation of TextCacheRepositoryProtocol
-public final class TextCacheRepository: TextCacheRepositoryProtocol {
+/// Thread-safe actor that protects cache dictionary from concurrent access
+public actor TextCacheRepository: TextCacheRepositoryProtocol {
     private static let cacheFileName = "ordnerMeister.cache"
 
     private let fileManager: FileManager
@@ -47,6 +48,23 @@ public final class TextCacheRepository: TextCacheRepositoryProtocol {
             try await saveCache()
         } catch {
             logger.error("Failed to save cache for '\(url.lastPathComponent)': \(error.localizedDescription)")
+            throw error
+        }
+    }
+
+    public func cacheTextDeferred(_ text: String, for url: URL) async {
+        cache[url] = text
+        logger.debug("Deferred caching text for: \(url.lastPathComponent) (\(text.count) characters)")
+    }
+
+    public func flushCache() async throws {
+        let cacheCount = self.cache.count
+        logger.info("Flushing cache to disk (\(cacheCount) entries)")
+        do {
+            try await saveCache()
+            logger.info("Cache flush completed successfully")
+        } catch {
+            logger.error("Failed to flush cache: \(error.localizedDescription)")
             throw error
         }
     }
@@ -115,10 +133,10 @@ public final class TextCacheRepository: TextCacheRepositoryProtocol {
         }
 
         do {
-            let cacheFile = CacheFile(data: cache)
+            let cacheFile = CacheFile(data: self.cache)
             let data = try JSONEncoder().encode(cacheFile)
             try data.write(to: cacheFileURL, options: .atomic)
-            let count = cache.count
+            let count = self.cache.count
             logger.debug("Saved cache: \(count) entries")
         } catch {
             logger.error("Failed to save cache: \(error.localizedDescription)")

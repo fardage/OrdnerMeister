@@ -5,7 +5,8 @@ import OrdnerMeisterDomain
 import OSLog
 
 /// Concrete implementation of ClassificationRepositoryProtocol using Bayesian classification
-public final class ClassificationRepository: ClassificationRepositoryProtocol {
+/// Thread-safe actor that protects the Bayesian classifier from concurrent access
+public actor ClassificationRepository: ClassificationRepositoryProtocol {
     private var bayesianClassifier: BayesianClassifier<URL, String>?
     private let logger = Logger(subsystem: "ch.tseng.OrdnerMeister", category: "Classifier")
 
@@ -76,17 +77,50 @@ public final class ClassificationRepository: ClassificationRepositoryProtocol {
         }
     }
 
-    public func classifyBatch(files: [File], topN: Int) async throws -> [Classification] {
-        logger.info("Starting batch classification for \(files.count) files")
-        var classifications: [Classification] = []
+    public func classifyBatch(files: [File], topN: Int, maxConcurrentTasks: Int = 8) async throws -> [Classification] {
+        logger.info("Starting parallel batch classification for \(files.count) files (max \(maxConcurrentTasks) concurrent)")
 
-        for file in files {
-            let predictions = try await classify(file: file, topN: topN)
-            classifications.append(Classification(file: file, predictions: predictions))
+        return try await withThrowingTaskGroup(of: Classification.self) { group in
+            var classifications: [Classification] = []
+            var activeTasks = 0
+            var fileIterator = files.makeIterator()
+
+            // Start initial batch of tasks up to the concurrency limit
+            while activeTasks < maxConcurrentTasks, let file = fileIterator.next() {
+                group.addTask {
+                    // Check for cancellation before starting
+                    try Task.checkCancellation()
+
+                    let predictions = try await self.classify(file: file, topN: topN)
+                    return Classification(file: file, predictions: predictions)
+                }
+                activeTasks += 1
+            }
+
+            // As tasks complete, add new ones to maintain concurrency
+            for try await classification in group {
+                // Check for cancellation between iterations
+                try Task.checkCancellation()
+
+                classifications.append(classification)
+
+                // Add next task if available
+                if let nextFile = fileIterator.next() {
+                    group.addTask {
+                        // Check for cancellation before starting
+                        try Task.checkCancellation()
+
+                        let predictions = try await self.classify(file: nextFile, topN: topN)
+                        return Classification(file: nextFile, predictions: predictions)
+                    }
+                } else {
+                    activeTasks -= 1
+                }
+            }
+
+            logger.info("Parallel batch classification completed for \(files.count) files")
+            return classifications
         }
-
-        logger.info("Batch classification completed for \(files.count) files")
-        return classifications
     }
 
     public func reset() async throws {

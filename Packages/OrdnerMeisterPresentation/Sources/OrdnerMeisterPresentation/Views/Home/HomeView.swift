@@ -16,12 +16,16 @@ public struct HomeView: View {
                 predictions: viewModel.predictions,
                 status: viewModel.status,
                 showCompletionStatus: viewModel.showCompletionStatus,
+                currentProgress: viewModel.currentProgress,
                 inboxPath: viewModel.inboxPath,
                 selectedPredictionId: $viewModel.selectedPredictionId,
                 onPredictionClick: { prediction in
                     Task {
                         await viewModel.onPredictionClick(prediction: prediction)
                     }
+                },
+                onCancel: {
+                    viewModel.cancelProcessing()
                 }
             )
         } detail: {

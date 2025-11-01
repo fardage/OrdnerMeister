@@ -1,7 +1,7 @@
 import Foundation
 
 /// Domain entity representing a file with its content
-public struct File: Hashable {
+public struct File: Hashable, Sendable {
     public let url: URL
     public let name: String
     public let textContent: String

@@ -21,6 +21,7 @@ public final class HomeViewModel {
 
     private var cancellables = Set<AnyCancellable>()
     private var completionTimer: Task<Void, Never>?
+    private var processingTask: Task<Void, Never>?
 
     public private(set) var status: Status = .ready
     public private(set) var predictions: [FilePredictionViewModel] = []
@@ -28,6 +29,7 @@ public final class HomeViewModel {
     public private(set) var lastError: Error?
     public private(set) var showError: Bool = false
     public private(set) var showCompletionStatus: Bool = false
+    public private(set) var currentProgress: ProcessingProgress?
     public var selectedPredictionId: String?
 
     public var selectedPrediction: FilePredictionViewModel? {
@@ -54,28 +56,65 @@ public final class HomeViewModel {
 
     @MainActor
     public func processFolders() async {
+        // Cancel any existing processing
+        processingTask?.cancel()
+
+        // Update UI state immediately on MainActor
         status = .busy
         predictions = []
         processingResult = nil
         lastError = nil
+        currentProgress = nil
 
-        logger.info("Starting folder processing workflow")
+        logger.info("Starting folder processing workflow with progress tracking")
 
+        // Store the processing task for cancellation support
+        processingTask = Task { @MainActor in
+            await performProcessing()
+        }
+
+        await processingTask?.value
+    }
+
+    @MainActor
+    private func performProcessing() async {
         do {
-            // First, train the classifier on existing files
-            logger.info("Training classifier...")
-            let trainingResult = try await trainClassifierUseCase.execute()
+            // Phase 1: Train classifier with progress updates
+            let (trainingStream, trainingTask) = trainClassifierUseCase.executeWithProgress()
+
+            // Consume training progress updates
+            let progressTask = Task { @MainActor in
+                for await progress in trainingStream {
+                    self.currentProgress = progress
+                }
+            }
+
+            // Wait for training to complete
+            let trainingResult = try await trainingTask.value
+            await progressTask.value
             logger.info("Training completed: \(trainingResult.summaryMessage)")
 
-            // Check if training had failures
             if trainingResult.hasFailures {
                 logger.warning("Training completed with \(trainingResult.failureCount) errors")
             }
 
-            // Then, classify files in inbox
-            logger.info("Classifying files...")
-            let (classificationResult, classifications) = try await classifyFilesUseCase.execute()
+            // Phase 2: Classify files with progress updates
+            let (classifyStream, classifyTask) = classifyFilesUseCase.executeWithProgress()
+
+            // Consume classification progress updates
+            let classifyProgressTask = Task { @MainActor in
+                for await progress in classifyStream {
+                    self.currentProgress = progress
+                }
+            }
+
+            // Wait for classification to complete
+            let (classificationResult, classifications) = try await classifyTask.value
+            await classifyProgressTask.value
             logger.info("Classification completed: \(classificationResult.summaryMessage)")
+
+            // Clear progress after completion
+            currentProgress = nil
 
             // Store the processing result
             processingResult = classificationResult
@@ -95,6 +134,9 @@ public final class HomeViewModel {
             // Show completion status briefly, then hide
             showCompletionIndicator()
         } catch {
+            // Clear progress on error
+            currentProgress = nil
+
             // Handle critical error
             lastError = error
             showError = true
@@ -125,6 +167,15 @@ public final class HomeViewModel {
     public func dismissError() {
         showError = false
         lastError = nil
+    }
+
+    @MainActor
+    public func cancelProcessing() {
+        logger.info("Cancelling processing...")
+        processingTask?.cancel()
+        processingTask = nil
+        currentProgress = nil
+        status = .ready
     }
 
     @MainActor

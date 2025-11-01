@@ -1,7 +1,7 @@
 import Foundation
 
 /// Domain entity representing a folder/directory
-public struct Folder: Hashable {
+public struct Folder: Hashable, Sendable {
     public let url: URL
     public let name: String
 

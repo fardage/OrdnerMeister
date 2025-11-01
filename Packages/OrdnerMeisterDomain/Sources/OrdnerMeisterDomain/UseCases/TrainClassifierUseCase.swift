@@ -4,6 +4,10 @@ import OSLog
 /// Use case for training the file classifier
 public protocol TrainClassifierUseCaseProtocol {
     func execute() async throws -> ProcessingResult
+
+    /// Execute with real-time progress updates
+    /// - Returns: Tuple of (progress stream, result task)
+    func executeWithProgress() -> (stream: AsyncStream<ProcessingProgress>, task: Task<ProcessingResult, Error>)
 }
 
 public final class TrainClassifierUseCase: TrainClassifierUseCaseProtocol, @unchecked Sendable {
@@ -69,7 +73,7 @@ public final class TrainClassifierUseCase: TrainClassifierUseCaseProtocol, @unch
                 } else {
                     do {
                         text = try await textExtractionRepository.extractText(from: fileURL)
-                        try await textCacheRepository.cacheText(text, for: fileURL)
+                        await textCacheRepository.cacheTextDeferred(text, for: fileURL)
                     } catch {
                         // Collect error and continue with other files
                         let fileName = fileURL.lastPathComponent
@@ -92,6 +96,9 @@ public final class TrainClassifierUseCase: TrainClassifierUseCaseProtocol, @unch
         let successCount = filesToTrain.count
         logger.info("Text extraction completed: \(successCount) succeeded, \(errors.count) failed out of \(totalFiles) files")
 
+        // Flush cache to disk once (batch write)
+        try await textCacheRepository.flushCache()
+
         // 5. Train the classifier
         try await classificationRepository.train(files: filesToTrain, folderLabels: folderLabels)
 
@@ -105,5 +112,120 @@ public final class TrainClassifierUseCase: TrainClassifierUseCaseProtocol, @unch
         logger.info("Training process completed: \(processingResult.summaryMessage)")
 
         return processingResult
+    }
+
+    public func executeWithProgress() -> (stream: AsyncStream<ProcessingProgress>, task: Task<ProcessingResult, Error>) {
+        var continuation: AsyncStream<ProcessingProgress>.Continuation?
+
+        let stream = AsyncStream<ProcessingProgress> { cont in
+            continuation = cont
+        }
+
+        let task = Task<ProcessingResult, Error> {
+            guard let cont = continuation else {
+                throw NSError(domain: "TrainClassifierUseCase", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to initialize progress stream"])
+            }
+
+            defer { cont.finish() }
+
+            logger.info("Starting classifier training process with progress tracking")
+
+            // 1. Get settings
+            let settings = settingsRepository.getSettings()
+
+            // 2. Build file tree from output directory
+            let fileTree = try await fileRepository.buildFileTree(
+                from: settings.outputPath,
+                excluding: settings.exclusions
+            )
+
+            // 3. Get folders from the tree
+            let folderURLs = fileTree.flattenFolders()
+            logger.info("Found \(folderURLs.count) folders for training")
+
+            // 4. For each folder, get files and extract text with progress updates
+            var filesToTrain: [File] = []
+            var folderLabels: [URL: Folder] = [:]
+            var errors: [ProcessingResult.FileProcessingError] = []
+            var totalFiles = 0
+            var processedFiles = 0
+
+            // First, count total files for accurate progress
+            for folderURL in folderURLs where folderURL != settings.outputPath.url {
+                let fileURLs = try await fileRepository.getFiles(
+                    from: try DirectoryPath(url: folderURL),
+                    fileExtensions: [".pdf"]
+                )
+                totalFiles += fileURLs.count
+            }
+
+            logger.info("Found \(totalFiles) training files")
+
+            // Now extract text with progress updates
+            for folderURL in folderURLs where folderURL != settings.outputPath.url {
+                let folder = Folder(url: folderURL)
+                let fileURLs = try await fileRepository.getFiles(
+                    from: try DirectoryPath(url: folderURL),
+                    fileExtensions: [".pdf"]
+                )
+
+                // Extract text from files in this folder
+                for fileURL in fileURLs {
+                    processedFiles += 1
+                    let fileName = fileURL.lastPathComponent
+
+                    // Emit progress
+                    cont.yield(ProcessingProgress(
+                        stage: .training(current: processedFiles, total: totalFiles),
+                        currentFileName: fileName
+                    ))
+
+                    // Check cache first
+                    let text: String
+                    if let cachedText = await textCacheRepository.getCachedText(for: fileURL) {
+                        text = cachedText
+                    } else {
+                        do {
+                            text = try await textExtractionRepository.extractText(from: fileURL)
+                            await textCacheRepository.cacheTextDeferred(text, for: fileURL)
+                        } catch {
+                            logger.warning("Failed to extract text from '\(fileName)': \(error.localizedDescription)")
+                            errors.append(ProcessingResult.FileProcessingError(
+                                fileName: fileName,
+                                fileURL: fileURL,
+                                error: error
+                            ))
+                            continue
+                        }
+                    }
+
+                    let file = File(url: fileURL, textContent: text)
+                    filesToTrain.append(file)
+                    folderLabels[fileURL] = folder
+                }
+            }
+
+            let successCount = filesToTrain.count
+            logger.info("Text extraction completed: \(successCount) succeeded, \(errors.count) failed out of \(totalFiles) files")
+
+            // Flush cache to disk once (batch write)
+            try await textCacheRepository.flushCache()
+
+            // 5. Train the classifier
+            try await classificationRepository.train(files: filesToTrain, folderLabels: folderLabels)
+
+            // 6. Create processing result
+            let processingResult = ProcessingResult(
+                totalFiles: totalFiles,
+                successCount: successCount,
+                errors: errors
+            )
+
+            logger.info("Training process completed: \(processingResult.summaryMessage)")
+
+            return processingResult
+        }
+
+        return (stream, task)
     }
 }

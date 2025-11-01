@@ -1,7 +1,7 @@
 import Foundation
 
 /// Value object representing a prediction of which folder a file belongs to
-public struct FilePrediction: Hashable {
+public struct FilePrediction: Hashable, Sendable {
     public let folder: Folder
     public let confidence: Double
 
@@ -12,7 +12,7 @@ public struct FilePrediction: Hashable {
 }
 
 /// A file with its classification predictions
-public struct Classification: Hashable {
+public struct Classification: Hashable, Sendable {
     public let file: File
     public let predictions: [FilePrediction]
 

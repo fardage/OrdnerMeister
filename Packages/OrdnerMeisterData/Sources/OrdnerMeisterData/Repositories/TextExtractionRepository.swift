@@ -6,7 +6,8 @@ import OrdnerMeisterDomain
 import OSLog
 
 /// Concrete implementation of TextExtractionRepositoryProtocol
-public final class TextExtractionRepository: TextExtractionRepositoryProtocol {
+/// Safe for concurrent access as it has no mutable state
+public final class TextExtractionRepository: TextExtractionRepositoryProtocol, @unchecked Sendable {
     private static let ocrThreshold = 10
     private let logger = Logger(subsystem: "ch.tseng.OrdnerMeister", category: "OCR")
 
@@ -53,27 +54,71 @@ public final class TextExtractionRepository: TextExtractionRepositoryProtocol {
         return pdfString
     }
 
-    public func extractTextBatch(from urls: [URL]) async throws -> [URL: String] {
-        logger.info("Starting batch text extraction for \(urls.count) files")
-        var results: [URL: String] = [:]
-        var successCount = 0
-        var failureCount = 0
+    public func extractTextBatch(from urls: [URL], maxConcurrentTasks: Int = 8) async throws -> [URL: String] {
+        logger.info("Starting parallel batch text extraction for \(urls.count) files (max \(maxConcurrentTasks) concurrent)")
 
-        for url in urls {
-            do {
-                let text = try await extractText(from: url)
-                results[url] = text
-                successCount += 1
-            } catch {
-                // Log but continue with other files
-                logger.warning("Batch extraction failed for '\(url.lastPathComponent)': \(error.localizedDescription)")
-                results[url] = ""
-                failureCount += 1
+        return try await withThrowingTaskGroup(of: (URL, String).self) { group in
+            var results: [URL: String] = [:]
+            var successCount = 0
+            var failureCount = 0
+            var activeTasks = 0
+            var urlIterator = urls.makeIterator()
+
+            // Start initial batch of tasks up to the concurrency limit
+            while activeTasks < maxConcurrentTasks, let url = urlIterator.next() {
+                group.addTask {
+                    // Check for cancellation before starting
+                    try Task.checkCancellation()
+
+                    do {
+                        let text = try await self.extractText(from: url)
+                        return (url, text)
+                    } catch is CancellationError {
+                        throw CancellationError()
+                    } catch {
+                        self.logger.warning("Batch extraction failed for '\(url.lastPathComponent)': \(error.localizedDescription)")
+                        return (url, "") // Return empty string on failure to continue processing
+                    }
+                }
+                activeTasks += 1
             }
-        }
 
-        logger.info("Batch extraction completed: \(successCount) succeeded, \(failureCount) failed out of \(urls.count) files")
-        return results
+            // As tasks complete, add new ones to maintain concurrency
+            for try await (url, text) in group {
+                // Check for cancellation between iterations
+                try Task.checkCancellation()
+
+                results[url] = text
+                if !text.isEmpty {
+                    successCount += 1
+                } else {
+                    failureCount += 1
+                }
+
+                // Add next task if available
+                if let nextURL = urlIterator.next() {
+                    group.addTask {
+                        // Check for cancellation before starting
+                        try Task.checkCancellation()
+
+                        do {
+                            let text = try await self.extractText(from: nextURL)
+                            return (nextURL, text)
+                        } catch is CancellationError {
+                            throw CancellationError()
+                        } catch {
+                            self.logger.warning("Batch extraction failed for '\(nextURL.lastPathComponent)': \(error.localizedDescription)")
+                            return (nextURL, "")
+                        }
+                    }
+                } else {
+                    activeTasks -= 1
+                }
+            }
+
+            logger.info("Parallel batch extraction completed: \(successCount) succeeded, \(failureCount) failed out of \(urls.count) files")
+            return results
+        }
     }
 
     // MARK: - Private Methods

@@ -6,9 +6,11 @@ struct FileSidebarView: View {
     let predictions: [FilePredictionViewModel]
     let status: HomeViewModel.Status
     let showCompletionStatus: Bool
+    let currentProgress: ProcessingProgress?
     let inboxPath: String
     @Binding var selectedPredictionId: String?
     let onPredictionClick: (FilePredictionViewModel) -> Void
+    let onCancel: () -> Void
 
     var body: some View {
         VStack(spacing: 0) {
@@ -45,10 +47,13 @@ struct FileSidebarView: View {
             // Bottom status indicator (Apple Mail-style)
             BottomStatusIndicator(
                 status: status,
-                showCompletion: showCompletionStatus
+                showCompletion: showCompletionStatus,
+                currentProgress: currentProgress,
+                onCancel: onCancel
             )
             .animation(.easeInOut(duration: 0.3), value: status)
             .animation(.easeInOut(duration: 0.3), value: showCompletionStatus)
+            .animation(.easeInOut(duration: 0.3), value: currentProgress?.progress)
         }
         .navigationTitle("Files")
     }
