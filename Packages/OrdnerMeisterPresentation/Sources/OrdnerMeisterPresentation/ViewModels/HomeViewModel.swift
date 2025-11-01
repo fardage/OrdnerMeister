@@ -127,6 +127,12 @@ public final class HomeViewModel {
             // Convert to presentation models
             predictions = classifications.map { FilePredictionViewModel(from: $0) }
 
+            // Auto-select the first file if predictions are available
+            if let firstPrediction = predictions.first {
+                selectedPredictionId = firstPrediction.id
+                logger.info("Auto-selected first file: \(firstPrediction.file.lastPathComponent)")
+            }
+
             // Determine status based on results
             if classificationResult.hasFailures {
                 status = .done // Show results even with partial failures

@@ -3,7 +3,6 @@ import OrdnerMeisterDomain
 
 public struct HomeView: View {
     @Bindable var viewModel: HomeViewModel
-    @State private var showingResultAlert = false
     @Environment(\.openSettings) private var openSettings
 
     public init(viewModel: HomeViewModel) {
@@ -50,6 +49,10 @@ public struct HomeView: View {
             }
         }
         .animation(.easeInOut(duration: 0.3), value: viewModel.selectedPredictionId)
+        .withProcessingOverlay(
+            isProcessing: viewModel.status == .busy,
+            progress: viewModel.currentProgress
+        )
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button(action: {
@@ -58,13 +61,6 @@ public struct HomeView: View {
                     Label("Settings", systemImage: "gear")
                 }
                 .help("Open Settings")
-            }
-        }
-        .alert("Processing Complete", isPresented: $showingResultAlert) {
-            Button("OK", role: .cancel) { }
-        } message: {
-            if let result = viewModel.processingResult {
-                Text(resultAlertMessage(for: result))
             }
         }
         .alert("Error", isPresented: Binding(
@@ -93,34 +89,6 @@ public struct HomeView: View {
                 }
             )
         }
-        .onChange(of: viewModel.status) { oldValue, newValue in
-            handleStatusChange(newValue)
-        }
-    }
-
-    private func handleStatusChange(_ newStatus: HomeViewModel.Status) {
-        switch newStatus {
-        case .done:
-            showingResultAlert = true
-        default:
-            break
-        }
-    }
-
-    private func resultAlertMessage(for result: ProcessingResult) -> String {
-        var message = result.summaryMessage
-
-        if result.hasFailures {
-            message += "\n\nFailed files:"
-            for error in result.errors.prefix(5) {
-                message += "\n• \(error.fileName)"
-            }
-            if result.errors.count > 5 {
-                message += "\n• and \(result.errors.count - 5) more..."
-            }
-        }
-
-        return message
     }
 }
 
