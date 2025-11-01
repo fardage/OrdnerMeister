@@ -4,6 +4,7 @@ import OrdnerMeisterDomain
 public struct HomeView: View {
     @Bindable var viewModel: HomeViewModel
     @State private var showingResultAlert = false
+    @Environment(\.openSettings) private var openSettings
 
     public init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -46,6 +47,16 @@ public struct HomeView: View {
                         await viewModel.processFolders()
                     }
                 )
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button(action: {
+                    openSettings()
+                }) {
+                    Label("Settings", systemImage: "gear")
+                }
+                .help("Open Settings")
             }
         }
         .alert("Processing Complete", isPresented: $showingResultAlert) {
