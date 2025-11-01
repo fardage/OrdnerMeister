@@ -38,6 +38,18 @@ public final class SettingsViewModel {
 
     public var excludedDirectories: [String] = []
 
+    public var fileOperationMode: FileOperationMode = .copy {
+        didSet {
+            guard !isInitializing else { return }
+
+            do {
+                try updateSettingsUseCase.updateFileOperationMode(fileOperationMode)
+            } catch {
+                Logger().error("Failed to update file operation mode: \(error.localizedDescription)")
+            }
+        }
+    }
+
     public init(
         getSettingsUseCase: GetSettingsUseCaseProtocol,
         updateSettingsUseCase: UpdateSettingsUseCaseProtocol
@@ -77,5 +89,6 @@ public final class SettingsViewModel {
         inboxDirectory = settings.inboxPath.url.path
         outputDirectory = settings.outputPath.url.path
         excludedDirectories = settings.exclusions.map { $0.url.path }
+        fileOperationMode = settings.fileOperationMode
     }
 }

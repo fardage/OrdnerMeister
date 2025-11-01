@@ -40,6 +40,18 @@ public final class FileRepository: FileRepositoryProtocol {
         }
     }
 
+    public func deleteFile(at url: URL) async throws {
+        logger.debug("Deleting file: '\(url.lastPathComponent)'")
+
+        do {
+            try fileManager.removeItem(at: url)
+            logger.info("Successfully deleted: \(url.lastPathComponent)")
+        } catch {
+            logger.error("Failed to delete '\(url.lastPathComponent)': \(error.localizedDescription)")
+            throw error
+        }
+    }
+
     public func fileExists(at url: URL) -> Bool {
         let exists = fileManager.fileExists(atPath: url.path)
         logger.debug("File existence check for '\(url.lastPathComponent)': \(exists)")

@@ -9,6 +9,7 @@ public final class SettingsRepository: SettingsRepositoryProtocol {
         case inboxDirectory
         case outputDirectory
         case excludedDirectories
+        case fileOperationMode
     }
 
     public init(userDefaults: UserDefaults = .standard) {
@@ -19,11 +20,13 @@ public final class SettingsRepository: SettingsRepositoryProtocol {
         let inbox = userDefaults.string(forKey: Keys.inboxDirectory.rawValue)
         let output = userDefaults.string(forKey: Keys.outputDirectory.rawValue)
         let exclusions = userDefaults.array(forKey: Keys.excludedDirectories.rawValue) as? [String] ?? []
+        let modeString = userDefaults.string(forKey: Keys.fileOperationMode.rawValue)
 
         return Self.makeSettings(
             inboxPath: inbox,
             outputPath: output,
-            exclusions: exclusions
+            exclusions: exclusions,
+            fileOperationMode: modeString
         )
     }
 
@@ -47,9 +50,13 @@ public final class SettingsRepository: SettingsRepositoryProtocol {
         userDefaults.set(paths, forKey: Keys.excludedDirectories.rawValue)
     }
 
+    public func updateFileOperationMode(_ mode: FileOperationMode) throws {
+        userDefaults.set(mode.rawValue, forKey: Keys.fileOperationMode.rawValue)
+    }
+
     // MARK: - Private Helpers
 
-    private static func makeSettings(inboxPath: String?, outputPath: String?, exclusions: [String]) -> Settings {
+    private static func makeSettings(inboxPath: String?, outputPath: String?, exclusions: [String], fileOperationMode: String?) -> Settings {
         // Provide default paths if not set
         let defaultInbox = try? DirectoryPath(string: NSHomeDirectory() + "/Downloads")
         let defaultOutput = try? DirectoryPath(string: NSHomeDirectory() + "/Documents")
@@ -57,11 +64,13 @@ public final class SettingsRepository: SettingsRepositoryProtocol {
         let inbox = inboxPath.flatMap { try? DirectoryPath(string: $0) } ?? defaultInbox!
         let output = outputPath.flatMap { try? DirectoryPath(string: $0) } ?? defaultOutput!
         let excluded = exclusions.compactMap { try? DirectoryPath(string: $0) }
+        let mode = fileOperationMode.flatMap { FileOperationMode(rawValue: $0) } ?? .copy
 
         return Settings(
             inboxPath: inbox,
             outputPath: output,
-            exclusions: excluded
+            exclusions: excluded,
+            fileOperationMode: mode
         )
     }
 }

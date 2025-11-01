@@ -1,5 +1,6 @@
 import OSLog
 import SwiftUI
+import OrdnerMeisterDomain
 
 public struct SettingsView: View {
     private enum Tabs: Hashable {
@@ -21,7 +22,7 @@ public struct SettingsView: View {
                 .tag(Tabs.general)
         }
         .padding(20)
-        .frame(width: 750, height: 300)
+        .frame(width: 750, height: 450)
     }
 }
 
@@ -30,16 +31,37 @@ struct FolderSettingsView: View {
 
     var body: some View {
         Form {
-            DirectoryConfigView(
-                path: $viewModel.inboxDirectory,
-                label: "Inbox",
-                description: "Directory with input files to be classified and sorted"
-            )
-            DirectoryConfigView(
-                path: $viewModel.outputDirectory,
-                label: "Output",
-                description: "Directory where the input files should be moved to and sorted"
-            )
+            Section {
+                DirectoryConfigView(
+                    path: $viewModel.inboxDirectory,
+                    label: "Inbox",
+                    description: "Directory with input files to be classified and sorted"
+                )
+
+                DirectoryConfigView(
+                    path: $viewModel.outputDirectory,
+                    label: "Output",
+                    description: "Directory where the input files should be moved to and sorted"
+                )
+            } header: {
+                Text("Directories")
+                    .font(.headline)
+            }
+            .padding(.bottom, 8)
+
+            Section {
+                Picker("File Operation", selection: $viewModel.fileOperationMode) {
+                    ForEach(FileOperationMode.allCases, id: \.self) { mode in
+                        Text(mode.displayName).tag(mode)
+                    }
+                }
+                .pickerStyle(.radioGroup)
+                .help("Choose whether to copy files (keeping them in inbox) or move them (removing from inbox)")
+            } header: {
+                Text("File Handling")
+                    .font(.headline)
+            }
+            .padding(.bottom, 8)
 
             DirList(
                 description: "Directories in the output folder to exclude / ignore",
@@ -48,6 +70,7 @@ struct FolderSettingsView: View {
                 removeDirectory: viewModel.removeExcludedDirectory
             )
         }
+        .formStyle(.grouped)
         .padding()
     }
 }

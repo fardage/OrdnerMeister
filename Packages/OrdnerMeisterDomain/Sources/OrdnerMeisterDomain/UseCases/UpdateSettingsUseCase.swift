@@ -5,6 +5,7 @@ public protocol UpdateSettingsUseCaseProtocol {
     func updateInboxPath(_ path: DirectoryPath) throws
     func updateOutputPath(_ path: DirectoryPath) throws
     func updateExclusions(_ exclusions: [DirectoryPath]) throws
+    func updateFileOperationMode(_ mode: FileOperationMode) throws
 }
 
 public final class UpdateSettingsUseCase: UpdateSettingsUseCaseProtocol, @unchecked Sendable {
@@ -24,5 +25,9 @@ public final class UpdateSettingsUseCase: UpdateSettingsUseCaseProtocol, @unchec
 
     public func updateExclusions(_ exclusions: [DirectoryPath]) throws {
         try settingsRepository.updateExclusions(exclusions)
+    }
+
+    public func updateFileOperationMode(_ mode: FileOperationMode) throws {
+        try settingsRepository.updateFileOperationMode(mode)
     }
 }

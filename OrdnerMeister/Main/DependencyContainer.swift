@@ -51,7 +51,7 @@ final class DependencyContainer {
     }()
 
     private lazy var moveFileUseCase: MoveFileUseCase = {
-        MoveFileUseCase(fileRepository: fileRepository)
+        MoveFileUseCase(fileRepository: fileRepository, getSettingsUseCase: getSettingsUseCase)
     }()
 
     private lazy var getSettingsUseCase: GetSettingsUseCase = {

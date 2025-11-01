@@ -65,27 +65,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B17F91432B41B80800473E19 /* PDF */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = PDF;
-			sourceTree = "<group>";
-		};
-		B1869E9E2B42BC8300B7407E /* NLP */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = NLP;
-			sourceTree = "<group>";
-		};
-		B19E6A722B404930006B7A4A /* FileTree */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = FileTree;
-			sourceTree = "<group>";
-		};
 		B1FBB76B2B3EF389006FC513 = {
 			isa = PBXGroup;
 			children = (
@@ -101,9 +80,6 @@
 			children = (
 				B1FBB7A42B3F1AFC006FC513 /* Main */,
 				B1FBB7B12B40010A006FC513 /* Shared */,
-				B19E6A722B404930006B7A4A /* FileTree */,
-				B17F91432B41B80800473E19 /* PDF */,
-				B1869E9E2B42BC8300B7407E /* NLP */,
 				B1FBB77B2B3EF389006FC513 /* Assets.xcassets */,
 				B1FBB7802B3EF389006FC513 /* OrdnerMeister.entitlements */,
 				B1FBB77D2B3EF389006FC513 /* Preview Content */,

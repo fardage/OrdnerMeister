@@ -8,6 +8,9 @@ public protocol FileRepositoryProtocol {
     /// Copy a file to a destination folder
     func copyFile(from source: URL, to destination: URL) async throws
 
+    /// Delete a file at the specified URL
+    func deleteFile(at url: URL) async throws
+
     /// Check if a path exists
     func fileExists(at url: URL) -> Bool
 

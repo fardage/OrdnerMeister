@@ -13,4 +13,7 @@ public protocol SettingsRepositoryProtocol {
 
     /// Update exclusion list
     func updateExclusions(_ exclusions: [DirectoryPath]) throws
+
+    /// Update file operation mode (copy or move)
+    func updateFileOperationMode(_ mode: FileOperationMode) throws
 }
